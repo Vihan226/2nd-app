@@ -24,12 +24,12 @@ function setup() {
   allow.position(width/1.15-width/2,height/2+50)
   allow.size(200,100)
 
-Platform = createSprite(width/1-width/2, height/2+500)
+Platform = createSprite(width/1-width/2, height/2+600)
 Platform.addImage("platformImg", PlatformImage)
 Platform.scale=5
 Platform.visible=false
 
-Rightplayer=createSprite(width/1.1-width/2, height/2+150)
+Rightplayer=createSprite(width/1.1-width/2, height/2+250)
 Rightplayer.addImage("rplayer", RightplayerImage)
 RightplayerImage.scale=1
 Rightplayer.visible=false
