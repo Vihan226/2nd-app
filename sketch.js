@@ -1,4 +1,4 @@
-var Rightplayer,Platform, Background, Greenenemy, Bigblock, Smallblock, Redenemy, Playerbullet, Enemybullet, collider;
+var Rightplayer,Platform, Background, Greenenemy, Bigblock, Smallblock, Redenemy, Playerbullet, Enemybullet, collider, GetBack, jump;
 var RightplayerImage,PlatformImage, GreenenemyImage, BigblockImage, SmallblockImage, RedenemyImage, PlayerbulletImage, EnemybulletImage;
 var allow;
 var ButtonShoot;
@@ -19,7 +19,7 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
- 
+
 
   allow= createButton("Agree And Continue to Play")
   allow.position(width/1.15-width/2,height/2+100)
@@ -30,6 +30,12 @@ function setup() {
   ButtonShoot.size(70,30)
   ButtonShoot.hide()
 
+  
+  jump= createButton("Jump")
+  jump.position(width/1.3-width/2, height/2+100)
+  jump.size(70,30)
+  jump.hide()
+
 Platform = createSprite(width/1-width/2, height/2+600)
 Platform.addImage("platformImg", PlatformImage)
 Platform.scale=5
@@ -39,14 +45,15 @@ Rightplayer=createSprite(width/1.15-width/2, height/2+250)
 Rightplayer.addImage("rplayer", RightplayerImage)
 RightplayerImage.scale=1
 Rightplayer.visible=false
- 
-Playerbullet=createSprite(width/1.13-width/2, height/2+240)
-Playerbullet.addImage("pbullet", PlayerbulletImage)
-PlayerbulletImage.scale=.5
-Playerbullet.visible=false
+
+
+
 
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
+
+GetBack=createSprite(width/1.15-width/2, height/2, 10000,10)
+GetBack.visible=false
 }
 
 function draw() {
@@ -69,30 +76,54 @@ gameState="game"
 
 
 
+
   if(gameState==="game"){
     background(Background)
     allow.hide()
+    jump.show()
     ButtonShoot.show()
     Platform.visible=true
     Rightplayer.visible=true
-    Playerbullet.visible=true
   }
 
   
 
-Playerbullet.debug=false
-Playerbullet.setCollider('rectangle', -30,0,150,Playerbullet.height-100)
+
 
 Rightplayer.debug=false
 
-Rightplayer.x=collider.x
-Rightplayer.y=collider.y
-Rightplayer.collide(collider)
 
+if(Rightplayer.isTouching(GetBack)){
+ Rightplayer.x=collider.x
+ Rightplayer.y=collider.y
+ Rightplayer.collide(collider)
+}
+
+ButtonShoot.mousePressed(()=>{
+  var newbullet =bullet();
+     
+  newbullet.addImage(PlayerbulletImage); 
+  newbullet.y=Rightplayer.y
+})
+
+jump.mousePressed(()=>{
+  Rightplayer.velocityY=-10
+    })
+   
 
 
  drawSprites();
     
+}
+function bullet(){
+  Playerbullet=createSprite(width/1.13-width/2, height/2+240)
+
+PlayerbulletImage.scale=.25
+
+Playerbullet.debug=false
+Playerbullet.setCollider('rectangle', 0,0,30,Playerbullet.height-100)
+Playerbullet.velocityX=6;
+return Playerbullet; 
 }
 
 
