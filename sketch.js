@@ -1,5 +1,5 @@
-var Rightplayer,Platform, Background, Greenenemy, Bigblock, Smallblock, Redenemy, Playerbullet, Enemybullet, collider, GetBack, jump;
-var RightplayerImage,PlatformImage, GreenenemyImage, BigblockImage, SmallblockImage, RedenemyImage, PlayerbulletImage, EnemybulletImage;
+var Rightplayer,Platform, Background, Greenenemy, Bigblock, Smallblock, Redenemy, Playerbullet, Enemybullet, collider, GetBack, jumpm,  coin;
+var RightplayerImage,PlatformImage, GreenenemyImage, BigblockImage, SmallblockImage, RedenemyImage, PlayerbulletImage, EnemybulletImage, coinImage;
 var allow;
 var ButtonShoot;
 var gameState=null;
@@ -8,6 +8,7 @@ var health;
 var level;
 var start;
 var kills;
+var CoinSound, coinsound, EnemySound;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -19,6 +20,9 @@ function preload(){
   PlayerbulletImage= loadImage("Playerbullet.png")
   EnemybulletImage= loadImage("Enemybullet.png")
   PlatformImage= loadImage("Platform.png")
+  coinImage=loadImage("Coin.png")
+  CoinSound=loadSound('coinsound.wav')
+  EnemySound=loadSound('enemyhit.wav')
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -55,7 +59,7 @@ GetBack.visible=false
 
 score=0
 health=100
-start=250
+start=300
 kills=0
 }
 
@@ -65,13 +69,13 @@ function draw() {
   textSize(30)
 fill("red")
   text(" Shooting Dungeon- Made By Vihan Seth",width/1.25-width/2,height/2-200)
-  text("Start in: "+start, width/3-width/2, height/2-300)
+  text("Start in: "+start, width/4-width/2, height/2-300)
   
   textSize(20)
   fill("black")
   text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
   text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
-  text("Press and Agree and Continue when it says Start!", width/1.25-width/2, height/2-110)
+  text("Press- Agree and Continue to Play when it says Start!", width/1.25-width/2, height/2-110)
 
   //sprite
   start= start-1
@@ -113,6 +117,18 @@ Playerbullet.addImage('bulletofplayer', PlayerbulletImage)
     Greenenemy.y= Math.round(random(height/2+250, height/2-100))
   }
 
+  if(frameCount %100 ===0){
+    coin=createSprite(width/.85-width/2, height/2)
+    coin.addImage('coin', coinImage)
+    coinImage.scale=.25
+    coin.visible=false
+    coin.velocityX=-9
+    coin.lifetime=900
+    coin.debug=false
+    coin.y=Math.round(random(height/2+250, height/2-150))
+   
+  }
+
 
 
   allow.mousePressed(()=>{
@@ -128,6 +144,7 @@ gameState="game"
     allow.hide()
     
     
+    
     if(touches.length>0){
       Rightplayer.velocityY=-10
       touches=[]
@@ -139,9 +156,10 @@ gameState="game"
   GetBack.visible=false
   Playerbullet.visible=true
   Greenenemy.visible=true
-
+  coin.visible=true
   if(Playerbullet.isTouching(Greenenemy)){
     Greenenemy.destroy()
+    EnemySound.play()
     kills=kills+1
   }
   if(Greenenemy.isTouching(Rightplayer)){
@@ -154,6 +172,12 @@ gameState="game"
     // make health go down a bit
     health=health-5
     Smallblock.destroy()
+    }
+
+    if(Rightplayer.isTouching(coin)){
+     score=score+2
+     CoinSound.play()
+     coin.destroy()
     }
 
 /*  if(Playerbullet.isTouching(Smallblock)){
