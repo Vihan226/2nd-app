@@ -26,14 +26,14 @@ function setup() {
   allow.size(200,100)
 
   ButtonShoot= createButton("Shoot")
-  ButtonShoot.position(width/.8-width/2, height/2+100)
-  ButtonShoot.size(70,30)
+  ButtonShoot.position(width/.8-width/2, height/2+220)
+  ButtonShoot.size(150,80)
   ButtonShoot.hide()
 
   
   jump= createButton("Jump")
-  jump.position(width/1.3-width/2, height/2+100)
-  jump.size(70,30)
+  jump.position(width/1.5-width/2, height/2+220)
+  jump.size(150,80)
   jump.hide()
 
 Platform = createSprite(width/1-width/2, height/2+600)
@@ -52,8 +52,10 @@ Rightplayer.visible=false
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
 
-GetBack=createSprite(width/1.15-width/2, height/2, 10000,10)
+GetBack=createSprite(width/1.15-width/2, height/2-300, 10000,10)
 GetBack.visible=false
+
+
 }
 
 function draw() {
@@ -63,17 +65,18 @@ function draw() {
 fill("red")
   text(" Shooting Dungeon- Made By Vihan Seth",width/1.25-width/2,height/2-200)
   
+  
   textSize(20)
   fill("black")
   text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
   text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
 
+  
   allow.mousePressed(()=>{
 gameState="game"
   })
 
-
-
+  
 
 
 
@@ -84,11 +87,17 @@ gameState="game"
     ButtonShoot.show()
     Platform.visible=true
     Rightplayer.visible=true
-  }
-
+    
   
 
+  
+    textSize(25)
+    fill('blue')
+    text('Shoot', width/.79-width/2, height/2+215)
 
+    text('Jump', width/1.45-width/2, height/2+215)
+  
+  
 
 Rightplayer.debug=false
 
@@ -111,6 +120,7 @@ jump.mousePressed(()=>{
     })
    
 
+  }
 
  drawSprites();
     
