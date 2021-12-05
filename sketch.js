@@ -8,7 +8,7 @@ var health;
 var level;
 var start;
 var kills;
-var CoinSound, coinsound, EnemySound;
+var CoinSound, coinsound, EnemySound, wintertheme;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -23,6 +23,7 @@ function preload(){
   coinImage=loadImage("Coin.png")
   CoinSound=loadSound('coinsound.wav')
   EnemySound=loadSound('enemyhit.wav')
+  wintertheme=loadImage('wintergif.gif')
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -38,9 +39,9 @@ function setup() {
   
 
 
-Platform = createSprite(width/1-width/2, height/2+600)
+Platform = createSprite(width/1-width/2, height/2+770)
 Platform.addImage("platformImg", PlatformImage)
-Platform.scale=5
+Platform.scale=8
 Platform.visible=false
 
 Rightplayer=createSprite(width/1.5-width/2, height/2+250)
@@ -86,7 +87,7 @@ fill("red")
     text('Start', width/1.14-width/2, height/2+50)
   }
   if(frameCount %300 === 0){
-    Smallblock=createSprite(width/.8-width/2, height/2+270)
+    Smallblock=createSprite(width/.8-width/2, height/2+280)
     Smallblock.addImage("smallblock", SmallblockImage)
     Smallblock.scale=.5
     Smallblock.visible=false
@@ -179,6 +180,20 @@ gameState="game"
      CoinSound.play()
      coin.destroy()
     }
+
+    if(score>10){
+      Greenenemy.velocityX=-10.5
+      coin.velocityX=-11
+      Smallblock.velocityX=-8
+    }
+
+    if(score>25){
+      Greenenemy.velocityX=-11
+      coin.velocityX=-12
+      Smallblock.velocityX=-8.5
+    }
+
+    
 
 /*  if(Playerbullet.isTouching(Smallblock)){
     Smallblock.destroy()
