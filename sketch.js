@@ -26,13 +26,13 @@ function setup() {
   allow.size(200,100)
 
   ButtonShoot= createButton("Shoot")
-  ButtonShoot.position(width/.8-width/2, height/2+220)
+  ButtonShoot.position(width/.8-width/2, height/2+290)
   ButtonShoot.size(150,80)
   ButtonShoot.hide()
 
   
   jump= createButton("Jump")
-  jump.position(width/1.5-width/2, height/2+220)
+  jump.position(width/1.5-width/2, height/2+290)
   jump.size(150,80)
   jump.hide()
 
@@ -93,9 +93,9 @@ gameState="game"
   
     textSize(25)
     fill('blue')
-    text('Shoot', width/.79-width/2, height/2+215)
+    text('Shoot', width/.79-width/2, height/2+285)
 
-    text('Jump', width/1.45-width/2, height/2+215)
+    text('Jump', width/1.45-width/2, height/2+285)
   
   
 
