@@ -9,6 +9,8 @@ var level;
 var start;
 var kills;
 var CoinSound, coinsound, EnemySound, wintertheme;
+var RedThunder, RedThunderImage, ThunderSound;
+var GetBack2;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -24,6 +26,8 @@ function preload(){
   CoinSound=loadSound('coinsound.wav')
   EnemySound=loadSound('enemyhit.wav')
   wintertheme=loadImage('wintergif.gif')
+  RedThunderImage= loadImage('redthunder.png')
+  ThunderSound=loadSound('thundersound.wav')
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -49,14 +53,19 @@ Rightplayer.addImage("rplayer", RightplayerImage)
 RightplayerImage.scale=1
 Rightplayer.visible=false
 
-
-
-
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
 
 GetBack=createSprite(width/1.15-width/2, height/2-300, 10000,10)
 GetBack.visible=false
+
+GetBack2=createSprite(width/1.15-width/2, height/2+380, 10000,10)
+GetBack2.visible=false
+
+RedThunder=createSprite(width/.75-width/2, height/2-340)
+RedThunder.addImage('redthunder', RedThunderImage)
+RedThunderImage.scale=.25
+RedThunder.visible=false
 
 score=0
 health=100
@@ -143,8 +152,8 @@ gameState="game"
   if(gameState==="game"){
     background(Background)
     allow.hide()
-    
-    
+  
+  
     
     if(touches.length>0){
       Rightplayer.velocityY=-10
@@ -158,6 +167,7 @@ gameState="game"
   Playerbullet.visible=true
   Greenenemy.visible=true
   coin.visible=true
+
   if(Playerbullet.isTouching(Greenenemy)){
     Greenenemy.destroy()
     EnemySound.play()
@@ -180,17 +190,78 @@ gameState="game"
      CoinSound.play()
      coin.destroy()
     }
+    if(RedThunder.isTouching(GetBack2)){
+      RedThunder.visible=false
+      RedThunder.x= width/.75-width/2
+      RedThunder.y=height/2-340
+      RedThunder.velocityX=0
+      RedThunder.velocityY=0
+    }
 
+  
+    // changing levels 
     if(score>10){
       Greenenemy.velocityX=-10.5
       coin.velocityX=-11
       Smallblock.velocityX=-8
+      
     }
-
     if(score>25){
       Greenenemy.velocityX=-11
       coin.velocityX=-12
       Smallblock.velocityX=-8.5
+    
+    }
+    if(score>50){
+      Greenenemy.velocityX=-12
+      coin.velocityX=-14
+      Smallblock.velocityX=-9
+    
+    }
+
+    if(score>70){
+      Greenenemy.velocityX=-12.5
+      coin.velocityX=-14
+      Smallblock.velocityX=-9
+    
+    }
+
+    if(score>11 && score<13){
+      ThunderSound.play()
+      RedThunder.velocityX=-27
+      RedThunder.velocityY=10
+      RedThunder.visible=true
+    }
+
+    if(score>33 && score<35){
+      ThunderSound.play()
+      RedThunder.velocityX=-27
+      RedThunder.velocityY=10
+      RedThunder.visible=true
+    }
+    if(score>49 && score<51){
+      ThunderSound.play()
+      RedThunder.velocityX=-27
+      RedThunder.velocityY=10
+      RedThunder.visible=true
+    }
+    if(score>69 && score<71){
+      ThunderSound.play()
+      RedThunder.velocityX=-27
+      RedThunder.velocityY=10
+      RedThunder.visible=true
+    }
+    if(score>89 && score<91){
+      ThunderSound.play()
+      RedThunder.velocityX=-27
+      RedThunder.velocityY=10
+      RedThunder.visible=true
+    }
+
+    
+
+    if(RedThunder.isTouching(Rightplayer)){
+      health=health-1
     }
 
     
