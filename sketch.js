@@ -32,17 +32,14 @@ function setup() {
 
 
   
-  jump= createButton("Jump")
-  jump.position(width/1.6-width/2, height/2+290)
-  jump.size(150,80)
-  jump.hide()
+
 
 Platform = createSprite(width/1-width/2, height/2+600)
 Platform.addImage("platformImg", PlatformImage)
 Platform.scale=5
 Platform.visible=false
 
-Rightplayer=createSprite(width/1.2-width/2, height/2+250)
+Rightplayer=createSprite(width/1.5-width/2, height/2+250)
 Rightplayer.addImage("rplayer", RightplayerImage)
 RightplayerImage.scale=1
 Rightplayer.visible=false
@@ -58,7 +55,7 @@ GetBack.visible=false
 
 score=0
 health=100
-start=190
+start=250
 kills=0
 }
 
@@ -94,7 +91,7 @@ fill("red")
   }
 
   if(frameCount %50 ===0){
-    Playerbullet=createSprite(width/1.13-width/2, Rightplayer.y)
+    Playerbullet=createSprite(width/1.3-width/2, Rightplayer.y)
 Playerbullet.addImage('bulletofplayer', PlayerbulletImage)
     PlayerbulletImage.scale=.25
     Playerbullet.visible=false
@@ -129,8 +126,13 @@ gameState="game"
   if(gameState==="game"){
     background(Background)
     allow.hide()
-    jump.show()
     
+    
+    if(touches.length>0){
+      Rightplayer.velocityY=-10
+      touches=[]
+        }
+
     Platform.visible=true
     Rightplayer.visible=true
    Smallblock.visible=true
@@ -167,9 +169,7 @@ text('Health: '+health, width/.8-width/2, height/2-290)
 //make player have some gravity to floor and collide with the collider.
    Rightplayer.velocityY=Rightplayer.velocityY+.5;
 
-    textSize(25)
-    fill('blue')
-    text('Jump', width/1.55-width/2, height/2+285)
+    
   
 
 
@@ -183,9 +183,7 @@ Rightplayer.debug=false
 
 
 
-jump.mousePressed(()=>{
-  Rightplayer.velocityY=-10
-    })
+
    
 
   }
