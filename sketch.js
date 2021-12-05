@@ -3,6 +3,9 @@ var RightplayerImage,PlatformImage, GreenenemyImage, BigblockImage, SmallblockIm
 var allow;
 var ButtonShoot;
 var gameState=null;
+var score;
+var health;
+var level;
 
 function preload(){
 
@@ -25,14 +28,11 @@ function setup() {
   allow.position(width/1.15-width/2,height/2+100)
   allow.size(200,100)
 
-  ButtonShoot= createButton("Shoot")
-  ButtonShoot.position(width/.8-width/2, height/2+290)
-  ButtonShoot.size(150,80)
-  ButtonShoot.hide()
+
 
   
   jump= createButton("Jump")
-  jump.position(width/1.5-width/2, height/2+290)
+  jump.position(width/1.6-width/2, height/2+290)
   jump.size(150,80)
   jump.hide()
 
@@ -55,7 +55,8 @@ collider.visible=false
 GetBack=createSprite(width/1.15-width/2, height/2-300, 10000,10)
 GetBack.visible=false
 
-
+score=0
+health=100
 }
 
 function draw() {
@@ -71,7 +72,31 @@ fill("red")
   text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
   text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
 
-  
+  //sprite
+  if(frameCount %110 === 0){
+    Smallblock=createSprite(width/.9-width/2, height/2+270)
+    Smallblock.addImage("smallblock", SmallblockImage)
+    Smallblock.scale=.5
+    Smallblock.visible=false
+    Smallblock.velocityX=-10
+    Smallblock.lifetime=900
+  }
+
+  if(frameCount %50 ===0){
+    Playerbullet=createSprite(width/1.13-width/2, Rightplayer.y)
+Playerbullet.addImage('bulletofplayer', PlayerbulletImage)
+    PlayerbulletImage.scale=.25
+    Playerbullet.visible=false
+    Playerbullet.debug=false
+    Playerbullet.setCollider('rectangle', 0,0,30,Playerbullet.height-100)
+    Playerbullet.velocityX=6;
+    Playerbullet.lifetime=900
+
+   
+  }
+
+
+
   allow.mousePressed(()=>{
 gameState="game"
   })
@@ -84,36 +109,47 @@ gameState="game"
     background(Background)
     allow.hide()
     jump.show()
-    ButtonShoot.show()
+    
     Platform.visible=true
     Rightplayer.visible=true
-    
-  
+   Smallblock.visible=true
+  GetBack.visible=false
+  Playerbullet.visible=true
 
-  
+    if(Rightplayer.isTouching(Smallblock)){
+    background('red')
+    // make health go down a bit
+    health=health-5
+    Smallblock.destroy()
+    }
+
+  if(Playerbullet.isTouching(Smallblock)){
+    Smallblock.destroy()
+  }
+
+textSize(40)
+fill('green')
+text('Score: '+score, width/1.6-width/2, height/2-290)
+fill('red')
+text('Health: '+health, width/.8-width/2, height/2-290)
+//make player have some gravity to floor and collide with the collider.
+   Rightplayer.velocityY=Rightplayer.velocityY+.5;
+
     textSize(25)
     fill('blue')
-    text('Shoot', width/.79-width/2, height/2+285)
-
-    text('Jump', width/1.45-width/2, height/2+285)
+    text('Jump', width/1.55-width/2, height/2+285)
   
-  
+ 
 
 Rightplayer.debug=false
 
 
-if(Rightplayer.isTouching(GetBack)){
- Rightplayer.x=collider.x
- Rightplayer.y=collider.y
- Rightplayer.collide(collider)
-}
 
-ButtonShoot.mousePressed(()=>{
-  var newbullet =bullet();
-     
-  newbullet.addImage(PlayerbulletImage); 
-  newbullet.y=Rightplayer.y
-})
+
+ Rightplayer.collide(collider)
+
+
+
 
 jump.mousePressed(()=>{
   Rightplayer.velocityY=-10
@@ -124,16 +160,6 @@ jump.mousePressed(()=>{
 
  drawSprites();
     
-}
-function bullet(){
-  Playerbullet=createSprite(width/1.13-width/2, height/2+240)
-
-PlayerbulletImage.scale=.25
-
-Playerbullet.debug=false
-Playerbullet.setCollider('rectangle', 0,0,30,Playerbullet.height-100)
-Playerbullet.velocityX=6;
-return Playerbullet; 
 }
 
 
