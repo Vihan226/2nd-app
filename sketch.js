@@ -13,6 +13,7 @@ var RedThunder, RedThunderImage, ThunderSound;
 var GetBack2;
 var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 var health_increaseButton;
+var drop=[];
 function preload(){
 
   Background= loadImage("Background.png")
@@ -34,8 +35,9 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-
-
+ for (var i=0; i<400; i++){
+   drop[i]= new Drop()
+ }
   allow= createButton("Agree And Continue to Play")
   allow.position(width/1.15-width/2,height/2+150)
   allow.size(200,100)
@@ -96,7 +98,6 @@ kills=0
 
 function draw() {
   background("white");
-
 
 
 
@@ -179,6 +180,10 @@ gameState="game"
     allow.hide()
     powerButton.show()
     health_increaseButton.show()
+
+ 
+
+   
   
     
   
@@ -243,10 +248,44 @@ gameState="game"
 
 //gamestate of winter theme
 
-if(kills>7&& kills<16){
+if(kills>3&& kills<7){
   background(0,0,35,25); 
   background(wintertheme)
  Galaxy()
+
+}
+if(kills>8&&kills<14){
+  background('black')
+  for (var i=0; i<400; i++){
+    drop[i].show()
+    drop[i].update()
+  }
+}
+if(kills>15&& kills<19){
+  background(0,0,35,25); 
+  background(wintertheme)
+ Galaxy()
+
+}
+if(kills>20&&kills<28){
+  background('black')
+  for (var i=0; i<400; i++){
+    drop[i].show()
+    drop[i].update()
+  }
+}
+if(kills>32&& kills<36){
+  background(0,0,35,25); 
+  background(wintertheme)
+ Galaxy()
+
+}
+if(kills>39&&kills<48){
+  background('black')
+  for (var i=0; i<400; i++){
+    drop[i].show()
+    drop[i].update()
+  }
 }
 
 if(health<0|| score<0){
@@ -417,7 +456,7 @@ function Galaxy(){
     color:('white'),
     locationX : random(width),
     locationY : random(height),
-    size : random(20,25),
+    size : random(25,30),
 
    
 
@@ -425,7 +464,26 @@ function Galaxy(){
   ellipse(mouseX ,mouseY, galaxy.size, galaxy.size);
 
     ellipse(galaxy.locationX ,galaxy.locationY, galaxy.size, galaxy.size);
-    
+  
+}
+
+function Drop(){
+  this.x=random(0,width);
+  this.y=random(0,-height);
+
+  this.show= function(){
+    noStroke()
+    fill(255);
+    ellipse(this.x, this.y, 3,15);
+  }
+
+  this.update=function(){
+    this.y=this.y+13
+
+    if(this.y>height){
+      this.y=random(0,-height);
+    }
+  }
 
 }
 
