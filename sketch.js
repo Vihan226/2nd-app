@@ -26,7 +26,7 @@ function preload(){
   coinImage=loadImage("Coin.png")
   CoinSound=loadSound('coinsound.wav')
   EnemySound=loadSound('enemyhit.wav')
-  wintertheme=loadImage('wintergif.gif')
+  wintertheme=loadImage('winterTheme.png')
   RedThunderImage= loadImage('redthunder.png')
   ThunderSound=loadSound('thundersound.wav')
 }
@@ -92,6 +92,10 @@ kills=0
 
 function draw() {
   background("white");
+
+
+
+
   // this is question 1 from the game
   textSize(30)
 fill("red")
@@ -223,16 +227,18 @@ gameState="game"
       arrow2.velocityX=25;
       arrow3.velocityX=25;
       arrow4.velocityX=25;
+      
 
     })
 
 //gamestate of winter theme
 
-if(kills>23){
+if(kills>8&& kills<19){
+  background(0,0,35,25); 
   background(wintertheme)
-
-
+ Galaxy()
 }
+
   
 if(arrow1.isTouching(arrow_get_back)){
    
@@ -381,8 +387,28 @@ Rightplayer.debug=false
 
   }
 
+
  drawSprites();
     
+}
+
+function Galaxy(){
+  
+  background(0,0,35,25); 
+  var galaxy = { 
+    color:('white'),
+    locationX : random(width),
+    locationY : random(height),
+    size : random(15,22),
+
+   
+
+  }
+  ellipse(mouseX ,mouseY, galaxy.size, galaxy.size);
+
+    ellipse(galaxy.locationX ,galaxy.locationY, galaxy.size, galaxy.size);
+    
+
 }
 
 
