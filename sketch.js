@@ -11,6 +11,7 @@ var kills;
 var CoinSound, coinsound, EnemySound, wintertheme;
 var RedThunder, RedThunderImage, ThunderSound;
 var GetBack2;
+var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -38,9 +39,11 @@ function setup() {
   allow.position(width/1.15-width/2,height/2+150)
   allow.size(200,100)
 
+  powerButton= createButton('power')
+  powerButton.position(width/1.6-width/2, height/2-430)
+  powerButton.size(100,40)
+  powerButton.hide()
 
-
-  
 
 
 Platform = createSprite(width/1-width/2, height/2+770)
@@ -59,13 +62,27 @@ collider.visible=false
 GetBack=createSprite(width/1.15-width/2, height/2-300, 10000,10)
 GetBack.visible=false
 
-GetBack2=createSprite(width/1.15-width/2, height/2+380, 10000,10)
+GetBack2=createSprite(width/1.15-width/2, height/2+500, 10000,10)
 GetBack2.visible=false
 
 RedThunder=createSprite(width/.75-width/2, height/2-340)
 RedThunder.addImage('redthunder', RedThunderImage)
 RedThunderImage.scale=.25
 RedThunder.visible=false
+
+arrow1= createSprite(width/2.2-width/2, height/2, 100,10)
+arrow1.shapeColor='blue'
+
+arrow2= createSprite(width/2.2-width/2, height/2-120, 100,10)
+arrow2.shapeColor='blue'
+
+arrow3= createSprite(width/2.2-width/2, height/2-240, 100,10)
+arrow3.shapeColor='blue'
+
+arrow4= createSprite(width/2.2-width/2, height/2+150, 100,10)
+arrow4.shapeColor='blue'
+
+arrow_get_back= createSprite(width/.4-width/2, height/2, 50,1000)
 
 score=0
 health=100
@@ -152,7 +169,9 @@ gameState="game"
   if(gameState==="game"){
     background(Background)
     allow.hide()
+    powerButton.show()
   
+    
   
     
     if(touches.length>0){
@@ -198,13 +217,77 @@ gameState="game"
       RedThunder.velocityY=0
     }
 
+    powerButton.mousePressed(()=>{
+
+      arrow1.velocityX=25;
+      arrow2.velocityX=25;
+      arrow3.velocityX=25;
+      arrow4.velocityX=25;
+
+    })
+    
+
   
+if(arrow1.isTouching(arrow_get_back)){
+   
+  arrow1.x= width/2.2-width/2
+ arrow1.velocityX=0
+
+
+}
+if(arrow2.isTouching(arrow_get_back)){
+  arrow2.x= width/2.2-width/2
+ arrow2.velocityX=0
+
+
+}  
+if(arrow3.isTouching(arrow_get_back)){
+  arrow3.x= width/2.2-width/2
+ arrow3.velocityX=0
+
+
+}  
+if(arrow4.isTouching(arrow_get_back)){
+  arrow4.x= width/2.2-width/2
+ arrow4.velocityX=0
+
+
+}    
+
+if(kills>1&&kills<5){
+  powerButton.hide()
+}
+else{
+  powerButton.show()
+}
+
+
+
+
+
+if(arrow1.isTouching(RedThunder)||arrow2.isTouching(RedThunder)||arrow3.isTouching(RedThunder)||arrow4.isTouching(RedThunder)){
+  RedThunder.visible=false
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
+  RedThunder.velocityX=0
+  RedThunder.velocityY=0
+  score=score+2
+}
+
+if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouching(Greenenemy)|| arrow4.isTouching(Greenenemy)){
+  Greenenemy.destroy()
+  kills=kills+1
+
+}
     // changing levels 
     if(score>10){
       Greenenemy.velocityX=-10.5
       coin.velocityX=-11
       Smallblock.velocityX=-8
       
+    if(score>1){
+      powerButton.show()
+    }
     }
     if(score>25){
       Greenenemy.velocityX=-11
@@ -233,7 +316,7 @@ gameState="game"
       RedThunder.visible=true
     }
 
-    if(score>33 && score<35){
+    if(score>23 && score<25){
       ThunderSound.play()
       RedThunder.velocityX=-27
       RedThunder.velocityY=10
