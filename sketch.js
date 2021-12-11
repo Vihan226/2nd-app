@@ -82,7 +82,7 @@ arrow3.shapeColor='blue'
 arrow4= createSprite(width/2.2-width/2, height/2+150, 100,10)
 arrow4.shapeColor='blue'
 
-arrow_get_back= createSprite(width/.4-width/2, height/2, 50,1000)
+arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 
 score=0
 health=100
@@ -225,8 +225,14 @@ gameState="game"
       arrow4.velocityX=25;
 
     })
-    
 
+//gamestate of winter theme
+
+if(kills>23){
+  background(wintertheme)
+
+
+}
   
 if(arrow1.isTouching(arrow_get_back)){
    
@@ -254,12 +260,6 @@ if(arrow4.isTouching(arrow_get_back)){
 
 }    
 
-if(kills>1&&kills<5){
-  powerButton.hide()
-}
-else{
-  powerButton.show()
-}
 
 
 
@@ -354,7 +354,7 @@ if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouc
   }*/
 
 textSize(40)
-fill('green')
+fill('#cc6600')
 text('Score: '+score, width/1.6-width/2, height/2-290)
 text('Kills: '+kills, width/1.6-width/2, height/2-340)
 fill('red')
