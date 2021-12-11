@@ -12,6 +12,7 @@ var CoinSound, coinsound, EnemySound, wintertheme;
 var RedThunder, RedThunderImage, ThunderSound;
 var GetBack2;
 var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
+var health_increaseButton;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -40,11 +41,14 @@ function setup() {
   allow.size(200,100)
 
   powerButton= createButton('power')
-  powerButton.position(width/1.6-width/2, height/2-430)
+  powerButton.position(width/1.7-width/2, height/2-450)
   powerButton.size(100,40)
   powerButton.hide()
 
-
+  health_increaseButton=  createButton('Health Increase')
+  health_increaseButton.position(width/1.5-width/2, height/2-450)
+  health_increaseButton.size(200,40)
+  health_increaseButton.hide()
 
 Platform = createSprite(width/1-width/2, height/2+770)
 Platform.addImage("platformImg", PlatformImage)
@@ -84,7 +88,7 @@ arrow4.shapeColor='blue'
 
 arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 
-score=0
+score=25
 health=100
 start=300
 kills=0
@@ -174,6 +178,7 @@ gameState="game"
     background(Background)
     allow.hide()
     powerButton.show()
+    health_increaseButton.show()
   
     
   
@@ -221,6 +226,11 @@ gameState="game"
       RedThunder.velocityY=0
     }
 
+     health_increaseButton.mousePressed(()=>{
+       health=health+5
+       score=score-15
+     })
+
     powerButton.mousePressed(()=>{
 
       arrow1.velocityX=25;
@@ -233,10 +243,18 @@ gameState="game"
 
 //gamestate of winter theme
 
-if(kills>8&& kills<19){
+if(kills>7&& kills<16){
   background(0,0,35,25); 
   background(wintertheme)
  Galaxy()
+}
+
+if(health<0|| score<0){
+  gameState=null
+  Platform.destroy()
+  powerButton.hide()
+  health_increaseButton.hide()
+
 }
 
   
@@ -286,7 +304,7 @@ if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouc
 
 }
     // changing levels 
-    if(score>10){
+    if(score>7){
       Greenenemy.velocityX=-10.5
       coin.velocityX=-11
       Smallblock.velocityX=-8
@@ -295,20 +313,20 @@ if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouc
       powerButton.show()
     }
     }
-    if(score>25){
+    if(score>17){
       Greenenemy.velocityX=-11
       coin.velocityX=-12
       Smallblock.velocityX=-8.5
     
     }
-    if(score>50){
+    if(score>19){
       Greenenemy.velocityX=-12
       coin.velocityX=-14
       Smallblock.velocityX=-9
     
     }
 
-    if(score>70){
+    if(score>28){
       Greenenemy.velocityX=-12.5
       coin.velocityX=-14
       Smallblock.velocityX=-9
@@ -399,7 +417,7 @@ function Galaxy(){
     color:('white'),
     locationX : random(width),
     locationY : random(height),
-    size : random(15,22),
+    size : random(20,25),
 
    
 
