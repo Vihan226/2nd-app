@@ -37,14 +37,14 @@ function preload(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
- for (var i=0; i<400; i++){
+ for (var i=0; i<200; i++){
    drop[i]= new Drop()
  }
 
  //homestate and its skins
  home=createButton('Home')
  home.position(width/.8-width/2, height/2-480)
- home.size(50,30)
+ home.size(150,90)
  home.hide()
 
  playButton=createButton('Play')
@@ -216,7 +216,7 @@ gameState="game"
     
   
     
-    if(touches.length>0){
+    if(touches.length>0|| keyDown('space')){
       Rightplayer.velocityY=-10
       touches=[]
         }
@@ -284,7 +284,7 @@ if(kills>3&& kills<7){
 }
 if(kills>8&&kills<14){
   background('black')
-  for (var i=0; i<400; i++){
+  for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
   }
@@ -297,7 +297,7 @@ if(kills>15&& kills<19){
 }
 if(kills>20&&kills<28){
   background('black')
-  for (var i=0; i<400; i++){
+  for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
   }
@@ -310,7 +310,7 @@ if(kills>32&& kills<36){
 }
 if(kills>39&&kills<48){
   background('black')
-  for (var i=0; i<400; i++){
+  for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
   }
@@ -449,7 +449,7 @@ if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouc
 
 textSize(40)
 fill('#cc6600')
-text('Score: '+score, width/1.6-width/2, height/2-290)
+text('Coins: '+score, width/1.6-width/2, height/2-290)
 text('Kills: '+kills, width/1.6-width/2, height/2-340)
 fill('red')
 text('Health: '+health, width/.8-width/2, height/2-290)
@@ -472,6 +472,7 @@ Rightplayer.debug=false
     gameState='home'
     Rightplayer.visible=false
     skin1.visible=false;
+    skin1button.hide()
   })
 
 
@@ -486,8 +487,8 @@ Rightplayer.debug=false
 
     text('Welcome to Sho Run!', width/1.3-width/2, height/2-470)
     textSize(30)
-    text('You can play as default or change a skin by giving coins', width/1.4-width/2, height/2-410)
-    text('Change Skins when the player is on the floor/ground!', width/1.4-width/2, height/2-350)
+    text('You can play as default or change a skin by giving coins', width/1.4-width/2, height/2-420)
+    text('Change Skins when the player is on the floor/ground!', width/1.4-width/2, height/2-370)
     health_increaseButton.hide()
     powerButton.hide()
     home.hide()
@@ -510,17 +511,21 @@ Rightplayer.debug=false
     skinChange.mousePressed(()=>{
       gameState='skins'
       Rightplayer.visible=false
+      home.show()
     })
 
 
   }
   if(gameState==='skins'){
     background('green')
+    fill('blue')
+    textSize(50)
+    text('Coins: '+score, width/1.6-width/2, height/2-100)
     fill('white')
     textSize(40)
-    text('Skins(Each)- 25 coins', width/1.3-width/2, height/2-460)
+    text('Each skin will be 25 coins', width/1.3-width/2, height/2-460)
     textSize(20)
-    text('More Skins will be Added in the coming updates', width/1.3-width/2, height/2-410)
+    text('Weekly skin!', width/1.3-width/2, height/2-410)
     skin1.visible=true
     playButton.hide()
     Rightplayer.visible=false;
@@ -575,7 +580,7 @@ function Drop(){
   }
 
   this.update=function(){
-    this.y=this.y+13
+    this.y=this.y+20
 
     if(this.y>height){
       this.y=random(0,-height);
