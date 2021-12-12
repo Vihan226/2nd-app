@@ -14,6 +14,7 @@ var GetBack2;
 var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 var health_increaseButton;
 var drop=[];
+var home, playButton, skinChange, skin1, skin1image, skin1button;
 function preload(){
 
   Background= loadImage("Background.png")
@@ -31,6 +32,7 @@ function preload(){
   wintertheme=loadImage('winterTheme.png')
   RedThunderImage= loadImage('redthunder.png')
   ThunderSound=loadSound('thundersound.wav')
+  skin1image=loadImage('skin1_red.png')
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -38,6 +40,31 @@ function setup() {
  for (var i=0; i<400; i++){
    drop[i]= new Drop()
  }
+
+ //homestate and its skins
+ home=createButton('Home')
+ home.position(width/.8-width/2, height/2-480)
+ home.size(50,30)
+ home.hide()
+
+ playButton=createButton('Play')
+ playButton.position(width/1.15-width/2,height/2+150)
+ playButton.size(200,100)
+ playButton.hide()
+
+ skinChange=createButton('Change Character')
+ skinChange.position(width/.7-width/2, height/2)
+ skinChange.size(70,150)
+ skinChange.hide()
+ 
+ skin1button=createButton('Red Force Skin')
+ skin1button.position(width/1.6-width/2, height/2+160)
+ skin1button.hide()
+
+ skin1=createSprite(width/1.5-width/2, height/2-150)
+ skin1.addImage('redforce', skin1image)
+ skin1.visible=false
+
   allow= createButton("Agree And Continue to Play")
   allow.position(width/1.15-width/2,height/2+150)
   allow.size(200,100)
@@ -48,7 +75,7 @@ function setup() {
   powerButton.hide()
 
   health_increaseButton=  createButton('Health Increase')
-  health_increaseButton.position(width/1.5-width/2, height/2-450)
+  health_increaseButton.position(width/1.3-width/2, height/2-450)
   health_increaseButton.size(200,40)
   health_increaseButton.hide()
 
@@ -169,6 +196,7 @@ Playerbullet.addImage('bulletofplayer', PlayerbulletImage)
 
   allow.mousePressed(()=>{
 gameState="game"
+
   })
 
   
@@ -180,7 +208,7 @@ gameState="game"
     allow.hide()
     powerButton.show()
     health_increaseButton.show()
-
+    home.show()
  
 
    
@@ -206,19 +234,19 @@ gameState="game"
     EnemySound.play()
     kills=kills+1
   }
-  if(Greenenemy.isTouching(Rightplayer)){
+  if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     health=health-7
     Greenenemy.destroy()
   }
   
-    if(Rightplayer.isTouching(Smallblock)){
+    if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)){
     background('red')
     // make health go down a bit
     health=health-5
     Smallblock.destroy()
     }
 
-    if(Rightplayer.isTouching(coin)){
+    if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)){
      score=score+2
      CoinSound.play()
      coin.destroy()
@@ -404,6 +432,9 @@ if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouc
       RedThunder.visible=true
     }
 
+    //skins attach to rightplayer(default player)
+    skin1.y=Rightplayer.y-10
+    
     
 
     if(RedThunder.isTouching(Rightplayer)){
@@ -437,10 +468,76 @@ Rightplayer.debug=false
  Rightplayer.collide(collider)
 
 
-
+  home.mousePressed(()=>{
+    gameState='home'
+    Rightplayer.visible=false
+    skin1.visible=false;
+  })
 
 
    
+
+  }
+
+  if(gameState==='home'){
+    background('white')
+    fill('green')
+    textSize(30)
+
+    text('Welcome to Sho Run!', width/1.3-width/2, height/2-470)
+    textSize(30)
+    text('You can play as default or change a skin by giving coins', width/1.4-width/2, height/2-410)
+    text('Change Skins when the player is on the floor/ground!', width/1.4-width/2, height/2-350)
+    health_increaseButton.hide()
+    powerButton.hide()
+    home.hide()
+    Platform.visible=false
+    Rightplayer.visible=false
+
+    playButton.show()
+    skinChange.show()
+
+    playButton.mousePressed(()=>{
+      gameState='game'
+
+      playButton.hide()
+      skinChange.hide()
+      skin1.visible=false;
+      skin1button.hide()
+      Rightplayer.x=width/1.5-width/2
+
+    })
+    skinChange.mousePressed(()=>{
+      gameState='skins'
+      Rightplayer.visible=false
+    })
+
+
+  }
+  if(gameState==='skins'){
+    background('green')
+    fill('white')
+    textSize(40)
+    text('Skins(Each)- 25 coins', width/1.3-width/2, height/2-460)
+    textSize(20)
+    text('More Skins will be Added in the coming updates', width/1.3-width/2, height/2-410)
+    skin1.visible=true
+    playButton.hide()
+    Rightplayer.visible=false;
+    skin1button.show()
+
+    skin1button.mousePressed(()=>{
+      gameState='game'
+      skinChange.hide()
+      skin1button.hide()
+      Rightplayer.visible=false
+
+      skin1.y=Rightplayer.y-10
+      Rightplayer.x=width/2.4-width/2
+      score=score-25
+      
+    
+    })
 
   }
 
