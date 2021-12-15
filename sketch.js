@@ -15,6 +15,7 @@ var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 var health_increaseButton;
 var drop=[];
 var home, playButton, skinChange, skin1, skin1image, skin1button;
+var homesound, skin1sound; 
 function preload(){
 
   Background= loadImage("Background.png")
@@ -33,6 +34,8 @@ function preload(){
   RedThunderImage= loadImage('redthunder.png')
   ThunderSound=loadSound('thundersound.wav')
   skin1image=loadImage('skin1_red.png')
+  homesound= loadSound('homesound.wav')
+  skin1sound= loadSound('skin1.wav')
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -209,7 +212,7 @@ gameState="home"
     powerButton.show()
     health_increaseButton.show()
     home.show()
- 
+    homesound.stop()
 
    
   
@@ -476,6 +479,7 @@ Rightplayer.debug=false
     Rightplayer.visible=false
     skin1.visible=false;
     skin1button.hide()
+    homesound.play()
   })
 
 
@@ -488,6 +492,7 @@ Rightplayer.debug=false
     fill('green')
     textSize(30)
 
+
     text('Welcome to Sho Run!', width/1.3-width/2, height/2-470)
     textSize(30)
     text('You can play as default or change a skin by giving coins', width/1.4-width/2, height/2-420)
@@ -497,6 +502,8 @@ Rightplayer.debug=false
     home.hide()
     Platform.visible=false
     Rightplayer.visible=false
+
+    
 
     playButton.show()
     skinChange.show()
@@ -546,6 +553,7 @@ Rightplayer.debug=false
       skinChange.hide()
       skin1button.hide()
       Rightplayer.visible=false
+      skin1sound.play()
 
       skin1.y=Rightplayer.y-10
       Rightplayer.x=width/2.4-width/2
