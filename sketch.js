@@ -92,7 +92,7 @@ Rightplayer.visible=false
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
 
-GetBack=createSprite(width/1.15-width/2, height/2-300, 10000,10)
+GetBack=createSprite(width/1.15-width/2, height/2-600, 10000,10)
 GetBack.visible=false
 
 GetBack2=createSprite(width/1.15-width/2, height/2+500, 10000,10)
@@ -195,7 +195,7 @@ Playerbullet.addImage('bulletofplayer', PlayerbulletImage)
 
 
   allow.mousePressed(()=>{
-gameState="game"
+gameState="home"
 
   })
 
@@ -224,7 +224,7 @@ gameState="game"
     Platform.visible=true
     Rightplayer.visible=true
    Smallblock.visible=true
-  GetBack.visible=false
+  GetBack.visible= false
   Playerbullet.visible=true
   Greenenemy.visible=true
   coin.visible=true
@@ -257,6 +257,9 @@ gameState="game"
       RedThunder.y=height/2-340
       RedThunder.velocityX=0
       RedThunder.velocityY=0
+    }
+    if(Rightplayer.isTouching(GetBack)){
+      Rightplayer.y= height/2+250
     }
 
      health_increaseButton.mousePressed(()=>{
@@ -497,6 +500,7 @@ Rightplayer.debug=false
 
     playButton.show()
     skinChange.show()
+    allow.hide()
 
     playButton.mousePressed(()=>{
       gameState='game'
@@ -525,11 +529,17 @@ Rightplayer.debug=false
     textSize(40)
     text('Each skin will be 25 coins', width/1.3-width/2, height/2-460)
     textSize(20)
-    text('Weekly skin!', width/1.3-width/2, height/2-410)
+    text('Weekly character!', width/1.3-width/2, height/2-410)
     skin1.visible=true
     playButton.hide()
     Rightplayer.visible=false;
     skin1button.show()
+
+    home.mousePressed(()=>{
+      gameState='home'
+      skin1.visible=false;
+      skin1button.hide()
+    })
 
     skin1button.mousePressed(()=>{
       gameState='game'
