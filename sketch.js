@@ -14,6 +14,7 @@ var GetBack2;
 var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 var health_increaseButton;
 var drop=[];
+var snowball= [];
 var home, playButton, skinChange, skin1, skin1image, skin1button;
 var homesound, skin1sound; 
 function preload(){
@@ -30,7 +31,7 @@ function preload(){
   coinImage=loadImage("Coin.png")
   CoinSound=loadSound('coinsound.wav')
   EnemySound=loadSound('enemyhit.wav')
-  wintertheme=loadImage('winterTheme.png')
+  wintertheme=loadImage('Snowbg.jpg')
   RedThunderImage= loadImage('redthunder.png')
   ThunderSound=loadSound('thundersound.wav')
   skin1image=loadImage('skin1_red.png')
@@ -42,6 +43,9 @@ function setup() {
 
  for (var i=0; i<200; i++){
    drop[i]= new Drop()
+ }
+ for (var i=0; i<100; i++){
+   snowball[i]= new Snowball()
  }
 
  //homestate and its skins
@@ -285,7 +289,12 @@ gameState="home"
 if(kills>3&& kills<7){
   background(0,0,35,25); 
   background(wintertheme)
- Galaxy()
+  for(var i=0; i<100; i++){
+    snowball[i].show()
+    snowball[i].update()
+   
+  }
+  Platform.visible=false;
 
 }
 if(kills>8&&kills<14){
@@ -298,7 +307,11 @@ if(kills>8&&kills<14){
 if(kills>15&& kills<19){
   background(0,0,35,25); 
   background(wintertheme)
- Galaxy()
+  for(var i=0; i<100; i++){
+    snowball[i].show()
+    snowball[i].update()
+   
+  }
 
 }
 if(kills>20&&kills<28){
@@ -311,7 +324,11 @@ if(kills>20&&kills<28){
 if(kills>32&& kills<36){
   background(0,0,35,25); 
   background(wintertheme)
- Galaxy()
+  for(var i=0; i<100; i++){
+    snowball[i].show()
+    snowball[i].update()
+   
+  }
 
 }
 if(kills>39&&kills<48){
@@ -605,6 +622,25 @@ function Drop(){
     }
   }
 
+}
+function Snowball(){
+  this.x= random(0,width)
+  this.y= random(0,-height)
+  this.w= random(10, 16)
+  this.h= random(10,16)
+
+  this.show= function(){
+    noStroke()
+    fill(255)
+    ellipse(this.x, this.y, this.w, this.h)
+  }
+  this.update= function(){
+    this.y= this.y+20
+
+    if(this.y>height){
+      this.y=random(0,-height)
+    }
+  }
 }
 
 
