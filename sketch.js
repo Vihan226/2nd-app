@@ -69,7 +69,7 @@ playButton.size(300,150)
 playButton.hide()
 
 skinChange=createImg('characters.png')
-skinChange.position(width/.72-width/2, height/2-100)
+skinChange.position(width/.75-width/2, height/2-100)
 skinChange.size(150,400)
 skinChange.hide()
 
