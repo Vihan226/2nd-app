@@ -15,6 +15,7 @@ var powerButton, arrow1, arrow2, arrow3, arrow4, arrow5, arrow_get_back;
 var health_increaseButton;
 var drop=[];
 var snowball= [];
+var snowballattack=[];
 var home, playButton, skinChange, skin1, skin1image, skin1button;
 var homesound, skin1sound; 
 var storm, stormImage;
@@ -52,42 +53,47 @@ for (var i=0; i<100; i++){
 snowball[i]= new Snowball()
 }
 
+/*for (var i=0; i<3; i++){
+  snowballattack[i]= new Snowballattack()
+  }*/
+
 //homestate and its skins
-home=createButton('Home')
+home=createImg('Home.png')
 home.position(width/.8-width/2, height/2-480)
 home.size(150,90)
 home.hide()
 
-playButton=createButton('Play')
+playButton=createImg('playimage.png')
 playButton.position(width/1.15-width/2,height/2+150)
-playButton.size(200,100)
+playButton.size(300,150)
 playButton.hide()
 
-skinChange=createButton('Change Character')
-skinChange.position(width/.7-width/2, height/2)
-skinChange.size(70,150)
+skinChange=createImg('characters.png')
+skinChange.position(width/.72-width/2, height/2-100)
+skinChange.size(150,400)
 skinChange.hide()
 
-skin1button=createButton('Red Force')
-skin1button.position(width/1.6-width/2, height/2+160)
+skin1button=createImg('skin1_red.png')
+skin1button.position(width/1.2-width/2, height/2)
+skin1button.size(210,170)
 skin1button.hide()
 
 skin1=createSprite(width/1.5-width/2, height/2-150)
 skin1.addImage('redforce', skin1image)
 skin1.visible=false
 
-allow= createButton("Agree And Continue to Play")
+allow= createImg('agree.png')
 allow.position(width/1.15-width/2,height/2+150)
-allow.size(200,100)
+allow.size(300,150)
 
-powerButton= createButton('power')
+powerButton= createImg('Power.png')
 powerButton.position(width/1.7-width/2, height/2-450)
-powerButton.size(100,40)
+powerButton.size(100,50)
 powerButton.hide()
 
-health_increaseButton=  createButton('Health Increase')
+health_increaseButton=  createImg('Healthincrease.png')
 health_increaseButton.position(width/1.3-width/2, height/2-450)
-health_increaseButton.size(200,40)
+health_increaseButton.size(200,80)
 health_increaseButton.hide()
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -136,6 +142,8 @@ arrow4.shapeColor='blue'
 
 arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 
+
+
 score=5
 health=100
 start=300
@@ -167,8 +175,8 @@ if(start<0){
   fill('blue')
   text('Start', width/1.14-width/2, height/2+50)
 }
-if(frameCount %300 === 0){
-  Smallblock=createSprite(width/.8-width/2, height/2+280)
+if(frameCount %150 === 0){
+  Smallblock=createSprite(width/.7-width/2, height/2+280)
   Smallblock.addImage("smallblock", SmallblockImage)
   Smallblock.scale=.5
   Smallblock.visible=false
@@ -299,7 +307,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
 
 //gamestate of winter theme
 
-if(kills>3&& kills<7){
+if(kills>0&& kills<5){
 background(0,0,35,25); 
 background(wintertheme)
 for(var i=0; i<100; i++){
@@ -307,6 +315,10 @@ for(var i=0; i<100; i++){
   snowball[i].update()
 
 }
+/*for (var i=0; i<3; i++){
+  snowballattack[i].show()
+  snowballattack[i].update()
+  }*/
 Platform.visible=false;
 
 }
@@ -326,6 +338,7 @@ for(var i=0; i<100; i++){
 
 }
 
+
 }
 if(kills>20&&kills<28){
 background('black')
@@ -334,7 +347,6 @@ for (var i=0; i<200; i++){
   drop[i].update()
 }
 }
-
 
 if(score>30&& score<33){
   storm.visible=true
@@ -594,6 +606,7 @@ if(gameState==='home'){
   skin1button.y= skin1.y+30
   })
 
+ 
 
 }
 if(gameState==='skins'){
@@ -606,7 +619,7 @@ if(gameState==='skins'){
   text('Each Character will be 25 coins', width/1.3-width/2, height/2-460)
   textSize(20)
   text('Weekly character!', width/1.3-width/2, height/2-410)
-  skin1.visible=true
+  skin1.visible=false
   skin1.scale= 2
   playButton.hide()
   Rightplayer.visible=false;
@@ -628,6 +641,7 @@ if(gameState==='skins'){
     skin1button.hide()
     Rightplayer.visible=false
     skin1sound.play()
+    skin1.visible=true
 
     skin1.y=Rightplayer.y-10
     skin1.x=Rightplayer.x
@@ -639,6 +653,8 @@ if(gameState==='skins'){
     
   
   })
+
+
 
 }
 
@@ -703,5 +719,25 @@ this.update= function(){
   }
 }
 }
+
+/*function Snowballattack(){
+  this.x=random(width/.5-width/2, width/.7-width/2)
+  this.y= random(height/2+300, height/2-300)
+  this.w= random(20,30)
+  this.h= random(20,30)
+  
+  this.show= function(){
+    noStroke()
+    fill('white')
+    ellipse(this.x, this.y, this.w, this.h)
+  }
+  this.update= function(){
+    this.x=this.x-20
+
+   if(this.x<width/1.7-width/2){
+     this.x= random(width/.5-width/2, width/.7-width/2)
+   }
+  }
+}*/
 
 
