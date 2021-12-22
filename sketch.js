@@ -20,7 +20,8 @@ var home, playButton, skinChange, skin1, skin1image, skin1button;
 var homesound, skin1sound; 
 var storm, stormImage;
 var enemystopper;
-
+var homebg;
+var hometext, hometextImage;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -42,6 +43,8 @@ skin1image=loadImage('skin1_red.png')
 homesound= loadSound('homesound.wav')
 skin1sound= loadSound('skin1.wav')
 stormImage= loadImage('storm.png')
+homebg= loadImage('homebg.png')
+hometextImage= loadImage('title.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -58,6 +61,11 @@ snowball[i]= new Snowball()
   }*/
 
 //homestate and its skins
+hometext= createSprite(width/1.05-width/2, height/2-300)
+hometext.addImage('hometext', hometextImage)
+hometext.scale=2
+hometext.visible=false
+
 home=createImg('Home.png')
 home.position(width/.8-width/2, height/2-480)
 home.size(150,90)
@@ -238,6 +246,8 @@ if(gameState==="game"){
   home.show()
   homesound.stop()
   storm.y=height/2-10000
+  hometext.visible=false
+
 
 
 
@@ -557,6 +567,10 @@ home.mousePressed(()=>{
   skin1.visible=false;
   skin1button.hide()
   homesound.play()
+  Greenenemy.visible=false;
+  Smallblock.visible=false;
+  Playerbullet.visible=false;
+  coin.visible=false
 })
 
 
@@ -565,15 +579,12 @@ home.mousePressed(()=>{
 }
 
 if(gameState==='home'){
-  background('cyan')
+  background(homebg)
   fill('green')
   textSize(30)
 
 
-  text('Welcome to Sho Run!', width/1.3-width/2, height/2-470)
-  textSize(30)
-  text('You can play as default or change a Change by giving coins', width/1.4-width/2, height/2-420)
-  text('Enjoy your weekly characters!', width/1.4-width/2, height/2-370)
+ hometext.visible=true
   health_increaseButton.hide()
   powerButton.hide()
   home.hide()
@@ -624,6 +635,7 @@ if(gameState==='skins'){
   playButton.hide()
   Rightplayer.visible=false;
   skin1button.show()
+  hometext.visible=false
 
   skin1button.x= skin1.x
   skin1button.y= skin1.y+30
