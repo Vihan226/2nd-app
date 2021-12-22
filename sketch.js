@@ -22,6 +22,7 @@ var storm, stormImage;
 var enemystopper;
 var homebg;
 var hometext, hometextImage;
+var redenemy, redenemyImage, redenemybullet;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -45,6 +46,7 @@ skin1sound= loadSound('skin1.wav')
 stormImage= loadImage('storm.png')
 homebg= loadImage('homebg.png')
 hometextImage= loadImage('title.png')
+redenemyImage= loadImage('Redenemy.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -152,6 +154,7 @@ arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 
 
 
+
 score=5
 health=100
 start=300
@@ -159,7 +162,7 @@ kills=0
 }
 
 function draw() {
-background("white");
+background('green')
 
 
 
@@ -226,6 +229,24 @@ if(frameCount %100 ===0){
   coin.y=Math.round(random(height/2+250, height/2-150))
 
 }
+if(frameCount %300 ===0){
+  redenemy= createSprite(width/.7-width/2, height/2)
+  redenemy.addImage('redenemy', redenemyImage)
+  redenemy.scale=2
+  redenemy.visible= false
+  redenemy.velocityX=-6
+  redenemy.lifetime=1000
+  
+  redenemy.y= Math.round(random(height/2+300, height/2-300))
+}
+if(frameCount %298 ===0){
+  redenemybullet= createSprite(width/.7-width/2, height/2, 30,15)
+  redenemybullet.shapeColor= 'red'
+  redenemybullet.visible=false
+  redenemybullet.velocityX=-12
+  redenemybullet.lifetime= 1000
+
+}
 
 
 
@@ -247,7 +268,10 @@ if(gameState==="game"){
   homesound.stop()
   storm.y=height/2-10000
   hometext.visible=false
+  redenemy.visible=true
+  redenemybullet.visible=true
 
+  redenemybullet.y= redenemy.y
 
 
 
@@ -301,8 +325,8 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   }
 
   health_increaseButton.mousePressed(()=>{
-    health=health+15
-    score=score-5
+    health=health+15      
+    score=score-2
   })
 
   powerButton.mousePressed(()=>{
@@ -314,7 +338,29 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     
 
   })
+// codes for enemies and its bulelts
+  if(redenemy.isTouching(Rightplayer)){
+    health= health-5
+    redenemy.destroy()
+  }
 
+  if(Playerbullet.isTouching(redenemy)){
+    redenemy.destroy()
+    EnemySound.play()
+  }
+  if(arrow1.isTouching(redenemy)||arrow2.isTouching(redenemy)||arrow3.isTouching(redenemy)||arrow4.isTouching(redenemy)){
+    redenemy.destroy()
+    EnemySound.play()
+  }
+
+  if(redenemy.isTouching(enemystopper)){
+    redenemy.destroy()
+  }
+
+  if(redenemybullet.isTouching(Rightplayer)){
+    health= health-1
+    redenemybullet.destroy()
+  }
 //gamestate of winter theme
 
 if(kills>0&& kills<5){
@@ -448,6 +494,7 @@ score=score+2
 
 if(arrow1.isTouching(Greenenemy)|| arrow2.isTouching(Greenenemy)|| arrow3.isTouching(Greenenemy)|| arrow4.isTouching(Greenenemy)){
 Greenenemy.destroy()
+EnemySound.play()
 kills=kills+1
 
 }
@@ -571,6 +618,7 @@ home.mousePressed(()=>{
   Smallblock.visible=false;
   Playerbullet.visible=false;
   coin.visible=false
+  redenemy.visible=false;
 })
 
 
@@ -590,6 +638,7 @@ if(gameState==='home'){
   home.hide()
   Platform.visible=false
   Rightplayer.visible=false
+  redenemy.visible=false;
 
   
 
@@ -624,18 +673,19 @@ if(gameState==='skins'){
   background('green')
   fill('blue')
   textSize(50)
-  text('Coins: '+score, width/1.6-width/2, height/2-400)
+  text('Coins: '+score, width/1.6-width/2, height/2-300)
   fill('white')
   textSize(40)
-  text('Each Character will be 25 coins', width/1.3-width/2, height/2-460)
+  text('Each Character will be 25 coins', width/1.3-width/2, height/2-490)
   textSize(20)
-  text('Weekly character!', width/1.3-width/2, height/2-410)
+  text('Weekly character!', width/1.3-width/2, height/2-450)
   skin1.visible=false
   skin1.scale= 2
   playButton.hide()
   Rightplayer.visible=false;
   skin1button.show()
   hometext.visible=false
+  redenemy.visible=false;
 
   skin1button.x= skin1.x
   skin1button.y= skin1.y+30
