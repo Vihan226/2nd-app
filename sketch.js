@@ -68,14 +68,14 @@ hometext.addImage('hometext', hometextImage)
 hometext.scale=2
 hometext.visible=false
 
-home=createImg('Home.png')
+home=createImg('usehome.png')
 home.position(width/.8-width/2, height/2-480)
-home.size(150,90)
+home.size(150,130)
 home.hide()
 
-playButton=createImg('playimage.png')
+playButton=createImg('useplay.png')
 playButton.position(width/1.15-width/2,height/2+150)
-playButton.size(300,150)
+playButton.size(300,250)
 playButton.hide()
 
 skinChange=createImg('characters.png')
@@ -96,14 +96,14 @@ allow= createImg('agree.png')
 allow.position(width/1.15-width/2,height/2+150)
 allow.size(300,150)
 
-powerButton= createImg('Power.png')
-powerButton.position(width/1.7-width/2, height/2-450)
-powerButton.size(100,50)
+powerButton= createImg('usepower.png')
+powerButton.position(width/1.7-width/2, height/2-455)
+powerButton.size(100,90)
 powerButton.hide()
 
-health_increaseButton=  createImg('Healthincrease.png')
-health_increaseButton.position(width/1.3-width/2, height/2-450)
-health_increaseButton.size(200,80)
+health_increaseButton=  createImg('usehealth.png')
+health_increaseButton.position(width/1.3-width/2, height/2-455)
+health_increaseButton.size(110,90)
 health_increaseButton.hide()
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -243,7 +243,7 @@ if(frameCount %298 ===0){
   redenemybullet= createSprite(width/.7-width/2, height/2, 30,15)
   redenemybullet.shapeColor= 'red'
   redenemybullet.visible=false
-  redenemybullet.velocityX=-12
+  redenemybullet.velocityX=-15
   redenemybullet.lifetime= 1000
 
 }
@@ -321,7 +321,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     RedThunder.velocityY=0
   }
   if(Rightplayer.isTouching(GetBack)){
-    Rightplayer.y= height/2+250
+    Rightplayer.bounceOff(GetBack)
   }
 
   health_increaseButton.mousePressed(()=>{
@@ -347,6 +347,8 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   if(Playerbullet.isTouching(redenemy)){
     redenemy.destroy()
     EnemySound.play()
+    kills= kills+1
+    score= score+5
   }
   if(arrow1.isTouching(redenemy)||arrow2.isTouching(redenemy)||arrow3.isTouching(redenemy)||arrow4.isTouching(redenemy)){
     redenemy.destroy()
@@ -375,7 +377,7 @@ for(var i=0; i<100; i++){
   snowballattack[i].show()
   snowballattack[i].update()
   }*/
-Platform.visible=false;
+Platform.visible=true;
 
 }
 if(kills>8&&kills<14){
@@ -678,7 +680,8 @@ if(gameState==='skins'){
   textSize(40)
   text('Each Character will be 25 coins', width/1.3-width/2, height/2-490)
   textSize(20)
-  text('Weekly character!', width/1.3-width/2, height/2-450)
+  text('Weekly characters!', width/1.3-width/2, height/2-450)
+  
   skin1.visible=false
   skin1.scale= 2
   playButton.hide()
