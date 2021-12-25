@@ -17,7 +17,7 @@ var drop=[];
 var snowball= [];
 var snowballattack=[];
 var home, playButton, skinChange, skin1, skin1image, skin1button;
-var homesound, skin1sound; asdw
+var homesound, skin1sound; 
 var storm, stormImage;
 var enemystopper;
 var homebg;
@@ -731,6 +731,18 @@ if(gameState==='home'){
 
     Platform.visible=true
     Rightplayer.visible=true
+  Smallblock.visible=true
+  GetBack.visible= false
+  Playerbullet.visible=true
+  Greenenemy.visible=true
+
+
+  Rightplayer.x=width/1.5-width/2
+  Rightplayer.y=height/2
+
+  health=100
+
+  
   })
 
   if(score>10){
@@ -839,6 +851,8 @@ if(gameState==='cards'){
 if(gameState==='challenge'){
   background('black')
 
+  textSize(40)
+  text('Health: '+health, width/.8-width/2, height/2-280)
   for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
@@ -849,6 +863,110 @@ if(gameState==='challenge'){
     snowball[i].update()
   
   }
+
+  Rightplayer.velocityY= Rightplayer.velocityY+.5
+
+  Rightplayer.collide(collider)
+
+  if(touches.length>0|| keyDown('space')){
+    Rightplayer.velocityY=-10
+    touches=[]
+      }
+
+      Platform.visible=true
+      Rightplayer.visible=true
+    Smallblock.visible=true
+    GetBack.visible= false
+    Playerbullet.visible=true
+    Greenenemy.visible=true
+    RedThunder.visible=true
+    homesound.stop()
+    
+    home.show()
+    dailyCard.hide()
+    redenemy.visible=true;
+    redenemybullet.visible=true
+
+Smallblock.velocityX=-15
+Greenenemy.velocityX=-20
+redenemy.velocityX=-22
+redenemybullet.velocityX=-28
+RedThunder.velocityX=-27
+RedThunder.velocityY=10
+
+ redenemybullet.y= redenemy.y
+
+
+    if(Playerbullet.isTouching(Greenenemy)){
+      Greenenemy.destroy()
+      EnemySound.play()
+      
+    }
+    if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
+      
+      Greenenemy.destroy()
+      health=health-10
+    }
+    
+      if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)){
+      background('red')
+     
+      
+      Smallblock.destroy()
+      health=health-15
+      }
+    
+
+
+      if(redenemy.isTouching(Rightplayer)){
+        
+        redenemy.destroy()
+
+        health=health-20
+      }
+    
+      if(Playerbullet.isTouching(redenemy)){
+        redenemy.destroy()
+        EnemySound.play()
+       
+      }
+
+      if(redenemy.isTouching(enemystopper)){
+        redenemy.destroy()
+      }
+    
+      if(redenemybullet.isTouching(Rightplayer)){
+        
+        redenemybullet.destroy()
+        redenemy.destroy()
+
+        health=health-20
+      }
+
+      if(RedThunder.isTouching(GetBack2)){
+        RedThunder.visible=false
+        RedThunder.x= width/.75-width/2
+        RedThunder.y=height/2-340
+        RedThunder.velocityX=0
+        RedThunder.velocityY=0
+      }
+
+      if(RedThunder.isTouching(Rightplayer)){
+        health=health-2
+      }
+
+
+
+if(health<0){
+  gameState='home'
+}
+
+
+      
+
+
+
+
 
 }
 drawSprites();
