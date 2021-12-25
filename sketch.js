@@ -23,6 +23,7 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
+var cardTrades, card1button, card2button, card3button;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -79,7 +80,7 @@ playButton.size(300,250)
 playButton.hide()
 
 skinChange=createImg('characters.png')
-skinChange.position(width/.75-width/2, height/2-100)
+skinChange.position(width/.75-width/2, height/2-480)
 skinChange.size(150,400)
 skinChange.hide()
 
@@ -105,6 +106,16 @@ health_increaseButton=  createImg('usehealth.png')
 health_increaseButton.position(width/1.3-width/2, height/2-455)
 health_increaseButton.size(110,90)
 health_increaseButton.hide()
+
+cardTrades= createImg('usecardbutton.png')
+cardTrades.position(width/.745-width/2, height/2)
+cardTrades.hide()
+
+
+card1button= createImg('usecard1.png')
+card1button.position(width/1.4-width/2, height/2-200)
+card1button.hide()
+
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
 storm.addImage('lightingstorm', stormImage)
@@ -159,6 +170,7 @@ score=5
 health=100
 start=300
 kills=0
+card1unlock=0
 }
 
 function draw() {
@@ -592,9 +604,9 @@ kills=kills+1
 textSize(40)
 fill('#cc6600')
 text('Coins: '+score, width/1.6-width/2, height/2-290)
-text('Kills: '+kills, width/1.6-width/2, height/2-340)
+text('Kills: '+kills, width/1.6-width/2, height/2-330)
 fill('red')
-text('Health: '+health, width/.8-width/2, height/2-290)
+text('Health: '+health, width/.8-width/2, height/2-280)
 //make player have some gravity to floor and collide with the collider.
 Rightplayer.velocityY=Rightplayer.velocityY+.5;
 
@@ -621,6 +633,7 @@ home.mousePressed(()=>{
   Playerbullet.visible=false;
   coin.visible=false
   redenemy.visible=false;
+  card1button.hide()
 })
 
 
@@ -653,6 +666,7 @@ if(gameState==='home'){
 
     playButton.hide()
     skinChange.hide()
+    cardTrades.hide()
     skin1.visible=false;
     skin1button.hide()
     Rightplayer.x=width/1.5-width/2
@@ -668,6 +682,14 @@ if(gameState==='home'){
   skin1button.y= skin1.y+30
   })
 
+  if(score>10){
+    cardTrades.show()
+   
+  }
+
+  cardTrades.mousePressed(()=>{
+    gameState='cards'
+  })
  
 
 }
@@ -704,6 +726,7 @@ if(gameState==='skins'){
     gameState='game'
     skinChange.hide()
     skin1button.hide()
+    cardTrades.hide()
     Rightplayer.visible=false
     skin1sound.play()
     skin1.visible=true
@@ -723,6 +746,31 @@ if(gameState==='skins'){
 
 }
 
+if(gameState==='cards'){
+  background('pink')
+  hometext.visible=false;
+  skinChange.hide()
+  playButton.hide()
+  home.show()
+  cardTrades.hide()
+  card1button.show()
+
+  card1button.mousePressed(()=>{
+    card1unlock=1
+    score= score-20
+
+    
+  })
+  fill('Blue')
+  textSize(30)
+  text('Coins: '+score, width/1.6-width/2, height/2+250)
+
+    if(card1unlock>0){
+      fill('green')
+      textSize(20)
+      text('Unlocked', width/1.365- width/2, height/2-220)
+    }
+}
 
 drawSprites();
   
