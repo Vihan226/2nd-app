@@ -23,7 +23,8 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button, card2button, card3button;
+var cardTrades, card1button, card2button, card3button, dailyCard;
+var runnerScore;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -115,6 +116,11 @@ cardTrades.hide()
 card1button= createImg('usecard1.png')
 card1button.position(width/1.4-width/2, height/2-200)
 card1button.hide()
+// add imge
+
+dailyCard=createButton('chellange')
+dailyCard.position(width/.8-width/2, height/2+200)
+dailyCard.hide()
 
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -171,6 +177,7 @@ health=100
 start=300
 kills=0
 card1unlock=0
+runnerScore=0
 }
 
 function draw() {
@@ -282,8 +289,12 @@ if(gameState==="game"){
   hometext.visible=false
   redenemy.visible=true
   redenemybullet.visible=true
-
+  dailyCard.hide()
   redenemybullet.y= redenemy.y
+  
+  runnerScore= runnerScore+1
+
+  
 
 
 
@@ -352,7 +363,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   })
 // codes for enemies and its bulelts
   if(redenemy.isTouching(Rightplayer)){
-    health= health-5
+    health= health-10
     redenemy.destroy()
   }
 
@@ -372,12 +383,13 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   }
 
   if(redenemybullet.isTouching(Rightplayer)){
-    health= health-1
+    health= health-5
     redenemybullet.destroy()
+    redenemy.destroy()
   }
 //gamestate of winter theme
 
-if(kills>0&& kills<5){
+if(runnerScore>100&& runnerScore<400){
 background(0,0,35,25); 
 background(wintertheme)
 for(var i=0; i<100; i++){
@@ -392,14 +404,14 @@ for(var i=0; i<100; i++){
 Platform.visible=true;
 
 }
-if(kills>8&&kills<14){
+if(runnerScore>560&& runnerScore<800){
 background('black')
 for (var i=0; i<200; i++){
   drop[i].show()
   drop[i].update()
 }
 }
-if(kills>15&& kills<19){
+if(runnerScore>900&& runnerScore<1200){
 background(0,0,35,25); 
 background(wintertheme)
 for(var i=0; i<100; i++){
@@ -410,7 +422,7 @@ for(var i=0; i<100; i++){
 
 
 }
-if(kills>20&&kills<28){
+if(runnerScore>1400&& runnerScore<1700){
 background('black')
 for (var i=0; i<200; i++){
   drop[i].show()
@@ -418,17 +430,17 @@ for (var i=0; i<200; i++){
 }
 }
 
-if(score>30&& score<33){
+if(runnerScore>50&& runnerScore<70){
   storm.visible=true
   storm.y= height/2
 }
 
-if(score>50&& score<53){
+if(runnerScore>900&& runnerScore<650){
   storm.visible=true
   storm.y= height/2
 }
 
-if(score>75&& score<78){
+if(runnerScore>980&& runnerScore<1020){
   storm.visible=true
   storm.y= height/2
 }
@@ -439,7 +451,7 @@ if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)){
 if(Greenenemy.isTouching(enemystopper)){
   Greenenemy.destroy()
 }
-if(kills>32&& kills<36){
+if(runnerScore>2600&& runnerScore<3100){
 background(0,0,35,25); 
 background(wintertheme)
 for(var i=0; i<100; i++){
@@ -449,7 +461,7 @@ for(var i=0; i<100; i++){
 }
 
 }
-if(kills>39&&kills<48){
+if(runnerScore>1900&& runnerScore<2300){
 background('black')
 for (var i=0; i<200; i++){
   drop[i].show()
@@ -457,14 +469,30 @@ for (var i=0; i<200; i++){
 }
 }
 
-if(health<0|| score<0){
-gameState=null
-Platform.destroy()
+if(health<0){
+gameState='home'
 powerButton.hide()
 health_increaseButton.hide()
 
+Greenenemy.visible=false;
+
+Playerbullet.visible=false;
+
+Smallblock.visible=false
+
+score=5
 }
 
+if(score<0){
+  gameState='home'
+  score=5
+
+  Greenenemy.visible=false;
+
+Playerbullet.visible=false;
+
+Smallblock.visible=false;
+}
 
 if(arrow1.isTouching(arrow_get_back)){
 
@@ -654,13 +682,16 @@ if(gameState==='home'){
   Platform.visible=false
   Rightplayer.visible=false
   redenemy.visible=false;
-
+  
   
 
   playButton.show()
   skinChange.show()
   allow.hide()
 
+  if(card1unlock>0){
+    dailyCard.show()
+  }
   playButton.mousePressed(()=>{
     gameState='game'
 
@@ -672,6 +703,12 @@ if(gameState==='home'){
     Rightplayer.x=width/1.5-width/2
     Rightplayer.y=height/2
 
+    health=100
+
+    dailyCard.hide()
+
+    
+
   })
   skinChange.mousePressed(()=>{
     gameState='skins'
@@ -680,6 +717,9 @@ if(gameState==='home'){
     
   skin1button.x= skin1.x
   skin1button.y= skin1.y+30
+
+  skinChange.hide()
+  dailyCard.hide()
   })
 
   if(score>10){
@@ -689,6 +729,7 @@ if(gameState==='home'){
 
   cardTrades.mousePressed(()=>{
     gameState='cards'
+    dailyCard.hide()
   })
  
 
@@ -711,6 +752,7 @@ if(gameState==='skins'){
   skin1button.show()
   hometext.visible=false
   redenemy.visible=false;
+  dailyCard.hide()
 
   skin1button.x= skin1.x
   skin1button.y= skin1.y+30
@@ -755,12 +797,18 @@ if(gameState==='cards'){
   cardTrades.hide()
   card1button.show()
 
+  dailyCard.hide()
+
   card1button.mousePressed(()=>{
     card1unlock=1
     score= score-20
 
     
   })
+
+  if(score<0){
+    card1unlock=0
+  }
   fill('Blue')
   textSize(30)
   text('Coins: '+score, width/1.6-width/2, height/2+250)
@@ -769,6 +817,8 @@ if(gameState==='cards'){
       fill('green')
       textSize(20)
       text('Unlocked', width/1.365- width/2, height/2-220)
+
+            
     }
 }
 
