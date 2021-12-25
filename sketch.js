@@ -17,7 +17,7 @@ var drop=[];
 var snowball= [];
 var snowballattack=[];
 var home, playButton, skinChange, skin1, skin1image, skin1button;
-var homesound, skin1sound; 
+var homesound, skin1sound; asdw
 var storm, stormImage;
 var enemystopper;
 var homebg;
@@ -109,17 +109,17 @@ health_increaseButton.size(110,90)
 health_increaseButton.hide()
 
 cardTrades= createImg('usecardbutton.png')
-cardTrades.position(width/.745-width/2, height/2)
+cardTrades.position(width/.745-width/2, height/2-50)
 cardTrades.hide()
 
 
 card1button= createImg('usecard1.png')
 card1button.position(width/1.4-width/2, height/2-200)
 card1button.hide()
-// add imge
 
-dailyCard=createButton('chellange')
-dailyCard.position(width/.8-width/2, height/2+200)
+
+dailyCard=createImg('weekchellange.png')
+dailyCard.position(width/.745-width/2, height/2+200)
 dailyCard.hide()
 
 
@@ -722,6 +722,17 @@ if(gameState==='home'){
   dailyCard.hide()
   })
 
+  dailyCard.mousePressed(()=>{
+    gameState='challenge'
+    skinChange.hide()
+    hometext.visible=false;
+    dailyCard.hide()
+    playButton.hide()
+
+    Platform.visible=true
+    Rightplayer.visible=true
+  })
+
   if(score>10){
     cardTrades.show()
    
@@ -730,6 +741,9 @@ if(gameState==='home'){
   cardTrades.mousePressed(()=>{
     gameState='cards'
     dailyCard.hide()
+
+ 
+
   })
  
 
@@ -817,11 +831,26 @@ if(gameState==='cards'){
       fill('green')
       textSize(20)
       text('Unlocked', width/1.365- width/2, height/2-220)
-
+      
             
     }
 }
 
+if(gameState==='challenge'){
+  background('black')
+
+  for (var i=0; i<200; i++){
+    drop[i].show()
+    drop[i].update()
+  }
+
+  for(var i=0; i<100; i++){
+    snowball[i].show()
+    snowball[i].update()
+  
+  }
+
+}
 drawSprites();
   
 }
