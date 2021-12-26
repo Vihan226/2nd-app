@@ -111,7 +111,7 @@ health_increaseButton.size(110,90)
 health_increaseButton.hide()
 
 inventory=createImg('useinventory.png')
-inventory.position(width/1.6-width/2, height/2-455)
+inventory.position(width/1.61-width/2, height/2-455)
 inventory.size(80,80)
 inventory.hide()
 
@@ -124,8 +124,8 @@ card1button= createImg('usecard1.png')
 card1button.position(width/1.4-width/2, height/2-200)
 card1button.hide()
 
-card2button= createImg('card2use.png')
-card2button.position(width/1.2-width/2, height/2-200)
+card2button= createImg('usecard2.png')
+card2button.position(width/1.15-width/2, height/2-210)
 card2button.hide()
 
 // cards in the inventory
@@ -133,7 +133,7 @@ dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
 dailyCard.hide()
 
-card2use= createImg('card2use.png')
+card2use= createImg('usecard2.png')
 card2use.position(width/1.4-width/2, height/2-200)
 card2use.hide()
 
@@ -156,7 +156,7 @@ Rightplayer.visible=false
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
 
-GetBack=createSprite(width/1.15-width/2, height/2-600, 10000,10)
+GetBack=createSprite(width/1.15-width/2, height/2-500, 10000,10)
 GetBack.visible=false
 
 GetBack2=createSprite(width/1.15-width/2, height/2+500, 10000,10)
@@ -881,7 +881,7 @@ if(gameState==='cards'){
 
   card2button.mousePressed(()=>{
     card2unlock=1;
-    score=score-5
+    score=score-25
   })
 
   if(score<0){
@@ -890,7 +890,7 @@ if(gameState==='cards'){
   if(card2unlock>0){
     fill('green')
     textSize(20)
-    text('Unlocked',  width/1.165- width/2, height/2-220)
+    text('Unlocked',  width/1.12- width/2, height/2-220)
   }
 
 
@@ -907,6 +907,7 @@ if(gameState==='challenge'){
   textSize(40)
   text('Health: '+health, width/.8-width/2, height/2-280)
   text('Time Left: '+ seconds, width/.8-width/2, height/2-230)
+  Rightplayer.bounceOff(GetBack)
   for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
@@ -1051,7 +1052,7 @@ if(gameState==='cardsInventory'){
       card2use.show()
       fill('green')
       textSize(30)
-      text('Card for Use',  width/1.380- width/2, height/2-220)
+      text('Card for Use',  width/1.382- width/2, height/2-220)
     }
 
     card2use.mousePressed(()=>{
