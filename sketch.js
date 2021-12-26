@@ -23,8 +23,10 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button, card2button, card3button, dailyCard;
-var runnerScore;
+var cardTrades, card1button , card2button,card2use, card3button, dailyCard;
+var runnerScore, seconds;
+var card1unlock, card2unlock;
+var inventory;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -108,19 +110,32 @@ health_increaseButton.position(width/1.3-width/2, height/2-455)
 health_increaseButton.size(110,90)
 health_increaseButton.hide()
 
+inventory=createImg('useinventory.png')
+inventory.position(width/1.6-width/2, height/2-455)
+inventory.size(80,80)
+inventory.hide()
+
 cardTrades= createImg('usecardbutton.png')
 cardTrades.position(width/.745-width/2, height/2-50)
 cardTrades.hide()
 
-
+//cards for getting
 card1button= createImg('usecard1.png')
 card1button.position(width/1.4-width/2, height/2-200)
 card1button.hide()
 
+card2button= createImg('card2use.png')
+card2button.position(width/1.2-width/2, height/2-200)
+card2button.hide()
 
+// cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
 dailyCard.hide()
+
+card2use= createImg('card2use.png')
+card2use.position(width/1.4-width/2, height/2-200)
+card2use.hide()
 
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -178,6 +193,9 @@ start=300
 kills=0
 card1unlock=0
 runnerScore=0
+seconds=300
+card2unlock=0
+
 }
 
 function draw() {
@@ -662,6 +680,9 @@ home.mousePressed(()=>{
   coin.visible=false
   redenemy.visible=false;
   card1button.hide()
+  card2button.hide()
+
+  card2use.hide()
 })
 
 
@@ -688,7 +709,12 @@ if(gameState==='home'){
   playButton.show()
   skinChange.show()
   allow.hide()
+  inventory.show()
 
+  inventory.mousePressed(()=>{
+    gameState='cardsInventory'
+    inventory.hide()
+  })
   if(card1unlock>0){
     dailyCard.show()
   }
@@ -706,10 +732,13 @@ if(gameState==='home'){
     health=100
 
     dailyCard.hide()
+    inventory.hide()
 
     
 
   })
+
+
   skinChange.mousePressed(()=>{
     gameState='skins'
     Rightplayer.visible=false
@@ -720,6 +749,7 @@ if(gameState==='home'){
 
   skinChange.hide()
   dailyCard.hide()
+  inventory.hide()
   })
 
   dailyCard.mousePressed(()=>{
@@ -728,6 +758,8 @@ if(gameState==='home'){
     hometext.visible=false;
     dailyCard.hide()
     playButton.hide()
+    cardTrades.hide()
+    inventory.hide()
 
     Platform.visible=true
     Rightplayer.visible=true
@@ -742,6 +774,8 @@ if(gameState==='home'){
 
   health=100
 
+  seconds=600
+
   
   })
 
@@ -753,6 +787,7 @@ if(gameState==='home'){
   cardTrades.mousePressed(()=>{
     gameState='cards'
     dailyCard.hide()
+    inventory.hide()
 
  
 
@@ -822,6 +857,7 @@ if(gameState==='cards'){
   home.show()
   cardTrades.hide()
   card1button.show()
+  card2button.show()
 
   dailyCard.hide()
 
@@ -831,21 +867,38 @@ if(gameState==='cards'){
 
     
   })
-
   if(score<0){
     card1unlock=0
   }
+
+  if(card1unlock>0){
+    fill('green')
+    textSize(20)
+    text('Unlocked', width/1.365- width/2, height/2-220)
+    
+          
+  }
+
+  card2button.mousePressed(()=>{
+    card2unlock=1;
+    score=score-5
+  })
+
+  if(score<0){
+    card2unlock=0
+  }
+  if(card2unlock>0){
+    fill('green')
+    textSize(20)
+    text('Unlocked',  width/1.165- width/2, height/2-220)
+  }
+
+
   fill('Blue')
   textSize(30)
   text('Coins: '+score, width/1.6-width/2, height/2+250)
 
-    if(card1unlock>0){
-      fill('green')
-      textSize(20)
-      text('Unlocked', width/1.365- width/2, height/2-220)
-      
-            
-    }
+
 }
 
 if(gameState==='challenge'){
@@ -853,6 +906,7 @@ if(gameState==='challenge'){
 
   textSize(40)
   text('Health: '+health, width/.8-width/2, height/2-280)
+  text('Time Left: '+ seconds, width/.8-width/2, height/2-230)
   for (var i=0; i<200; i++){
     drop[i].show()
     drop[i].update()
@@ -864,7 +918,7 @@ if(gameState==='challenge'){
   
   }
 
-  Rightplayer.velocityY= Rightplayer.velocityY+.5
+  Rightplayer.velocityY= Rightplayer.velocityY+.9
 
   Rightplayer.collide(collider)
 
@@ -895,7 +949,7 @@ RedThunder.velocityX=-27
 RedThunder.velocityY=10
 
  redenemybullet.y= redenemy.y
-
+ seconds=seconds-1
 
     if(Playerbullet.isTouching(Greenenemy)){
       Greenenemy.destroy()
@@ -955,10 +1009,21 @@ RedThunder.velocityY=10
         health=health-2
       }
 
+      if(seconds<0&& health>0){
+        gameState='home'
+
+        score= score+25
+
+        dailyCard.hide()
+        
+
+      }
+
 
 
 if(health<0){
   gameState='home'
+  dailyCard.hide()
 }
 
 
@@ -967,6 +1032,41 @@ if(health<0){
 
 
 
+
+}
+
+if(gameState==='cardsInventory'){
+  background('blue')
+ 
+
+  hometext.visible=false;
+  dailyCard.hide()
+  cardTrades.hide()
+  skinChange.hide()
+  home.show()
+  playButton.hide()
+  storm.visible=false;
+
+    if(card2unlock>0){
+      card2use.show()
+      fill('green')
+      textSize(30)
+      text('Card for Use',  width/1.380- width/2, height/2-220)
+    }
+
+    card2use.mousePressed(()=>{
+      card2use.hide()
+      gameState='game'
+      score=score+10
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+    })
+
+    home.mousePressed(()=>{
+      gameState='home'
+      card2use.hide()
+    })
 
 }
 drawSprites();
