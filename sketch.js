@@ -23,9 +23,9 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button, dailyCard;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard;
 var runnerScore, seconds;
-var card1unlock, card2unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock;
 var inventory;
 function preload(){
 
@@ -128,6 +128,14 @@ card2button= createImg('usecard2.png')
 card2button.position(width/1.15-width/2, height/2-210)
 card2button.hide()
 
+card3button= createImg('usecard3.png')
+card3button.position(width/.96-width/2, height/2-210)
+card3button.hide()
+
+card4button= createImg('usecard4.png')
+card4button.position(width/.83-width/2, height/2-210)
+card4button.hide()
+
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
@@ -136,6 +144,14 @@ dailyCard.hide()
 card2use= createImg('usecard2.png')
 card2use.position(width/1.4-width/2, height/2-200)
 card2use.hide()
+
+card3use= createImg('usecard3.png')
+card3use.position(width/1.15-width/2, height/2-200)
+card3use.hide()
+
+card4use= createImg('usecard4.png')
+card4use.position(width/.98-width/2, height/2-200)
+card4use.hide()
 
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -188,14 +204,14 @@ arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 
 
 score=5
-health=100
+health=30
 start=300
 kills=0
 card1unlock=0
 runnerScore=0
 seconds=300
 card2unlock=0
-
+card3unlock=0
 }
 
 function draw() {
@@ -499,6 +515,7 @@ Playerbullet.visible=false;
 Smallblock.visible=false
 
 score=5
+health=30
 }
 
 if(score<0){
@@ -510,6 +527,8 @@ if(score<0){
 Playerbullet.visible=false;
 
 Smallblock.visible=false;
+health=30
+
 }
 
 if(arrow1.isTouching(arrow_get_back)){
@@ -683,6 +702,10 @@ home.mousePressed(()=>{
   card2button.hide()
 
   card2use.hide()
+  card3button.hide()
+  card3use.hide()
+  card4button.hide()
+  card4use.hide()
 })
 
 
@@ -729,7 +752,7 @@ if(gameState==='home'){
     Rightplayer.x=width/1.5-width/2
     Rightplayer.y=height/2
 
-    health=100
+    //health=100
 
     dailyCard.hide()
     inventory.hide()
@@ -858,6 +881,8 @@ if(gameState==='cards'){
   cardTrades.hide()
   card1button.show()
   card2button.show()
+  card3button.show()
+  card4button.show()
 
   dailyCard.hide()
 
@@ -884,6 +909,7 @@ if(gameState==='cards'){
     score=score-25
   })
 
+
   if(score<0){
     card2unlock=0
   }
@@ -891,6 +917,33 @@ if(gameState==='cards'){
     fill('green')
     textSize(20)
     text('Unlocked',  width/1.12- width/2, height/2-220)
+  }
+
+  card3button.mousePressed(()=>{
+    card3unlock=1
+    score=score-35
+  })
+  if(score<0){
+    card3unlock=0
+  }
+  if(card3unlock>0){
+    fill('green')
+    textSize(20)
+    text('Unlocked',  width/.94- width/2, height/2-220)
+  }
+
+  card4button.mousePressed(()=>{
+    card4unlock=1
+    score=score-35
+  })
+
+  if(score<0){
+    card4unlock=0
+  }
+  if(card4unlock>0){
+    fill('green')
+    textSize(20)
+    text('Unlocked',  width/.82- width/2, height/2-220)
   }
 
 
@@ -1037,7 +1090,7 @@ if(health<0){
 }
 
 if(gameState==='cardsInventory'){
-  background('blue')
+  background('yellow')
  
 
   hometext.visible=false;
@@ -1057,6 +1110,8 @@ if(gameState==='cardsInventory'){
 
     card2use.mousePressed(()=>{
       card2use.hide()
+      card3use.hide()
+      card4use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
@@ -1064,10 +1119,53 @@ if(gameState==='cardsInventory'){
 
     })
 
+    if(card3unlock>0){
+      card3use.show()
+      fill('green')
+      textSize(30)
+      text('Card for Use',  width/1.16- width/2, height/2-220)
+    }
+
+    card3use.mousePressed(()=>{
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      gameState='game'
+      score=score+15
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+    })
+
+    if(card4unlock>0){
+      card4use.show()
+      fill('green')
+      textSize(30)
+      text('Card for Use',  width/.98- width/2, height/2-220)
+    }
+
+    card4use.mousePressed(()=>{
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      gameState='game'
+      score=score+20
+      health=health+15
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+    })
+
+
+
     home.mousePressed(()=>{
       gameState='home'
       card2use.hide()
+      card3use.hide()
+      card4use.hide()
     })
+
+    
 
 }
 drawSprites();
