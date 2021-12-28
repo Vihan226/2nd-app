@@ -23,9 +23,9 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock;
 var inventory;
 function preload(){
 
@@ -73,7 +73,7 @@ hometext.scale=2
 hometext.visible=false
 
 home=createImg('usehome.png')
-home.position(width/.8-width/2, height/2-480)
+home.position(width/.75-width/2, height/2-480)
 home.size(150,130)
 home.hide()
 
@@ -121,20 +121,27 @@ cardTrades.hide()
 
 //cards for getting
 card1button= createImg('usecard1.png')
-card1button.position(width/1.4-width/2, height/2-200)
+card1button.position(width/1.5-width/2, height/2-250)
+card1button.size(105,170)
 card1button.hide()
 
 card2button= createImg('usecard2.png')
-card2button.position(width/1.15-width/2, height/2-210)
+card2button.position(width/1.2-width/2, height/2-250)
+card2button.size(105,170)
 card2button.hide()
 
 card3button= createImg('usecard3.png')
-card3button.position(width/.96-width/2, height/2-210)
+card3button.position(width/.97-width/2, height/2-250)
+card3button.size(105,170)
 card3button.hide()
 
 card4button= createImg('usecard4.png')
-card4button.position(width/.83-width/2, height/2-210)
+card4button.position(width/.83-width/2, height/2-250)
+card4button.size(105,170)
 card4button.hide()
+
+
+
 
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
@@ -142,15 +149,20 @@ dailyCard.position(width/.745-width/2, height/2+200)
 dailyCard.hide()
 
 card2use= createImg('usecard2.png')
-card2use.position(width/1.4-width/2, height/2-200)
+card2use.position(width/1.5-width/2, height/2-200)
+card2use.size(105,170)
 card2use.hide()
 
+
+
 card3use= createImg('usecard3.png')
-card3use.position(width/1.15-width/2, height/2-200)
+card3use.position(width/1.2-width/2, height/2-200)
+card3use.size(105,170)
 card3use.hide()
 
 card4use= createImg('usecard4.png')
 card4use.position(width/.98-width/2, height/2-200)
+card4use.size(105,170)
 card4use.hide()
 
 
@@ -232,6 +244,7 @@ text("with a web viewer. This includes shooting, and it is built for 3+ ages.", 
 text("Press- Agree and Continue to Play when it says Start!", width/1.25-width/2, height/2-110)
 
 //sprite
+
 start= start-1
 
 if(start<0){
@@ -464,23 +477,33 @@ for (var i=0; i<200; i++){
 }
 }
 
-if(runnerScore>50&& runnerScore<70){
+if(runnerScore>350&& runnerScore<357){
   storm.visible=true
   storm.y= height/2
 }
 
-if(runnerScore>900&& runnerScore<650){
+
+
+if(runnerScore>1200&& runnerScore<1207){
   storm.visible=true
   storm.y= height/2
 }
 
-if(runnerScore>980&& runnerScore<1020){
+
+
+if(runnerScore>1700&& runnerScore<1707){
+  storm.visible=true
+  storm.y= height/2
+}
+
+if(runnerScore>2100&& runnerScore<2107){
   storm.visible=true
   storm.y= height/2
 }
 
 if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)){
-  health= health-.1
+  
+  health=health=1
 }
 if(Greenenemy.isTouching(enemystopper)){
   Greenenemy.destroy()
@@ -516,6 +539,7 @@ Smallblock.visible=false
 
 score=5
 health=30
+runnerScore=0
 }
 
 if(score<0){
@@ -528,7 +552,7 @@ Playerbullet.visible=false;
 
 Smallblock.visible=false;
 health=30
-
+runnerScore=0
 }
 
 if(arrow1.isTouching(arrow_get_back)){
@@ -578,73 +602,87 @@ kills=kills+1
 
 }
   // changing levels 
-  if(score>7){
+  if(runnerScore>70){
     Greenenemy.velocityX=-10.5
     coin.velocityX=-11
     Smallblock.velocityX=-8
     
-  if(score>1){
+  if(runnerScore>200){
     powerButton.show()
   }
   }
-  if(score>10){
+  if(runnerScore>360){
     Greenenemy.velocityX=-12
     coin.velocityX=-12
     Smallblock.velocityX=-8.5
   
   }
-  if(score>19){
+  if(runnerScore>600){
     Greenenemy.velocityX=-14
     coin.velocityX=-14
     Smallblock.velocityX=-9
   
   }
 
-  if(score>28){
+  if(runnerScore>900){
     Greenenemy.velocityX=-14.5
     coin.velocityX=-14
     Smallblock.velocityX=-9
   
   }
-  if(score>38){
+  if(runnerScore>1200){
     Greenenemy.velocityX=-15.5
     coin.velocityX=-14
     Smallblock.velocityX=-9
   
   }
-  if(score>47){
+  if(runnerScore>1400){
     Greenenemy.velocityX=-16
     coin.velocityX=-14
     Smallblock.velocityX=-9
   
   }
 
-  if(score>11 && score<13){
+  if(runnerScore>100 && runnerScore<150){
     ThunderSound.play()
     RedThunder.velocityX=-27
     RedThunder.velocityY=10
     RedThunder.visible=true
   }
 
-  if(score>23 && score<25){
+  if(runnerScore>450 && runnerScore<480){
     ThunderSound.play()
     RedThunder.velocityX=-27
     RedThunder.velocityY=10
     RedThunder.visible=true
   }
-  if(score>49 && score<51){
+  if(runnerScore>600 && runnerScore<620){
     ThunderSound.play()
     RedThunder.velocityX=-27
     RedThunder.velocityY=10
     RedThunder.visible=true
   }
-  if(score>69 && score<71){
+  if(runnerScore>930 && runnerScore<950){
     ThunderSound.play()
     RedThunder.velocityX=-27
     RedThunder.velocityY=10
     RedThunder.visible=true
   }
-  if(score>89 && score<91){
+  if(runnerScore>1200 && runnerScore<1220){
+    ThunderSound.play()
+    RedThunder.velocityX=-27
+    RedThunder.velocityY=10
+    RedThunder.visible=true
+  }
+
+  if(runnerScore>1500 && runnerScore<1520){
+    ThunderSound.play()
+    RedThunder.velocityX=-27
+    RedThunder.velocityY=10
+    RedThunder.visible=true
+  }
+
+  if(runnerScore>1900 && runnerScore<1920){
     ThunderSound.play()
     RedThunder.velocityX=-27
     RedThunder.velocityY=10
@@ -756,6 +794,8 @@ if(gameState==='home'){
 
     dailyCard.hide()
     inventory.hide()
+
+    runnerScore=0
 
     
 
@@ -898,8 +938,8 @@ if(gameState==='cards'){
 
   if(card1unlock>0){
     fill('green')
-    textSize(20)
-    text('Unlocked', width/1.365- width/2, height/2-220)
+    textSize(13)
+    text('Unlocked', width/1.47- width/2, height/2-260)
     
           
   }
@@ -915,8 +955,8 @@ if(gameState==='cards'){
   }
   if(card2unlock>0){
     fill('green')
-    textSize(20)
-    text('Unlocked',  width/1.12- width/2, height/2-220)
+    textSize(13)
+    text('Unlocked',  width/1.18- width/2, height/2-260)
   }
 
   card3button.mousePressed(()=>{
@@ -928,8 +968,8 @@ if(gameState==='cards'){
   }
   if(card3unlock>0){
     fill('green')
-    textSize(20)
-    text('Unlocked',  width/.94- width/2, height/2-220)
+    textSize(13)
+    text('Unlocked',  width/.96- width/2, height/2-260)
   }
 
   card4button.mousePressed(()=>{
@@ -942,8 +982,8 @@ if(gameState==='cards'){
   }
   if(card4unlock>0){
     fill('green')
-    textSize(20)
-    text('Unlocked',  width/.82- width/2, height/2-220)
+    textSize(13)
+    text('Unlocked',  width/.82- width/2, height/2-260)
   }
 
 
@@ -1104,8 +1144,8 @@ if(gameState==='cardsInventory'){
     if(card2unlock>0){
       card2use.show()
       fill('green')
-      textSize(30)
-      text('Card for Use',  width/1.382- width/2, height/2-220)
+      textSize(13)
+      text('Card for Use',  width/1.47- width/2, height/2-220)
     }
 
     card2use.mousePressed(()=>{
@@ -1122,8 +1162,9 @@ if(gameState==='cardsInventory'){
     if(card3unlock>0){
       card3use.show()
       fill('green')
-      textSize(30)
-      text('Card for Use',  width/1.16- width/2, height/2-220)
+      textSize(13)
+      text('Card for Use',  width/1.19- width/2, height/2-210)
+      
     }
 
     card3use.mousePressed(()=>{
@@ -1140,8 +1181,8 @@ if(gameState==='cardsInventory'){
     if(card4unlock>0){
       card4use.show()
       fill('green')
-      textSize(30)
-      text('Card for Use',  width/.98- width/2, height/2-220)
+      textSize(13)
+text('Card for Use',  width/.97- width/2, height/2-210)
     }
 
     card4use.mousePressed(()=>{
