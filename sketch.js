@@ -25,7 +25,7 @@ var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
 var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open;
 var inventory;
 function preload(){
 
@@ -140,7 +140,10 @@ card4button.position(width/.83-width/2, height/2-250)
 card4button.size(105,170)
 card4button.hide()
 
-
+card5button= createImg('usecard5.png')
+card5button.position(width/1.505-width/2, height/2-50)
+card5button.size(115,170)
+card5button.hide()
 
 
 // cards in the inventory
@@ -164,6 +167,11 @@ card4use= createImg('usecard4.png')
 card4use.position(width/.98-width/2, height/2-200)
 card4use.size(105,170)
 card4use.hide()
+
+card5use= createImg('usecard5.png')
+card5use.position(width/.85-width/2, height/2-200)
+card5use.size(115,170)
+card5use.hide()
 
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
@@ -211,7 +219,7 @@ arrow4= createSprite(width/2.2-width/2, height/2+150, 100,10)
 arrow4.shapeColor='blue'
 
 arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
-
+arrow_get_back.visible=false
 
 
 
@@ -224,6 +232,7 @@ runnerScore=0
 seconds=300
 card2unlock=0
 card3unlock=0
+redthunderpower1open=0
 }
 
 function draw() {
@@ -341,7 +350,6 @@ if(gameState==="game"){
   
   runnerScore= runnerScore+1
 
-  
 
 
 
@@ -418,7 +426,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     redenemy.destroy()
     EnemySound.play()
     kills= kills+1
-    score= score+5
+    score= score+4
   }
   if(arrow1.isTouching(redenemy)||arrow2.isTouching(redenemy)||arrow3.isTouching(redenemy)||arrow4.isTouching(redenemy)){
     redenemy.destroy()
@@ -525,6 +533,34 @@ for (var i=0; i<200; i++){
   drop[i].update()
 }
 }
+
+if(score>10 && score<12){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
+if(score>20 && score<22){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+if(score>35 && score<38){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+if(score>45 && score<47){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
+
 
 if(health<0){
 gameState='home'
@@ -643,51 +679,6 @@ kills=kills+1
   
   }
 
-  if(runnerScore>100 && runnerScore<150){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-
-  if(runnerScore>450 && runnerScore<480){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-  if(runnerScore>600 && runnerScore<620){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-  if(runnerScore>930 && runnerScore<950){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-  if(runnerScore>1200 && runnerScore<1220){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-
-  if(runnerScore>1500 && runnerScore<1520){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
-
-  if(runnerScore>1900 && runnerScore<1920){
-    ThunderSound.play()
-    RedThunder.velocityX=-27
-    RedThunder.velocityY=10
-    RedThunder.visible=true
-  }
 
   //skins attach to rightplayer(default player)
   skin1.y=Rightplayer.y-10
@@ -744,6 +735,10 @@ home.mousePressed(()=>{
   card3use.hide()
   card4button.hide()
   card4use.hide()
+  card5button.hide()
+  card5use.hide()
+
+  arrow_get_back.x= width/.1-width/2
 })
 
 
@@ -796,8 +791,38 @@ if(gameState==='home'){
     inventory.hide()
 
     runnerScore=0
+    
+
+    //
 
     
+if(score>10 && score<12){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
+if(score>20 && score<22){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+if(score>35 && score<38){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+if(score>45 && score<47){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
+
 
   })
 
@@ -885,6 +910,8 @@ if(gameState==='skins'){
     gameState='home'
     skin1.visible=false;
     skin1button.hide()
+
+    arrow_get_back.x= width/.1-width/2
   })
 
   skin1button.mousePressed(()=>{
@@ -923,6 +950,7 @@ if(gameState==='cards'){
   card2button.show()
   card3button.show()
   card4button.show()
+  card5button.show()
 
   dailyCard.hide()
 
@@ -985,6 +1013,22 @@ if(gameState==='cards'){
     textSize(13)
     text('Unlocked',  width/.82- width/2, height/2-260)
   }
+
+  //card5
+  card5button.mousePressed(()=>{
+    card5unlock=1
+    score=score-55
+  })
+
+  if(score<0){
+    card5unlock=0
+  }
+  if(card5unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked',  width/1.48- width/2, height/2-60)
+  }
+
 
 
   fill('Blue')
@@ -1152,6 +1196,7 @@ if(gameState==='cardsInventory'){
       card2use.hide()
       card3use.hide()
       card4use.hide()
+      card5use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
@@ -1171,6 +1216,7 @@ if(gameState==='cardsInventory'){
       card2use.hide()
       card3use.hide()
       card4use.hide()
+      card5use.hide()
       gameState='game'
       score=score+15
       Rightplayer.x=width/1.5-width/2
@@ -1189,12 +1235,38 @@ text('Card for Use',  width/.97- width/2, height/2-210)
       card2use.hide()
       card3use.hide()
       card4use.hide()
+      card5use.hide()
       gameState='game'
       score=score+20
       health=health+15
       Rightplayer.x=width/1.5-width/2
       Rightplayer.y=height/2
 
+    })
+
+    //
+
+    if(card5unlock>0){
+      card5use.show()
+      fill('green')
+      textSize(13)
+text('Card for Use',  width/.84- width/2, height/2-210)
+    }
+
+    card5use.mousePressed(()=>{
+      runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      gameState='game'
+      score=score+30
+      health=health+30
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+      arrow_get_back.x= width/.4-width/2
+      
     })
 
 
@@ -1204,6 +1276,9 @@ text('Card for Use',  width/.97- width/2, height/2-210)
       card2use.hide()
       card3use.hide()
       card4use.hide()
+      card5use.hide()
+
+      arrow_get_back.x= width/.1-width/2
     })
 
     
