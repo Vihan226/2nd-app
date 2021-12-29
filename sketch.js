@@ -16,19 +16,19 @@ var health_increaseButton;
 var drop=[];
 var snowball= [];
 var snowballattack=[];
-var home, playButton, skinChange, skin1, skin1image, skin1button;
+var home, playButton, skinChange, skin1, skin1image, skin1button, skin2button, skin2, skin2image;
 var homesound, skin1sound; 
 var storm, stormImage;
 var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock;
 var inventory;
 function preload(){
-
+////////////////////// change prices of card6button and skin2button.mousepressed
 Background= loadImage("Background.png")
 RightplayerImage= loadImage("Rightplayer.png")
 GreenenemyImage= loadImage("Greenenemy.png")
@@ -51,6 +51,7 @@ stormImage= loadImage('storm.png')
 homebg= loadImage('homebg.png')
 hometextImage= loadImage('title.png')
 redenemyImage= loadImage('Redenemy.png')
+skin2image= loadImage('skin2image.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -88,13 +89,22 @@ skinChange.size(150,400)
 skinChange.hide()
 
 skin1button=createImg('skin1_red.png')
-skin1button.position(width/1.2-width/2, height/2)
+skin1button.position(width/1.4-width/2, height/2)
 skin1button.size(210,170)
 skin1button.hide()
+
+skin2button=createImg('skin2image.png')
+skin2button.position(width/1.1-width/2, height/2)
+skin2button.size(170,210)
+skin2button.hide()
 
 skin1=createSprite(width/1.5-width/2, height/2-150)
 skin1.addImage('redforce', skin1image)
 skin1.visible=false
+
+skin2=createSprite(width/1.5-width/2, height/2-150)
+skin2.addImage('ghostimage', skin2image)
+skin2.visible=false
 
 allow= createImg('agree.png')
 allow.position(width/1.15-width/2,height/2+150)
@@ -144,6 +154,11 @@ card5button= createImg('usecard5.png')
 card5button.position(width/1.505-width/2, height/2-50)
 card5button.size(115,170)
 card5button.hide()
+
+card6button= createImg('usecard6.png')
+card6button.position(width/1.2-width/2, height/2-50)
+card6button.size(120,170)
+card6button.hide()
 
 
 // cards in the inventory
@@ -233,6 +248,7 @@ seconds=300
 card2unlock=0
 card3unlock=0
 redthunderpower1open=0
+card6unlock=0
 }
 
 function draw() {
@@ -386,7 +402,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   Smallblock.destroy()
   }
 
-  if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)){
+  if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)||skin2.isTouching(coin)){
   score=score+2
   CoinSound.play()
   coin.destroy()
@@ -509,7 +525,7 @@ if(runnerScore>2100&& runnerScore<2107){
   storm.y= height/2
 }
 
-if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)){
+if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)|| storm.isTouching(skin2)){
   
   health=health=1
 }
@@ -534,26 +550,26 @@ for (var i=0; i<200; i++){
 }
 }
 
-if(score>10 && score<12){
+if(runnerScore>200 && runnerScore<220){
   ThunderSound.play()
   RedThunder.velocityX=-27
   RedThunder.velocityY=10
   RedThunder.visible=true
 }
 
-if(score>20 && score<22){
+if(runnerScore>420 && runnerScore<440){
   ThunderSound.play()
   RedThunder.velocityX=-27
   RedThunder.velocityY=10
   RedThunder.visible=true
 }
-if(score>35 && score<38){
+if(runnerScore>820 && runnerScore<840){
   ThunderSound.play()
   RedThunder.velocityX=-27
   RedThunder.velocityY=10
   RedThunder.visible=true
 }
-if(score>45 && score<47){
+if(runnerScore>1220 && runnerScore<1240){
   ThunderSound.play()
   RedThunder.velocityX=-27
   RedThunder.velocityY=10
@@ -573,6 +589,7 @@ Playerbullet.visible=false;
 
 Smallblock.visible=false
 
+skin2.visible=false
 score=5
 health=30
 runnerScore=0
@@ -587,6 +604,7 @@ if(score<0){
 Playerbullet.visible=false;
 
 Smallblock.visible=false;
+skin2.visible=false
 health=30
 runnerScore=0
 }
@@ -682,10 +700,11 @@ kills=kills+1
 
   //skins attach to rightplayer(default player)
   skin1.y=Rightplayer.y-10
+  skin2.y=Rightplayer.y-10
   
   
 
-  if(RedThunder.isTouching(Rightplayer)){
+  if(RedThunder.isTouching(Rightplayer)||RedThunder.isTouching(skin1)){
     health=health-1
   }
 
@@ -721,6 +740,8 @@ home.mousePressed(()=>{
   Rightplayer.visible=false
   skin1.visible=false;
   skin1button.hide()
+  skin2.visible=false;
+  
   homesound.play()
   Greenenemy.visible=false;
   Smallblock.visible=false;
@@ -737,6 +758,8 @@ home.mousePressed(()=>{
   card4use.hide()
   card5button.hide()
   card5use.hide()
+  card6button.hide()
+  skin2button.hide()
 
   arrow_get_back.x= width/.1-width/2
 })
@@ -750,6 +773,13 @@ if(gameState==='home'){
   background(homebg)
   fill('green')
   textSize(30)
+
+  card1button.hide()
+  card2button.hide()
+  card3button.hide()
+  card4button.hide()
+  card5button.hide()
+  card6button.hide()
 
 
  hometext.visible=true
@@ -785,6 +815,9 @@ if(gameState==='home'){
     Rightplayer.x=width/1.5-width/2
     Rightplayer.y=height/2
 
+    skin2.visible=false;
+    skin2button.hide()
+
     //health=100
 
     dailyCard.hide()
@@ -796,31 +829,7 @@ if(gameState==='home'){
     //
 
     
-if(score>10 && score<12){
-  ThunderSound.play()
-  RedThunder.velocityX=-27
-  RedThunder.velocityY=10
-  RedThunder.visible=true
-}
 
-if(score>20 && score<22){
-  ThunderSound.play()
-  RedThunder.velocityX=-27
-  RedThunder.velocityY=10
-  RedThunder.visible=true
-}
-if(score>35 && score<38){
-  ThunderSound.play()
-  RedThunder.velocityX=-27
-  RedThunder.velocityY=10
-  RedThunder.visible=true
-}
-if(score>45 && score<47){
-  ThunderSound.play()
-  RedThunder.velocityX=-27
-  RedThunder.velocityY=10
-  RedThunder.visible=true
-}
 
 
 
@@ -838,6 +847,7 @@ if(score>45 && score<47){
   skinChange.hide()
   dailyCard.hide()
   inventory.hide()
+  cardTrades.hide()
   })
 
   dailyCard.mousePressed(()=>{
@@ -877,7 +887,7 @@ if(score>45 && score<47){
     dailyCard.hide()
     inventory.hide()
 
- 
+    
 
   })
  
@@ -911,6 +921,9 @@ if(gameState==='skins'){
     skin1.visible=false;
     skin1button.hide()
 
+    skin2.visible=false;
+    skin2button.hide()
+
     arrow_get_back.x= width/.1-width/2
   })
 
@@ -925,13 +938,47 @@ if(gameState==='skins'){
     skin1.visible=true
 
     skin1.y=Rightplayer.y-10
-    skin1.x=Rightplayer.x
+    //skin1.x=Rightplayer.x
     Rightplayer.x=width/2.4-width/2
+    Rightplayer.y=height/2
     score=score-25
     skin1.scale=1
 
+    skin2.visible=false
+    skin2button.hide()
+
+    runnerScore=0;
+    
 
     
+  
+  })
+
+  if(card6unlock>0){
+    skin2button.show()
+  }
+
+  skin2button.mousePressed(()=>{
+  
+    gameState='game'
+    skinChange.hide()
+    skin2button.hide()
+    cardTrades.hide()
+    Rightplayer.visible=true
+    skin1sound.play()
+    skin2.visible=true
+
+    skin2.y=Rightplayer.y-10
+   // skin2.x=Rightplayer.x
+    Rightplayer.x=width/2.4-width/2
+    Rightplayer.y=height/2
+    score=score-5
+    skin2.scale=1
+    skin1.visible=false
+    skin1button.hide()
+
+
+    runnerScore=0
   
   })
 
@@ -951,6 +998,7 @@ if(gameState==='cards'){
   card3button.show()
   card4button.show()
   card5button.show()
+  card6button.show()
 
   dailyCard.hide()
 
@@ -1029,11 +1077,27 @@ if(gameState==='cards'){
     text('Unlocked',  width/1.48- width/2, height/2-60)
   }
 
+  card6button.mousePressed(()=>{
+    card6unlock=1
+    score=score-10
+  })
+
+  if(score<0){
+    card6unlock=0
+  }
+  if(card6unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked',  width/1.18- width/2, height/2-55)
+  }
+
+
+
 
 
   fill('Blue')
-  textSize(30)
-  text('Coins: '+score, width/1.6-width/2, height/2+250)
+  textSize(20)
+  text('Coins: '+score, width/1.6-width/2, height/2+460)
 
 
 }
@@ -1094,13 +1158,13 @@ RedThunder.velocityY=10
       EnemySound.play()
       
     }
-    if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
+    if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)||Greenenemy.isTouching(skin2)){
       
       Greenenemy.destroy()
       health=health-10
     }
     
-      if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)){
+      if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)||skin2.isTouching(Smallblock)){
       background('red')
      
       
@@ -1110,7 +1174,7 @@ RedThunder.velocityY=10
     
 
 
-      if(redenemy.isTouching(Rightplayer)){
+      if(redenemy.isTouching(Rightplayer)||redenemy.isTouching(skin1)||redenemy.isTouching(skin2)){
         
         redenemy.destroy()
 
@@ -1268,6 +1332,8 @@ text('Card for Use',  width/.84- width/2, height/2-210)
       arrow_get_back.x= width/.4-width/2
       
     })
+
+
 
 
 
