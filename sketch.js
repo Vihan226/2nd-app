@@ -27,6 +27,8 @@ var cardTrades, card1button , card2button,card2use, card3button,card3use,card4bu
 var runnerScore, seconds;
 var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock;
 var inventory;
+var snowman, snowmanImage, snowmanvisible;
+var smb, smbImage;
 function preload(){
 ////////////////////// change prices of card6button and skin2button.mousepressed
 Background= loadImage("Background.png")
@@ -52,6 +54,8 @@ homebg= loadImage('homebg.png')
 hometextImage= loadImage('title.png')
 redenemyImage= loadImage('Redenemy.png')
 skin2image= loadImage('skin2image.png')
+snowmanImage=loadImage('snowman.png')
+smbImage= loadImage('snowball.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -94,7 +98,7 @@ skin1button.size(210,170)
 skin1button.hide()
 
 skin2button=createImg('skin2image.png')
-skin2button.position(width/1.1-width/2, height/2)
+skin2button.position(width/1-width/2, height/2)
 skin2button.size(170,210)
 skin2button.hide()
 
@@ -230,12 +234,16 @@ arrow2.shapeColor='blue'
 arrow3= createSprite(width/2.2-width/2, height/2-240, 100,10)
 arrow3.shapeColor='blue'
 
-arrow4= createSprite(width/2.2-width/2, height/2+150, 100,10)
+arrow4= createSprite(width/2.2-width/2, height/2+200, 100,10)
 arrow4.shapeColor='blue'
 
 arrow_get_back= createSprite(width/.1-width/2, height/2, 50,1000)
 arrow_get_back.visible=false
 
+snowman= createSprite(width/.75-width/2, height/2+200)
+snowman.addImage('snowmanenemy', snowmanImage)
+snowman.scale=.4
+snowman.visible=false
 
 
 score=5
@@ -249,6 +257,7 @@ card2unlock=0
 card3unlock=0
 redthunderpower1open=0
 card6unlock=0
+
 }
 
 function draw() {
@@ -339,6 +348,15 @@ if(frameCount %298 ===0){
 
 }
 
+if(frameCount %150===0){
+  smb= createSprite(width/.75-width/2, height/2+10000)
+  smb.addImage('snowball', smbImage)
+  smb.shapeColor= 'white'
+  smb.visible=true
+  smb.scale=.2
+  smb.velocityX=-15
+  smb.lifetime= 1000
+}
 
 
 allow.mousePressed(()=>{
@@ -437,7 +455,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     health= health-10
     redenemy.destroy()
   }
-
+  
   if(Playerbullet.isTouching(redenemy)){
     redenemy.destroy()
     EnemySound.play()
@@ -459,7 +477,11 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
     redenemy.destroy()
   }
 //gamestate of winter theme
-
+snowman.visible=false
+if(arrow4.isTouching(smb)){
+  smb.destroy()
+  score=score+5
+}
 if(runnerScore>100&& runnerScore<400){
 background(0,0,35,25); 
 background(wintertheme)
@@ -468,11 +490,16 @@ for(var i=0; i<100; i++){
   snowball[i].update()
 
 }
-/*for (var i=0; i<3; i++){
-  snowballattack[i].show()
-  snowballattack[i].update()
-  }*/
+snowman.visible=true
+
 Platform.visible=true;
+smb.visible=true
+
+if(Rightplayer.isTouching(smb)){
+  health=health-5
+  smb.destroy()
+}
+smb.y= height/2+200
 
 }
 if(runnerScore>560&& runnerScore<800){
@@ -490,8 +517,14 @@ for(var i=0; i<100; i++){
   snowball[i].update()
 
 }
+snowman.visible=true
+smb.visible=true
 
-
+if(Rightplayer.isTouching(smb)){
+  health=health-5
+  smb.destroy()
+}
+smb.y= height/2+200
 }
 if(runnerScore>1400&& runnerScore<1700){
 background('black')
@@ -500,6 +533,58 @@ for (var i=0; i<200; i++){
   drop[i].update()
 }
 }
+
+if(runnerScore>1600&& runnerScore<2000){
+  background(0,0,35,25); 
+  background(wintertheme)
+  for(var i=0; i<100; i++){
+    snowball[i].show()
+    snowball[i].update()
+  
+  }
+  snowman.visible=true
+  smb.visible=true
+
+if(Rightplayer.isTouching(smb)){
+  health=health-5
+  smb.destroy()
+}
+smb.y= height/2+200
+  }
+
+  if(runnerScore>2200&& runnerScore<2600){
+    background('black')
+    for (var i=0; i<200; i++){
+      drop[i].show()
+      drop[i].update()
+    }
+    }
+
+    if(runnerScore>2800&& runnerScore<3200){
+      background(0,0,35,25); 
+      background(wintertheme)
+      for(var i=0; i<100; i++){
+        snowball[i].show()
+        snowball[i].update()
+      
+      }
+      snowman.visible=true
+      smb.visible=true
+
+if(Rightplayer.isTouching(smb)){
+  health=health-5
+  smb.destroy()
+}
+smb.y= height/2+200
+      }
+
+      if(runnerScore>3400&& runnerScore<3600){
+        background('black')
+        for (var i=0; i<200; i++){
+          drop[i].show()
+          drop[i].update()
+        }
+        }
 
 if(runnerScore>350&& runnerScore<357){
   storm.visible=true
@@ -521,6 +606,15 @@ if(runnerScore>1700&& runnerScore<1707){
 }
 
 if(runnerScore>2100&& runnerScore<2107){
+  storm.visible=true
+  storm.y= height/2
+}
+
+if(runnerScore>2600&& runnerScore<2607){
+  storm.visible=true
+  storm.y= height/2
+}
+if(runnerScore>3000&& runnerScore<3007){
   storm.visible=true
   storm.y= height/2
 }
@@ -570,6 +664,13 @@ if(runnerScore>820 && runnerScore<840){
   RedThunder.visible=true
 }
 if(runnerScore>1220 && runnerScore<1240){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
+if(runnerScore>1600 && runnerScore<1620){
   ThunderSound.play()
   RedThunder.velocityX=-27
   RedThunder.velocityY=10
@@ -789,7 +890,8 @@ if(gameState==='home'){
   Platform.visible=false
   Rightplayer.visible=false
   redenemy.visible=false;
-  
+  smb.visible=false;
+  snowman.visible=false
   
 
   playButton.show()
@@ -972,7 +1074,7 @@ if(gameState==='skins'){
    // skin2.x=Rightplayer.x
     Rightplayer.x=width/2.4-width/2
     Rightplayer.y=height/2
-    score=score-5
+    score=score-25
     skin2.scale=1
     skin1.visible=false
     skin1button.hide()
@@ -1079,7 +1181,7 @@ if(gameState==='cards'){
 
   card6button.mousePressed(()=>{
     card6unlock=1
-    score=score-10
+    score=score-75
   })
 
   if(score<0){
@@ -1147,8 +1249,8 @@ Smallblock.velocityX=-15
 Greenenemy.velocityX=-20
 redenemy.velocityX=-22
 redenemybullet.velocityX=-28
-RedThunder.velocityX=-27
-RedThunder.velocityY=10
+//RedThunder.velocityX=-27
+//RedThunder.velocityY=10
 
  redenemybullet.y= redenemy.y
  seconds=seconds-1
