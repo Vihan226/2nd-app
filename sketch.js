@@ -23,13 +23,14 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
+var selectSound;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -57,6 +58,7 @@ redenemyImage= loadImage('Redenemy.png')
 skin2image= loadAnimation('skin2image.png', 'skin2part2.png' ,'skin2part3.png','skin2part4.png', 'skin2part3.png', 'skin2part2.png', 'skin2image.png' )
 snowmanImage=loadImage('snowman.png')
 smbImage= loadImage('snowball.png')
+selectSound= loadSound('select.wav')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -170,6 +172,10 @@ card7button.position(width/1.2-width/2, height/2-50)
 card7button.size(120,170)
 card7button.hide()
 
+card8button= createImg('usecard8.png')
+card8button.position(width/.83-width/2, height/2-50)
+card8button.size(105,170)
+card8button.hide()
 
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
@@ -200,6 +206,11 @@ card7use= createImg('usecard7.png')
 card7use.position(width/1.5-width/2, height/2-10)
 card7use.size(115,170)
 card7use.hide()
+
+card8use= createImg('usecard8.png')
+card8use.position(width/1.2-width/2, height/2-10)
+card8use.size(115,170)
+card8use.hide()
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
 storm.addImage('lightingstorm', stormImage)
@@ -271,7 +282,9 @@ card3unlock=0
 redthunderpower1open=0
 card6unlock=0
 card7unlock=0
+card8unlock=0
 redthunderhastouched=0
+stormhastouched=0
 }
 
 function draw() {
@@ -404,6 +417,10 @@ if(redthunderhastouched>0&& RedThunder.isTouching(Rightplayer)){
   RedThunder.y=height/2-340
 
   health=health-1
+}
+if(stormhastouched>0&& storm.isTouching(Rightplayer)){
+storm.destroy()
+health=health-20
 }
 
 
@@ -617,58 +634,64 @@ if(runnerScore>350&& runnerScore<357){
 
 if(score>10){
   score=score+1
+  
 }
 
 }
 
 
 
-if(runnerScore>1200&& runnerScore<1207){
+if(runnerScore>1500&& runnerScore<1507){
   storm.visible=true
   storm.y= height/2
 
   if(score>25){
     score=score+1
+   
   }
 }
 
 
 
-if(runnerScore>1700&& runnerScore<1707){
+if(runnerScore>2100&& runnerScore<2107){
   storm.visible=true
   storm.y= height/2
 
   if(score>45){
     score=score+1
+ 
   }
 }
 
-if(runnerScore>2100&& runnerScore<2107){
+if(runnerScore>2800&& runnerScore<2807){
   storm.visible=true
   storm.y= height/2
   if(score>80){
     score=score+1
+
   }
 }
 
-if(runnerScore>2600&& runnerScore<2607){
+if(runnerScore>3200&& runnerScore<3207){
   storm.visible=true
   storm.y= height/2
   if(score>120){
     score=score+1
+
   }
 }
-if(runnerScore>3000&& runnerScore<3007){
+if(runnerScore>3600&& runnerScore<3607){
   storm.visible=true
   storm.y= height/2
   if(score>200){
     score=score+1
+ 
   }
 }
 
 if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)|| storm.isTouching(skin2)){
   
-  health=health=1
+  health=health-1
 }
 if(Greenenemy.isTouching(enemystopper)){
   Greenenemy.destroy()
@@ -889,8 +912,9 @@ home.mousePressed(()=>{
   gameState='home'
   Rightplayer.visible=false
   skin1.visible=false;
+  skin2.visible=false
   skin1button.hide()
-  skin2.visible=false;
+  selectSound.play()
   
   homesound.play()
   Greenenemy.visible=false;
@@ -910,6 +934,7 @@ home.mousePressed(()=>{
   card5use.hide()
   card6button.hide()
   card7button.hide()
+  card8button.hide()
   skin2button.hide()
 
   arrow_get_back.x= width/.1-width/2
@@ -933,6 +958,7 @@ if(gameState==='home'){
   card5button.hide()
   card6button.hide()
   card7button.hide()
+  card8button.hide()
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -953,13 +979,15 @@ if(gameState==='home'){
   inventory.mousePressed(()=>{
     gameState='cardsInventory'
     inventory.hide()
+    selectSound.play()
+    homesound.stop()
   })
   if(card1unlock>0){
     dailyCard.show()
   }
   playButton.mousePressed(()=>{
     gameState='game'
-
+    homesound.stop()
     playButton.hide()
     skinChange.hide()
     cardTrades.hide()
@@ -967,6 +995,7 @@ if(gameState==='home'){
     skin1button.hide()
     Rightplayer.x=width/1.5-width/2
     Rightplayer.y=height/2
+    selectSound.play()
 
     skin2.visible=false;
     skin2button.hide()
@@ -978,6 +1007,7 @@ if(gameState==='home'){
 
     runnerScore=0
     redthunderhastouched=0
+    stormhastouched=0
     RedThunder.x= width/.75-width/2
     RedThunder.y=height/2-340
 
@@ -1009,7 +1039,8 @@ arrow4.velocityX=0
     gameState='skins'
     Rightplayer.visible=false
     home.show()
-    
+    homesound.stop()
+    selectSound.play()
   skin1button.x= skin1.x
   skin1button.y= skin1.y+30
 
@@ -1027,7 +1058,7 @@ arrow4.velocityX=0
     playButton.hide()
     cardTrades.hide()
     inventory.hide()
-    skin1sound.play()
+    selectSound.play()
 
     Platform.visible=true
     Rightplayer.visible=true
@@ -1059,8 +1090,8 @@ arrow4.velocityX=0
     gameState='cards'
     dailyCard.hide()
     inventory.hide()
-
-    
+    selectSound.play()
+    homesound.stop()
 
   })
  
@@ -1098,6 +1129,8 @@ if(gameState==='skins'){
     skin2button.hide()
 
     arrow_get_back.x= width/.1-width/2
+    selectSound.play()
+    homesound.play()
   })
 
   skin1button.mousePressed(()=>{
@@ -1176,13 +1209,14 @@ if(gameState==='cards'){
   card5button.show()
   card6button.show()
   card7button.show()
+  card8button.show()
   dailyCard.hide()
 
   
   card1button.mousePressed(()=>{
     card1unlock=1
     score= score-20
-
+    selectSound.play()
     
   })
   if(score<0){
@@ -1200,6 +1234,7 @@ if(gameState==='cards'){
   card2button.mousePressed(()=>{
     card2unlock=1;
     score=score-25
+    selectSound.play()
   })
 
 
@@ -1215,6 +1250,7 @@ if(gameState==='cards'){
   card3button.mousePressed(()=>{
     card3unlock=1
     score=score-35
+    selectSound.play()
   })
   if(score<0){
     card3unlock=0
@@ -1228,6 +1264,7 @@ if(gameState==='cards'){
   card4button.mousePressed(()=>{
     card4unlock=1
     score=score-35
+    selectSound.play()
   })
 
   if(score<0){
@@ -1243,6 +1280,7 @@ if(gameState==='cards'){
   card5button.mousePressed(()=>{
     card5unlock=1
     score=score-55
+    selectSound.play()
   })
 
   if(score<0){
@@ -1257,6 +1295,7 @@ if(gameState==='cards'){
   card6button.mousePressed(()=>{
     card6unlock=1
     score=score-75
+    selectSound.play()
   })
 
   if(score<0){
@@ -1271,6 +1310,7 @@ if(gameState==='cards'){
   card7button.mousePressed(()=>{
     card7unlock=1
     score=score-55
+    selectSound.play()
   })
   
   if(score<0){
@@ -1280,6 +1320,21 @@ if(gameState==='cards'){
     fill('green')
     textSize(13)
     text('Unlocked',  width/1.18- width/2, height/2-55)
+  }
+
+  card8button.mousePressed(()=>{
+    card8unlock=1
+    score=score-80
+    selectSound.play()
+  })
+  
+  if(score<0){
+    card8unlock=0
+  }
+  if(card8unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked',  width/.82- width/2, height/2-55)
   }
 
 
@@ -1419,6 +1474,8 @@ anotheredthunder.velocityY=10
 home.mousePressed(()=>{
   gameState='home'
 card1unlock=0
+selectSound.play()
+homesound.play()
 })
 
 if(health<0){
@@ -1459,12 +1516,13 @@ if(gameState==='cardsInventory'){
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
       Rightplayer.y=height/2
 
-      skin1sound.play()
+ 
 
       arrow1.x= width/2.2-width/2
       arrow2.x= width/2.2-width/2
@@ -1478,6 +1536,8 @@ if(gameState==='cardsInventory'){
   arrow2.velocityX=0
   arrow3.velocityX=0
   arrow4.velocityX=0
+
+  selectSound.play()
     })
 
   
@@ -1498,11 +1558,12 @@ if(gameState==='cardsInventory'){
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
       gameState='game'
       score=score+15
       Rightplayer.x=width/1.5-width/2
       Rightplayer.y=height/2
-      skin1sound.play()
+      selectSound.play()
       arrow1.x= width/2.2-width/2
       arrow2.x= width/2.2-width/2
       arrow3.x=width/2.2-width/2
@@ -1530,12 +1591,13 @@ text('Card for Use',  width/.97- width/2, height/2-210)
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
       gameState='game'
       score=score+20
       health=health+15
       Rightplayer.x=width/1.5-width/2
       Rightplayer.y=height/2
-      skin1sound.play()
+      selectSound.play()
       arrow1.x= width/2.2-width/2
       arrow2.x= width/2.2-width/2
       arrow3.x=width/2.2-width/2
@@ -1566,6 +1628,7 @@ text('Card for Use',  width/.84- width/2, height/2-210)
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -1573,7 +1636,7 @@ text('Card for Use',  width/.84- width/2, height/2-210)
       Rightplayer.y=height/2
 
       arrow_get_back.x= width/.4-width/2
-      skin1sound.play()
+      selectSound.play()
       arrow1.x= width/2.2-width/2
       arrow2.x= width/2.2-width/2
       arrow3.x=width/2.2-width/2
@@ -1611,7 +1674,7 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
       Rightplayer.y=height/2
 // arrow get back is not used here because this is not the power card. Its the thunder card
      // arrow_get_back.x= width/.4-width/2
-      skin1sound.play()
+     selectSound.play()
       arrow1.x= width/2.2-width/2
       arrow2.x= width/2.2-width/2
       arrow3.x=width/2.2-width/2
@@ -1626,6 +1689,49 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
   arrow4.velocityX=0
 
   redthunderhastouched=1
+      
+  
+    })
+
+
+    if(card8unlock>0){
+      card8use.show()
+      fill('green')
+      textSize(13)
+text('Card for Use',  width/1.18- width/2, height/2-15)
+    }
+
+    card8use.mousePressed(()=>{
+      runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      card7use.hide()
+      card8use.hide()
+      gameState='game'
+      score=score+50
+      health=health+50
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+      arrow_get_back.x= width/.4-width/2
+      selectSound.play()
+      arrow1.x= width/2.2-width/2
+      arrow2.x= width/2.2-width/2
+      arrow3.x=width/2.2-width/2
+      arrow4.x= width/2.2-width/2
+      arrow1.y=height/2
+      arrow2.y= height/2-120
+      arrow3.y= height/2-240
+      arrow4.y = height/2+200
+  arrow1.velocityX=0
+  arrow2.velocityX=0
+  arrow3.velocityX=0
+  arrow4.velocityX=0
+
+  redthunderhastouched=1
+  stormhastouched=1
 
   
     })
@@ -1640,7 +1746,10 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
       arrow_get_back.x= width/.1-width/2
+      selectSound.play()
+      homesound.play()
     })
 
     
