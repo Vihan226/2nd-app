@@ -31,6 +31,9 @@ var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
 var selectSound;
+var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop ;
+var database, coins, coinStock;
+var settings, slider, worldstats, roadmap;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -62,6 +65,11 @@ selectSound= loadSound('select.wav')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
+
+database= firebase.database()
+coinStock=database.ref('Coins');
+coinStock.on("value",readStock);
+textSize(15);
 
 for (var i=0; i<200; i++){
 drop[i]= new Drop()
@@ -128,7 +136,7 @@ health_increaseButton.size(110,90)
 health_increaseButton.hide()
 
 inventory=createImg('useinventory.png')
-inventory.position(width/1.61-width/2, height/2-455)
+inventory.position(width/1.64-width/2, height/2-455)
 inventory.size(80,80)
 inventory.hide()
 
@@ -212,6 +220,25 @@ card8use.position(width/1.2-width/2, height/2-10)
 card8use.size(115,170)
 card8use.hide()
 
+// all the stuff of settings
+settings=createImg('settings.png')
+settings.position(width/1.67-width/2, height/2-340)
+settings.size(110,80)
+settings.hide()
+
+worldstats=createImg('worldstats.png')
+worldstats.position(width/1.13-width/2, height/2-370)
+worldstats.size(300,300)
+worldstats.hide()
+
+roadmap=createImg('roadmap.png')
+roadmap.position(width/1.13-width/2, height/2+50)
+roadmap.size(300,300)
+roadmap.hide()
+
+slider= createSlider(0,1,.5, .01)
+slider.hide()
+
 storm= createSprite(width/1.25-width/2, height/2- 10000)
 storm.addImage('lightingstorm', stormImage)
 storm.scale=2
@@ -230,7 +257,7 @@ Rightplayer.visible=false
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
 
-GetBack=createSprite(width/1.15-width/2, height/2-500, 10000,10)
+GetBack=createSprite(width/1.15-width/2, height/2-370, 10000,10)
 GetBack.visible=false
 
 GetBack2=createSprite(width/1.15-width/2, height/2+500, 10000,10)
@@ -285,11 +312,26 @@ card7unlock=0
 card8unlock=0
 redthunderhastouched=0
 stormhastouched=0
+card2stop=0
+card3stop=0
+card4stop=0
+card5stop=0
+card7stop=0
+card8stop=0
+
 }
 
 function draw() {
 background('green')
 
+
+homesound.setVolume(slider.value())
+CoinSound.setVolume(slider.value())
+EnemySound.setVolume(slider.value())
+ThunderSound.setVolume(slider.value())  
+skin1sound.setVolume(slider.value())
+selectSound.setVolume(slider.value())
+  //add styles here
 
 
 // this is question 1 from the game
@@ -396,6 +438,8 @@ gameState="home"
 
 
 if(gameState==="game"){
+
+
   background(Background)
   allow.hide()
   powerButton.show()
@@ -458,7 +502,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
   }
 
   if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)||skin2.isTouching(coin)){
-  score=score+2
+ score=score+5
   CoinSound.play()
   coin.destroy()
   }
@@ -975,12 +1019,31 @@ if(gameState==='home'){
   skinChange.show()
   allow.hide()
   inventory.show()
+  settings.show()
 
   inventory.mousePressed(()=>{
     gameState='cardsInventory'
     inventory.hide()
     selectSound.play()
     homesound.stop()
+    settings.hide()
+  })
+
+  settings.mousePressed(()=>{
+    gameState='settings'
+
+    selectSound.play()
+    homesound.stop()
+ 
+
+
+    inventory.hide()
+    hometext.hide()
+    dailyCard.hide()
+    cardTrades.hide()
+    playButton.hide()
+    skinChange.hide()
+    home.show()
   })
   if(card1unlock>0){
     dailyCard.show()
@@ -1004,6 +1067,7 @@ if(gameState==='home'){
 
     dailyCard.hide()
     inventory.hide()
+    settings.hide()
 
     runnerScore=0
     redthunderhastouched=0
@@ -1047,6 +1111,7 @@ arrow4.velocityX=0
   skinChange.hide()
   dailyCard.hide()
   inventory.hide()
+  settings.hide()
   cardTrades.hide()
   })
 
@@ -1058,6 +1123,7 @@ arrow4.velocityX=0
     playButton.hide()
     cardTrades.hide()
     inventory.hide()
+    settings.hide()
     selectSound.play()
 
     Platform.visible=true
@@ -1090,6 +1156,7 @@ arrow4.velocityX=0
     gameState='cards'
     dailyCard.hide()
     inventory.hide()
+    settings.hide()
     selectSound.play()
     homesound.stop()
 
@@ -1212,6 +1279,32 @@ if(gameState==='cards'){
   card8button.show()
   dailyCard.hide()
 
+
+  if(card2stop>2){
+    card2unlock=0
+    card2stop=0
+  }
+
+  if(card3stop>1){
+    card3unlock=0
+    card3stop=0
+  }
+  if(card4stop>1){
+    card4unlock=0
+    card4stop=0
+  }
+  if(card5stop>1){
+    card5unlock=0
+    card5stop=0
+  }
+  if(card7stop>1){
+    card7unlock=0
+    card7stop=0
+  }
+  if(card8stop>0){
+    card8unlock=0
+    card8stop=0
+  }
   
   card1button.mousePressed(()=>{
     card1unlock=1
@@ -1376,6 +1469,8 @@ if(gameState==='challenge'){
   if(touches.length>0|| keyDown('space')){
     Rightplayer.velocityY=-10
     touches=[]
+    
+    
       }
 
       Platform.visible=true
@@ -1493,7 +1588,6 @@ if(health<0){
 
 if(gameState==='cardsInventory'){
   background('yellow')
- 
 
   hometext.visible=false;
   dailyCard.hide()
@@ -1502,7 +1596,43 @@ if(gameState==='cardsInventory'){
   home.show()
   playButton.hide()
   storm.visible=false;
+// make cards buy again
 
+if(card2stop>2){
+  card2unlock=0
+  card2stop=0
+  score=score-5
+  health=health-5
+}
+if(card3stop>1){
+  card3unlock=0
+  card3stop=0
+  score=score-10
+  health=health-10
+}
+if(card4stop>1){
+  card4unlock=0
+  card4stop=0
+  score=score-20
+  health=health-20
+}
+if(card5stop>1){
+  card5unlock=0
+  card5stop=0
+  score=score-35
+  health=health-25
+}
+if(card7stop>1){
+  card7unlock=0
+  card7stop=0
+  score=score-40
+  health=health-30
+}
+if(card8stop>0){
+  card8unlock=0
+  card8stop=0
+  
+}
     if(card2unlock>0){
       card2use.show()
       fill('green')
@@ -1538,6 +1668,10 @@ if(gameState==='cardsInventory'){
   arrow4.velocityX=0
 
   selectSound.play()
+
+  card2stop=card2stop+1
+
+
     })
 
   
@@ -1576,6 +1710,8 @@ if(gameState==='cardsInventory'){
   arrow2.velocityX=0
   arrow3.velocityX=0
   arrow4.velocityX=0
+  
+  card3stop=card3stop+1
     })
 
     if(card4unlock>0){
@@ -1610,6 +1746,7 @@ text('Card for Use',  width/.97- width/2, height/2-210)
   arrow2.velocityX=0
   arrow3.velocityX=0
   arrow4.velocityX=0
+  card4stop=card4stop+1
     })
 
     //
@@ -1649,7 +1786,7 @@ text('Card for Use',  width/.84- width/2, height/2-210)
   arrow2.velocityX=0
   arrow3.velocityX=0
   arrow4.velocityX=0
-
+  card5stop=card5stop+1
 
     })
 
@@ -1689,7 +1826,7 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
   arrow4.velocityX=0
 
   redthunderhastouched=1
-      
+  card7stop=card7stop+1
   
     })
 
@@ -1732,7 +1869,7 @@ text('Card for Use',  width/1.18- width/2, height/2-15)
 
   redthunderhastouched=1
   stormhastouched=1
-
+  card8stop=card8stop+1
   
     })
 
@@ -1754,6 +1891,34 @@ text('Card for Use',  width/1.18- width/2, height/2-15)
 
     
 
+}
+if(gameState==='settings'){
+  background('yellow')
+
+  roadmap.show()
+  worldstats.show()
+  slider.show()
+  
+  homesound.stop()
+settings.hide()
+
+
+
+  inventory.hide()
+  hometext.visible=false
+  dailyCard.hide()
+  cardTrades.hide()
+  playButton.hide()
+  skinChange.hide()
+  home.show()
+
+  home.mousePressed(()=>{
+    gameState='home'
+homesound.play()
+slider.hide()
+roadmap.hide()
+worldstats.hide()
+  })
 }
 drawSprites();
   
@@ -1814,6 +1979,14 @@ this.update= function(){
     this.y=random(0,-height)
   }
 }
+}
+function readStock(data){
+  coins= data.val()
+  
+}
+function writeStock(x){
+ x=x+1
+  database.ref('/').update({Coins:x})
 }
 
 /*function Snowballattack(){
