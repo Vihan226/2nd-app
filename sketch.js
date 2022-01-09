@@ -33,7 +33,7 @@ var anotheredthunder;
 var selectSound;
 var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop ;
 var database, coins, coinStock;
-var settings, slider, worldstats, roadmap;
+var settings, worldstats, roadmap, volumeon, volumeoff;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -85,7 +85,7 @@ snowball[i]= new Snowball()
 //homestate and its skins
 hometext= createSprite(width/1.05-width/2, height/2-300)
 hometext.addImage('hometext', hometextImage)
-hometext.scale=2
+hometext.scale=1.5
 hometext.visible=false
 
 home=createImg('usehome.png')
@@ -227,17 +227,26 @@ settings.size(110,80)
 settings.hide()
 
 worldstats=createImg('worldstats.png')
-worldstats.position(width/1.13-width/2, height/2-370)
-worldstats.size(300,300)
+worldstats.position(width/1.13-width/2, height/2-170)
+worldstats.size(200,200)
 worldstats.hide()
 
 roadmap=createImg('roadmap.png')
-roadmap.position(width/1.13-width/2, height/2+50)
-roadmap.size(300,300)
+roadmap.position(width/1.13-width/2, height/2+150)
+roadmap.size(200,200)
 roadmap.hide()
 
-slider= createSlider(0,1,.5, .01)
-slider.hide()
+volumeoff=createImg('volumeoff.png')
+volumeoff.position(width/1.1-width/2, height/2-390)
+volumeoff.size(200,130)
+volumeoff.hide()
+
+volumeon=createImg('volumeon.png')
+volumeon.position(width/1.3-width/2, height/2-390)
+volumeon.size(200,130)
+volumeon.hide()
+
+
 
 storm= createSprite(width/1.25-width/2, height/2- 10000)
 storm.addImage('lightingstorm', stormImage)
@@ -325,12 +334,7 @@ function draw() {
 background('green')
 
 
-homesound.setVolume(slider.value())
-CoinSound.setVolume(slider.value())
-EnemySound.setVolume(slider.value())
-ThunderSound.setVolume(slider.value())  
-skin1sound.setVolume(slider.value())
-selectSound.setVolume(slider.value())
+
   //add styles here
 
 
@@ -1044,6 +1048,7 @@ if(gameState==='home'){
     playButton.hide()
     skinChange.hide()
     home.show()
+
   })
   if(card1unlock>0){
     dailyCard.show()
@@ -1897,7 +1902,9 @@ if(gameState==='settings'){
 
   roadmap.show()
   worldstats.show()
-  slider.show()
+
+  volumeon.show()
+  volumeoff.show()
   
   homesound.stop()
 settings.hide()
@@ -1915,9 +1922,28 @@ settings.hide()
   home.mousePressed(()=>{
     gameState='home'
 homesound.play()
-slider.hide()
+
 roadmap.hide()
 worldstats.hide()
+volumeoff.hide()
+volumeon.hide()
+  })
+
+  volumeon.mousePressed(()=>{
+    homesound.setVolume(1)
+    CoinSound.setVolume(1)
+    EnemySound.setVolume(1)
+    ThunderSound.setVolume(1)
+    skin1sound.setVolume(1)
+    selectSound.setVolume(1)
+  })
+  volumeoff.mousePressed(()=>{
+    homesound.setVolume(0)
+    CoinSound.setVolume(0)
+    EnemySound.setVolume(0)
+    ThunderSound.setVolume(0)
+    skin1sound.setVolume(0)
+    selectSound.setVolume(0)
   })
 }
 drawSprites();
