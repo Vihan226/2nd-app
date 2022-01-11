@@ -34,6 +34,7 @@ var selectSound;
 var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop ;
 var database, coins, coinStock;
 var settings, worldstats, roadmap, volumeon, volumeoff;
+var roadmapbg;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -62,6 +63,7 @@ skin2image= loadAnimation('skin2image.png', 'skin2part2.png' ,'skin2part3.png','
 snowmanImage=loadImage('snowman.png')
 smbImage= loadImage('snowball.png')
 selectSound= loadSound('select.wav')
+roadmapbg= loadImage('roadmapbg.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -220,6 +222,8 @@ card8use.position(width/1.2-width/2, height/2-10)
 card8use.size(115,170)
 card8use.hide()
 
+
+
 // all the stuff of settings
 settings=createImg('settings.png')
 settings.position(width/1.67-width/2, height/2-340)
@@ -237,7 +241,7 @@ roadmap.size(200,200)
 roadmap.hide()
 
 volumeoff=createImg('volumeoff.png')
-volumeoff.position(width/1.1-width/2, height/2-390)
+volumeoff.position(width/1-width/2, height/2-390)
 volumeoff.size(200,130)
 volumeoff.hide()
 
@@ -1919,6 +1923,9 @@ settings.hide()
   skinChange.hide()
   home.show()
 
+  roadmap.mousePressed(()=>{
+    gameState='roadmap'
+  })
   home.mousePressed(()=>{
     gameState='home'
 homesound.play()
@@ -1944,6 +1951,20 @@ volumeon.hide()
     ThunderSound.setVolume(0)
     skin1sound.setVolume(0)
     selectSound.setVolume(0)
+  })
+}
+
+if(gameState==='roadmap'){
+  background(roadmapbg)
+
+  volumeoff.hide()
+  volumeon.hide()
+  roadmap.hide()
+  worldstats.hide()
+
+  home.mousePressed(()=>{
+    gameState='home'
+    home.hide()
   })
 }
 drawSprites();
