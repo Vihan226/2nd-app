@@ -365,16 +365,16 @@ background('green')
 
 
 // this is question 1 from the game
-textSize(70)
+textSize(30)
 fill("red")
-text(" Shorun ",width/1.15-width/2,height/2-400)
-text("Start in: "+start, width/7-width/2, height/2-300)
+text(" Shorun",width/1.25-width/2,height/2-200)
+text("Start in: "+start, width/4-width/2, height/2-300)
 
-textSize(40)
+textSize(20)
 fill("black")
-text("For policies this is an official game built by Vihan Seth", width/1.35-width/2, height/2-200)
-text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.47-width/2, height/2-160)
-text("Press- Agree and Continue to Play when it says Start!", width/1.35-width/2, height/2-110)
+text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
+text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
+text("Press- Agree and Continue to Play when it says Start!", width/1.25-width/2, height/2-110)
 
 //sprite
 
