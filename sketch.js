@@ -87,6 +87,7 @@ snowball[i]= new Snowball()
   }*/
 
 //homestate and its skins
+
 hometext= createSprite(width/1.05-width/2, height/2-300)
 hometext.addImage('hometext', hometextImage)
 hometext.scale=1.5
@@ -198,9 +199,6 @@ card9button= createImg('usecard9.png')
 card9button.position(width/1.505-width/2, height/2+200)
 card9button.size(120,170)
 card9button.hide()
-
-
-
 
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
@@ -330,6 +328,7 @@ snowman.scale=.4
 snowman.visible=false
 
 
+
 score=5
 health=30
 start=300
@@ -366,16 +365,16 @@ background('green')
 
 
 // this is question 1 from the game
-textSize(30)
+textSize(70)
 fill("red")
-text(" Shooting Dungeon- Made By Vihan Seth",width/1.25-width/2,height/2-200)
-text("Start in: "+start, width/4-width/2, height/2-300)
+text(" Shorun ",width/1.15-width/2,height/2-400)
+text("Start in: "+start, width/7-width/2, height/2-300)
 
-textSize(20)
+textSize(40)
 fill("black")
-text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
-text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
-text("Press- Agree and Continue to Play when it says Start!", width/1.25-width/2, height/2-110)
+text("For policies this is an official game built by Vihan Seth", width/1.35-width/2, height/2-200)
+text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.47-width/2, height/2-160)
+text("Press- Agree and Continue to Play when it says Start!", width/1.35-width/2, height/2-110)
 
 //sprite
 
@@ -2041,6 +2040,7 @@ settings.hide()
 
   roadmap.mousePressed(()=>{
     gameState='roadmap'
+    selectSound.play()
   })
   home.mousePressed(()=>{
     gameState='home'
@@ -2082,6 +2082,8 @@ if(gameState==='roadmap'){
     gameState='home'
     home.hide()
   })
+
+
 }
 drawSprites();
   
