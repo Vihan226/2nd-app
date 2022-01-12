@@ -190,10 +190,7 @@ card8button.position(width/.83-width/2, height/2-50)
 card8button.size(105,170)
 card8button.hide()
 
-bgset2= createImg('bgforcards2.png')
-bgset2.position(width/1.56-width/2, height/2+180)
-bgset2.size(1250,500)
-bgset2.hide()
+
 
 card9button= createImg('usecard9.png')
 card9button.position(width/1.505-width/2, height/2+200)
@@ -1042,7 +1039,7 @@ if(gameState==='home'){
   card7button.hide()
   card8button.hide()
   card9button.hide()
-  bgset2.hide()
+
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -1324,7 +1321,7 @@ if(gameState==='cards'){
   }
   if(cardset2unlocked>0){
     card9button.show()
-    bgset2.show()
+ 
   }
 
   if(card2stop>2){
