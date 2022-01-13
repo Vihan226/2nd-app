@@ -23,15 +23,15 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
 var selectSound;
-var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop ;
+var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop ;
 var database, coins, coinStock;
 var settings, worldstats, roadmap, volumeon, volumeoff;
 var roadmapbg;
@@ -200,6 +200,16 @@ card10button.position(width/1.2-width/2, height/2+190)
 card10button.size(150,210)
 card10button.hide()
 
+card11button= createImg('usecard11.png')
+card11button.position(width/.97-width/2, height/2+190)
+card11button.size(140,190)
+card11button.hide()
+
+card12button= createImg('usecard12.png')
+card12button.position(width/.83-width/2, height/2+190)
+card12button.size(140,190)
+card12button.hide()
+
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
@@ -245,6 +255,15 @@ card10use.position(width/.85-width/2, height/2-20)
 card10use.size(150,210)
 card10use.hide()
 
+card11use= createImg('usecard11.png')
+card11use.position(width/1.52-width/2, height/2+200)
+card11use.size(150,210)
+card11use.hide()
+
+card12use= createImg('usecard12.png')
+card12use.position(width/1.18-width/2, height/2+200)
+card12use.size(150,210)
+card12use.hide()
 // all the stuff of settings
 settings=createImg('settings.png')
 settings.position(width/1.67-width/2, height/2-340)
@@ -347,6 +366,8 @@ card7unlock=0
 card8unlock=0
 card9unlock=0
 card10unlock=0
+card11unlock=0
+card12unlock=0
 redthunderhastouched=0
 stormhastouched=0
 card2stop=0
@@ -357,6 +378,8 @@ card7stop=0
 card8stop=0
 card9stop=0
 card10stop=0
+card11stop=0
+card12stop=0
 jumpingcard=0
 cardset2unlocked=0
 }
@@ -511,6 +534,10 @@ if(jumpingcard>0&&touches.length>0|| jumpingcard>0&&keyDown('space')){
 
 if(jumpingcard>1&&touches.length>0|| jumpingcard>1&&keyDown('space')){
   Rightplayer.velocityY=-20
+  touches=[]
+}
+if(jumpingcard>2&&touches.length>0|| jumpingcard>2&&keyDown('space')){
+  Rightplayer.velocityY=-22
   touches=[]
 }
   
@@ -1026,10 +1053,15 @@ home.mousePressed(()=>{
   card8button.hide()
   card9button.hide()
   card10button.hide()
+  card11button.hide()
+  card12button.hide()
   skin2button.hide()
 
   arrow_get_back.x= width/.1-width/2
   storm.visible=false
+
+
+  GetBack.y= height/2-300
 
   jumpingcard=0
 })
@@ -1054,6 +1086,8 @@ if(gameState==='home'){
   card8button.hide()
   card9button.hide()
   card10button.hide()
+  card11button.hide()
+  card12button.hide()
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -1330,6 +1364,7 @@ if(gameState==='cards'){
 
 
 
+
  if(score<0){
    score=10
  }
@@ -1339,6 +1374,11 @@ if(gameState==='cards'){
   if(cardset2unlocked>0){
     card9button.show()
     card10button.show()
+
+    card11button.show()
+
+    card12button.show()
+
   }
 
   if(card2stop>2){
@@ -1373,6 +1413,15 @@ if(gameState==='cards'){
   if(card10stop>1){
     card10unlock=0
     card10stop=0
+  }
+  if(card11stop>1){
+    card11unlock=0
+    card11stop=0
+  }
+
+  if(card12stop>1){
+    card12unlock=0
+    card12stop=0
   }
   
   card1button.mousePressed(()=>{
@@ -1544,6 +1593,38 @@ if(gameState==='cards'){
     fill('green')
     textSize(13)
     text('Unlocked',  width/1.165- width/2, height/2+200)
+  }
+
+  card11button.mousePressed(()=>{
+    card11unlock=1
+    score=score-70
+    selectSound.play()
+
+    if(score<0){
+      card11unlock=0
+    }
+  })
+  if(card11unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked',  width/.946- width/2, height/2+200)
+  }
+
+
+  
+  card12button.mousePressed(()=>{
+    card12unlock=1
+    score=score-100
+    selectSound.play()
+
+    if(score<0){
+      card12unlock=0
+    }
+  })
+  if(card12unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked',  width/.817- width/2, height/2+200)
   }
 
 
@@ -1759,6 +1840,14 @@ if(card10stop>1){
   card10unlock=0
   card10stop=0
 }
+if(card11stop>1){
+  card11unlock=0
+  card11stop=0
+}
+if(card12stop>1){
+  card12unlock=0
+  card12stop=0
+}
 
     if(card2unlock>0){
       card2use.show()
@@ -1776,6 +1865,8 @@ if(card10stop>1){
       card8use.hide()
       card9use.hide()
       card10use.hide()
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
@@ -1824,7 +1915,8 @@ if(card10stop>1){
       card8use.hide()
       card9use.hide()
       card10use.hide()
-
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+15
       Rightplayer.x=width/1.5-width/2
@@ -1862,7 +1954,8 @@ text('Card for Use',  width/.97- width/2, height/2-210)
       card8use.hide()
       card9use.hide()
       card10use.hide()
-
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+20
       health=health+15
@@ -1903,7 +1996,8 @@ text('Card for Use',  width/.84- width/2, height/2-210)
       card8use.hide()
       card9use.hide()
       card10use.hide()
-
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -1942,6 +2036,11 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
       card4use.hide()
       card5use.hide()
       card7use.hide()
+      card8use.hide()
+      card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -1986,7 +2085,8 @@ text('Card for Use',  width/1.18- width/2, height/2-15)
       card8use.hide()
       card9use.hide()
       card10use.hide()
-
+      card11use.hide()
+      card12use.hide()
       gameState='game'
       score=score+50
       health=health+50
@@ -2030,6 +2130,9 @@ text('Card for Use',  width/.97- width/2, height/2-15)
       card7use.hide()
       card8use.hide()
       card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      card12use.hide()
       gameState='game'
 
     
@@ -2074,6 +2177,8 @@ text('Card for Use',  width/.83- width/2, height/2-15)
       card8use.hide()
       card9use.hide()
       card10use.hide()
+      card11use.hide()
+      card12use.hide()
       gameState='game'
 
     
@@ -2101,6 +2206,98 @@ arrow4.velocityX=0
 jumpingcard=2
     })
 
+    if(card11unlock>0){
+      card11use.show()
+      fill('green')
+      textSize(13)
+text('Card for Use',  width/1.48- width/2, height/2+205)
+    }
+
+    card11use.mousePressed(()=>{
+      runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      card7use.hide()
+      card8use.hide()
+      card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      gameState='game'
+
+    
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+  selectSound.play()
+  card11stop=card11stop+1
+  
+  arrow_get_back.x= width/.4-width/2
+
+  arrow1.x= width/2.2-width/2
+  arrow2.x= width/2.2-width/2
+  arrow3.x=width/2.2-width/2
+  arrow4.x= width/2.2-width/2
+  arrow1.y=height/2
+  arrow2.y= height/2-120
+  arrow3.y= height/2-240
+  arrow4.y = height/2+200
+arrow1.velocityX=0
+arrow2.velocityX=0
+arrow3.velocityX=0
+arrow4.velocityX=0
+
+GetBack.y= height/2-450
+    })
+
+    if(card12unlock>0){
+      card12use.show()
+      fill('green')
+      textSize(13)
+text('Card for Use',  width/1.16- width/2, height/2+205)
+    }
+
+    card12use.mousePressed(()=>{
+      runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      card7use.hide()
+      card8use.hide()
+      card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      card12use.hide()
+      gameState='game'
+
+    
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+  selectSound.play()
+  card12stop=card12stop+1
+  
+  arrow_get_back.x= width/.4-width/2
+
+  arrow1.x= width/2.2-width/2
+  arrow2.x= width/2.2-width/2
+  arrow3.x=width/2.2-width/2
+  arrow4.x= width/2.2-width/2
+  arrow1.y=height/2
+  arrow2.y= height/2-120
+  arrow3.y= height/2-240
+  arrow4.y = height/2+200
+arrow1.velocityX=0
+arrow2.velocityX=0
+arrow3.velocityX=0
+arrow4.velocityX=0
+
+GetBack.y= height/2-600
+jumpingcard=3
+    })
+
 
     home.mousePressed(()=>{
       gameState='home'
@@ -2112,6 +2309,8 @@ jumpingcard=2
       card8use.hide()
       card9use.hide()
       card10use.hide()
+      card11use.hide()
+
       arrow_get_back.x= width/.1-width/2
       selectSound.play()
       homesound.play()
