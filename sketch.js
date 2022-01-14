@@ -37,6 +37,8 @@ var settings, worldstats, roadmap, volumeon, volumeoff;
 var roadmapbg;
 var jumpingcard, firstachiev;
 var bgset2, cardset2unlocked;
+var coinsclaim;
+var coinsnotlost;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -382,6 +384,7 @@ card11stop=0
 card12stop=0
 jumpingcard=0
 cardset2unlocked=0
+coinsnotlost=0
 }
 
 function draw() {
@@ -1425,13 +1428,16 @@ if(gameState==='cards'){
   }
   
   card1button.mousePressed(()=>{
-    card1unlock=1
-    score= score-20
-    selectSound.play()
-    
-    if(score<0){
-      card1unlock=0
-    }
+    if(score>19){
+      score=score-20
+      card1unlock=1
+      coinsnotlost=1
+      }
+      if(score<24&&coinsnotlost==0){
+        card1unlock=0
+      }
+
+      selectSound.play()
    
   })
 
@@ -1444,16 +1450,20 @@ if(gameState==='cards'){
           
   }
 
+
   card2button.mousePressed(()=>{
-    card2unlock=1;
-    score=score-25
-    selectSound.play()
+    if(score>24){
+      score=score-25
+      card2unlock=1
+      coinsnotlost=2
+      }
+      if(score<24&&coinsnotlost==0){
+        card2unlock=0
+      }
+selectSound.play()
 
-    if(score<0){
-      card2unlock=0
-    }
+   
   })
-
 
 
   if(card2unlock>0){
@@ -1463,13 +1473,20 @@ if(gameState==='cards'){
   }
 
   card3button.mousePressed(()=>{
-    card3unlock=1
-    score=score-35
-    selectSound.play()
+   
+ 
 
-    if(score<0){
+    if(score>34){
+    score=score-35
+    card3unlock=1
+    coinsnotlost=3
+    }
+    if(score<34&&coinsnotlost==0){
       card3unlock=0
     }
+    selectSound.play()
+
+
   })
 
   if(card3unlock>0){
@@ -1479,13 +1496,16 @@ if(gameState==='cards'){
   }
 
   card4button.mousePressed(()=>{
-    card4unlock=1
-    score=score-35
-    selectSound.play()
+    if(score>34){
+      score=score-35
+      card4unlock=1
+      coinsnotlost=4
+      }
+      if(score<34&&coinsnotlost==0){
+        card4unlock=0
+      }
 
-    if(score<0){
-      card4unlock=0
-    }
+      selectSound.play()
   })
 
 
@@ -1497,13 +1517,15 @@ if(gameState==='cards'){
 
   //card5
   card5button.mousePressed(()=>{
-    card5unlock=1
-    score=score-55
-    selectSound.play()
-
-    if(score<0){
-      card5unlock=0
-    }
+    if(score>54){
+      score=score-55
+      card5unlock=1
+      coinsnotlost=5
+      }
+      if(score<54&&coinsnotlost==0){
+        card5unlock=0
+      }
+      selectSound.play()
   })
 
   if(card5unlock>0){
@@ -1513,13 +1535,15 @@ if(gameState==='cards'){
   }
 
   card6button.mousePressed(()=>{
-    card6unlock=1
-    score=score-75
-    selectSound.play()
-
-    if(score<0){
-      card6unlock=0
-    }
+    if(score>54){
+      score=score-55
+      card6unlock=1
+      coinsnotlost=6
+      }
+      if(score<54&&coinsnotlost==0){
+        card6unlock=0
+      }
+      selectSound.play()
   })
 
 
@@ -1530,13 +1554,16 @@ if(gameState==='cards'){
   }
 
   card7button.mousePressed(()=>{
-    card7unlock=1
-    score=score-55
-    selectSound.play()
+    if(score>74){
+      score=score-75
+      card7unlock=1
+      coinsnotlost=7
+      }
+      if(score<74&&coinsnotlost==0){
+        card7unlock=0
+      }
 
-    if(score<0){
-      card7unlock=0
-    }
+      selectSound.play()
   })
   
 
@@ -1547,13 +1574,15 @@ if(gameState==='cards'){
   }
 
   card8button.mousePressed(()=>{
-    card8unlock=1
-    score=score-80
-    selectSound.play()
-
-    if(score<0){
-      card8unlock=0
-    }
+    if(score>79){
+      score=score-80
+      card8unlock=1
+      coinsnotlost=8
+      }
+      if(score<79&&coinsnotlost==0){
+        card8unlock=0
+      }
+      selectSound.play()
   })
   
 
@@ -1564,13 +1593,16 @@ if(gameState==='cards'){
   }
 
   card9button.mousePressed(()=>{
-    card9unlock=1
-    score=score-50
-    selectSound.play()
+    if(score>49){
+      score=score-50
+      card9unlock=1
+      coinsnotlost=9
+      }
+      if(score<49&&coinsnotlost==0){
+        card9unlock=0
+      }
 
-    if(score<0){
-      card9unlock=0
-    }
+      selectSound.play()
   })
   if(card9unlock>0){
     fill('green')
@@ -1581,13 +1613,15 @@ if(gameState==='cards'){
 
 
   card10button.mousePressed(()=>{
-    card10unlock=1
-    score=score-60
-    selectSound.play()
-
-    if(score<0){
-      card10unlock=0
-    }
+    if(score>59){
+      score=score-60
+      card10unlock=1
+      coinsnotlost=10
+      }
+      if(score<59&&coinsnotlost==0){
+        card10unlock=0
+      }
+      selectSound.play()
   })
   if(card10unlock>0){
     fill('green')
@@ -1596,13 +1630,16 @@ if(gameState==='cards'){
   }
 
   card11button.mousePressed(()=>{
-    card11unlock=1
-    score=score-70
-    selectSound.play()
+    if(score>69){
+      score=score-70
+      card11unlock=1
+      coinsnotlost=11
+      }
+      if(score<69&&coinsnotlost==0){
+        card11unlock=0
+      }
 
-    if(score<0){
-      card11unlock=0
-    }
+      selectSound.play()
   })
   if(card11unlock>0){
     fill('green')
@@ -1613,13 +1650,15 @@ if(gameState==='cards'){
 
   
   card12button.mousePressed(()=>{
-    card12unlock=1
-    score=score-100
-    selectSound.play()
-
-    if(score<0){
-      card12unlock=0
-    }
+    if(score>99){
+      score=score-100
+      card12unlock=1
+      coinsnotlost=12
+      }
+      if(score<99&&coinsnotlost==0){
+        card12unlock=0
+      }
+      selectSound.play()
   })
   if(card12unlock>0){
     fill('green')
@@ -1786,7 +1825,7 @@ if(health<0){
 }
 
 if(gameState==='cardsInventory'){
-  background('yellow')
+  background('white')
 
   hometext.visible=false;
   dailyCard.hide()
@@ -1872,6 +1911,8 @@ if(card12stop>1){
       Rightplayer.x=width/1.5-width/2
       Rightplayer.y=height/2
 
+      RedThunder.x= width/.75-width/2
+      RedThunder.y=height/2-340
  
 
       arrow1.x= width/2.2-width/2
@@ -1936,6 +1977,9 @@ if(card12stop>1){
   arrow4.velocityX=0
   
   card3stop=card3stop+1
+
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
     })
 
     if(card4unlock>0){
@@ -1975,6 +2019,9 @@ text('Card for Use',  width/.97- width/2, height/2-210)
   arrow3.velocityX=0
   arrow4.velocityX=0
   card4stop=card4stop+1
+
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
     })
 
     //
@@ -2020,6 +2067,8 @@ text('Card for Use',  width/.84- width/2, height/2-210)
   arrow4.velocityX=0
   card5stop=card5stop+1
 
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
     })
 
     if(card7unlock>0){
@@ -2065,6 +2114,9 @@ text('Card for Use',  width/1.481- width/2, height/2-15)
   redthunderhastouched=1
   card7stop=card7stop+1
   
+
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
     })
 
 
@@ -2111,6 +2163,9 @@ text('Card for Use',  width/1.18- width/2, height/2-15)
   redthunderhastouched=1
   stormhastouched=1
   card8stop=card8stop+1
+
+  RedThunder.x= width/.75-width/2
+  RedThunder.y=height/2-340
   
     })
 
@@ -2158,6 +2213,9 @@ arrow3.velocityX=0
 arrow4.velocityX=0
 
 jumpingcard=1
+
+RedThunder.x= width/.75-width/2
+RedThunder.y=height/2-340
     })
 
     if(card10unlock>0){
@@ -2204,6 +2262,9 @@ arrow3.velocityX=0
 arrow4.velocityX=0
 
 jumpingcard=2
+
+RedThunder.x= width/.75-width/2
+RedThunder.y=height/2-340
     })
 
     if(card11unlock>0){
@@ -2249,6 +2310,9 @@ arrow3.velocityX=0
 arrow4.velocityX=0
 
 GetBack.y= height/2-450
+
+RedThunder.x= width/.75-width/2
+RedThunder.y=height/2-340
     })
 
     if(card12unlock>0){
@@ -2296,6 +2360,9 @@ arrow4.velocityX=0
 
 GetBack.y= height/2-600
 jumpingcard=3
+
+RedThunder.x= width/.75-width/2
+RedThunder.y=height/2-340
     })
 
 
