@@ -238,73 +238,73 @@ dailyCard.position(width/.745-width/2, height/2+200)
 dailyCard.hide()
 
 card2use= createImg('usecard2.png')
-card2use.position(width/1.5-width/2, height/2-200)
-card2use.size(105,170)
+card2use.position(width/1.52-width/2, height/2-200)
+card2use.size(140,210)
 card2use.hide()
 
 card3use= createImg('usecard3.png')
 card3use.position(width/1.2-width/2, height/2-200)
-card3use.size(105,170)
+card3use.size(140,210)
 card3use.hide()
 
 card4use= createImg('usecard4.png')
 card4use.position(width/.98-width/2, height/2-200)
-card4use.size(105,170)
+card4use.size(140,210)
 card4use.hide()
 
 card5use= createImg('usecard5.png')
 card5use.position(width/.85-width/2, height/2-200)
-card5use.size(115,170)
+card5use.size(140,210)
 card5use.hide()
 
 card7use= createImg('usecard7.png')
-card7use.position(width/1.5-width/2, height/2-10)
-card7use.size(115,170)
+card7use.position(width/1.523-width/2, height/2+50)
+card7use.size(160,210)
 card7use.hide()
 
 card8use= createImg('usecard8.png')
-card8use.position(width/1.2-width/2, height/2-10)
-card8use.size(115,170)
+card8use.position(width/1.2-width/2, height/2+50)
+card8use.size(140,210)
 card8use.hide()
 
 card9use= createImg('usecard9.png')
-card9use.position(width/.98-width/2, height/2-10)
-card9use.size(115,170)
+card9use.position(width/.982-width/2, height/2+50)
+card9use.size(155,210)
 card9use.hide()
 
 card10use= createImg('usecard10.png')
-card10use.position(width/.85-width/2, height/2-20)
-card10use.size(150,210)
+card10use.position(width/.86-width/2, height/2+37)
+card10use.size(190,265)
 card10use.hide()
 
 card11use= createImg('usecard11.png')
-card11use.position(width/1.52-width/2, height/2+200)
-card11use.size(150,210)
+card11use.position(width/1.534-width/2, height/2+340)
+card11use.size(190,230)
 card11use.hide()
 
 card12use= createImg('usecard12.png')
-card12use.position(width/1.18-width/2, height/2+200)
-card12use.size(150,210)
+card12use.position(width/1.21-width/2, height/2+342)
+card12use.size(170,230)
 card12use.hide()
 
 card13use= createImg('usecard14.png')
-card13use.position(width/.85-width/2, height/2+200)
-card13use.size(165,210)
+card13use.position(width/.854-width/2, height/2+340)
+card13use.size(170,230)
 card13use.hide()
 
 card14use= createImg('usecard13.png')
-card14use.position(width/.98-width/2, height/2+200)
-card14use.size(165,210)
+card14use.position(width/.985-width/2, height/2+340)
+card14use.size(180,230)
 card14use.hide()
 
 card15use= createImg('usecard15.png')
-card15use.position(width/.85-width/2, height/2+200)
-card15use.size(165,210)
+card15use.position(width/1.52-width/2, height/2+640)
+card15use.size(180,220)
 card15use.hide()
 
 card16use= createImg('usecard16.png')
-card16use.position(width/1.522-width/2, height/2+470)
-card16use.size(165,210)
+card16use.position(width/1.2-width/2, height/2+640)
+card16use.size(160,220)
 card16use.hide()
 // all the stuff of settings
 settings=createImg('settings.png')
@@ -1624,7 +1624,7 @@ selectSound.play()
   if(card5unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.48- width/2, height/2-60)
+    text('Unlocked',  width/1.48- width/2, height/2+30)
   }
 
   card6button.mousePressed(()=>{
@@ -1643,7 +1643,7 @@ selectSound.play()
   if(card6unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.95- width/2, height/2-55)
+    text('Unlocked',  width/.95- width/2, height/2+30)
   }
 
   card7button.mousePressed(()=>{
@@ -1663,7 +1663,7 @@ selectSound.play()
   if(card7unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.18- width/2, height/2-55)
+    text('Unlocked',  width/1.18- width/2, height/2+30)
   }
 
   card8button.mousePressed(()=>{
@@ -1682,7 +1682,7 @@ selectSound.play()
   if(card8unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.82- width/2, height/2-55)
+    text('Unlocked',  width/.82- width/2, height/2+30)
   }
 
   card9button.mousePressed(()=>{
@@ -1700,7 +1700,7 @@ selectSound.play()
   if(card9unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.473- width/2, height/2+200)
+    text('Unlocked',  width/1.473- width/2, height/2+330)
   }
 
 
@@ -1719,7 +1719,7 @@ selectSound.play()
   if(card10unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.165- width/2, height/2+200)
+    text('Unlocked',  width/1.165- width/2, height/2+330)
   }
 
   card11button.mousePressed(()=>{
@@ -1737,7 +1737,7 @@ selectSound.play()
   if(card11unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.946- width/2, height/2+200)
+    text('Unlocked',  width/.946- width/2, height/2+330)
   }
 
 
@@ -1756,7 +1756,7 @@ selectSound.play()
   if(card12unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.817- width/2, height/2+200)
+    text('Unlocked',  width/.817- width/2, height/2+330)
   }
 
   card13button.mousePressed(()=>{
@@ -1773,7 +1773,7 @@ selectSound.play()
   if(card13unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.46- width/2, height/2+452)
+    text('Unlocked',  width/1.46- width/2, height/2+620)
   }
 
   card14button.mousePressed(()=>{
@@ -1790,7 +1790,7 @@ selectSound.play()
   if(card14unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/1.17- width/2, height/2+452)
+    text('Unlocked',  width/1.17- width/2, height/2+620)
   }
 
   card15button.mousePressed(()=>{
@@ -1807,7 +1807,7 @@ selectSound.play()
   if(card15unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.95- width/2, height/2+452)
+    text('Unlocked',  width/.95- width/2, height/2+620)
   }
 
   card16button.mousePressed(()=>{
@@ -1824,7 +1824,7 @@ selectSound.play()
   if(card16unlock>0){
     fill('green')
     textSize(13)
-    text('Unlocked',  width/.82- width/2, height/2+452)
+    text('Unlocked',  width/.82- width/2, height/2+620)
   }
 
 
