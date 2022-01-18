@@ -592,8 +592,8 @@ if(gameState==="game"){
   runnerScore= runnerScore+1
 
   if(enemyspeed>0){
-    Greenenemy.velocityX=-10
-    redenemy.velocityX=-8
+    Greenenemy.velocityX=-15
+    redenemy.velocityX=-9
   }
 if(score>24){
   firstachiev=1
@@ -1076,7 +1076,39 @@ kills=kills+1
   if(runnerScore>1400&&enemyspeed<1){
     Greenenemy.velocityX=-18
     coin.velocityX=-14
-    Smallblock.velocityX=-9
+    Smallblock.velocityX=-11
+  
+  }
+
+  if(runnerScore>1900&&enemyspeed<1){
+    Greenenemy.velocityX=-22
+    coin.velocityX=-14
+    Smallblock.velocityX=-12
+  
+  }
+
+  if(runnerScore>2500&&enemyspeed<1){
+    Greenenemy.velocityX=-24
+    coin.velocityX=-14
+    Smallblock.velocityX=-15
+  
+  }
+  if(runnerScore>2900&&enemyspeed<1){
+    Greenenemy.velocityX=-24
+    coin.velocityX=-15
+    Smallblock.velocityX=-16
+  
+  }
+  if(runnerScore>3500&&enemyspeed<1){
+    Greenenemy.velocityX=-28
+    coin.velocityX=-14
+    Smallblock.velocityX=-15
+  
+  }
+  if(runnerScore>4000&&enemyspeed<1){
+    Greenenemy.velocityX=-28.5
+    coin.velocityX=-14
+    Smallblock.velocityX=-17
   
   }
 
@@ -1165,6 +1197,8 @@ home.mousePressed(()=>{
 
   jumpingcard=0
   enemyspeed=0
+
+  runnerScore=runnerScore+0
 })
 
 
@@ -1262,7 +1296,7 @@ if(gameState==='home'){
     inventory.hide()
     settings.hide()
 
-    runnerScore=0
+    //runnerScore=0
     redthunderhastouched=0
     stormhastouched=0
     RedThunder.x= width/.75-width/2
@@ -1510,68 +1544,91 @@ if(gameState==='cards'){
   if(card2stop>2){
     card2unlock=0
     card2stop=0
+  
+    card2button.size(140,210)
   }
-
   if(card3stop>1){
     card3unlock=0
     card3stop=0
+  
+    card3button.size(140,210)
   }
   if(card4stop>1){
     card4unlock=0
     card4stop=0
+    card4button.size(140,210)
   }
   if(card5stop>1){
     card5unlock=0
     card5stop=0
+    card5button.size(152,210)
   }
   if(card7stop>1){
     card7unlock=0
     card7stop=0
+    card7button.size(158,220)
+  
   }
   if(card8stop>0){
     card8unlock=0
     card8stop=0
+    card8button.size(152,215)
+  
   }
   if(card9stop>1){
     card9unlock=0
     card9stop=0
+    card9button.size(175,220)
+  
   }
   if(card10stop>1){
     card10unlock=0
     card10stop=0
+  
+    card10button.size(200,280)
+  
   }
   if(card11stop>1){
     card11unlock=0
     card11stop=0
+    card11button.size(190,245)
+  
   }
-
   if(card12stop>1){
     card12unlock=0
     card12stop=0
+    card12button.size(190,245)
+  
   }
-
   if(card13stop>0){
     card13unlock=0
     card13stop=0
+    card13button.size(210,230)
+  
   }
-
   if(card14stop>0){
     card14unlock=0
     card14stop=0
+    card14button.size(190,245)
+  
   }
-
   if(card15stop>0){
     card15unlock=0
     card15stop=0
+    card15button.size(190,245)
+  
   }
   if(card16stop>0){
     card16unlock=0
     card16stop=0
+    card16button.size(190,245)
+  
   }
-
   if(card18stop>0){
     card18unlock=0
     card18stop=0
+    card18button.size(180,260)
+  
   }
   
   card1button.mousePressed(()=>{
@@ -1581,9 +1638,13 @@ if(gameState==='cards'){
       coinsnotlost=1
       selectSound.play()
       }
-      if(score<24&&coinsnotlost==0){
+      if(score<19&&coinsnotlost==0){
         card1unlock=0
       }
+
+if(card1unlock>0){
+  card1button.size(110,180)
+}
 
 
    
@@ -1605,6 +1666,9 @@ if(gameState==='cards'){
       }
 
 
+      if(card2unlock>0){
+        card2button.size(110,180)
+      }
    
   })
 
@@ -1625,6 +1689,10 @@ if(gameState==='cards'){
       card3unlock=0
     }
 
+    
+if(card3unlock>0){
+  card3button.size(110,180)
+}
 
   })
 
@@ -1642,7 +1710,9 @@ if(gameState==='cards'){
         card4unlock=0
       }
 
-      selectSound.play()
+      if(card4unlock>0){
+        card4button.size(110,180)
+      }
   })
 
 
@@ -1660,7 +1730,10 @@ if(gameState==='cards'){
       if(score<54&&coinsnotlost==0){
         card5unlock=0
       }
-      selectSound.play()
+     
+      if(card5unlock>0){
+        card5button.size(122,180)
+      }
   })
 
 
@@ -1675,7 +1748,9 @@ if(gameState==='cards'){
       if(score<74&&coinsnotlost==0){
         card6unlock=0
       }
-
+      if(card6unlock>0){
+        card6button.size(122,180)
+      }
   })
 
 
@@ -1691,7 +1766,9 @@ if(gameState==='cards'){
       if(score<54&&coinsnotlost==0){
         card7unlock=0
       }
-
+      if(card7unlock>0){
+        card7button.size(128,180)
+      }
    
   })
   
@@ -1709,6 +1786,10 @@ if(gameState==='cards'){
       if(score<79&&coinsnotlost==0){
         card8unlock=0
       }
+
+      if(card8unlock>0){
+        card8button.size(122,185)
+      }
   })
   
 
@@ -1725,7 +1806,9 @@ if(gameState==='cards'){
       if(score<49&&coinsnotlost==0){
         card9unlock=0
       }
-
+      if(card9unlock>0){
+        card9button.size(145, 190)
+      }
       
   })
 
@@ -1743,6 +1826,9 @@ if(gameState==='cards'){
       if(score<59&&coinsnotlost==0){
         card10unlock=0
       }
+      if(card10unlock>0){
+        card10button.size(170, 250)
+      }
   })
 
 
@@ -1758,7 +1844,9 @@ if(gameState==='cards'){
         card11unlock=0
       }
 
-  
+      if(card11unlock>0){
+        card11button.size(160, 215)
+      }
   })
 
 
@@ -1776,6 +1864,10 @@ if(gameState==='cards'){
         card12unlock=0
       }
 
+      if(card12unlock>0){
+        card12button.size(160, 215)
+      }
+
   })
 
 
@@ -1790,7 +1882,9 @@ if(gameState==='cards'){
       if(score<109&&coinsnotlost==0){
         card13unlock=0
       }
-
+      if(card13unlock>0){
+        card13button.size(180, 200)
+      }
   })
 
 
@@ -1805,7 +1899,9 @@ if(gameState==='cards'){
       if(score<119&&coinsnotlost==0){
         card14unlock=0
       }
-
+      if(card14unlock>0){
+        card14button.size(160, 215)
+      }
   })
 
 
@@ -1820,7 +1916,9 @@ if(gameState==='cards'){
       if(score<149&&coinsnotlost==0){
         card15unlock=0
       }
-
+      if(card15unlock>0){
+        card15button.size(160, 215)
+      }
   })
 
 
@@ -1835,7 +1933,9 @@ if(gameState==='cards'){
       if(score<199&&coinsnotlost==0){
         card16unlock=0
       }
-   
+      if(card16unlock>0){
+        card16button.size(160, 215)
+      }
   })
 
 
@@ -1851,7 +1951,9 @@ if(gameState==='cards'){
         card17unlock=0
       }
     
-
+      if(card17unlock>0){
+        card17button.size(150, 200)
+      }
   })
 
   card18button.mousePressed(()=>{
@@ -1866,7 +1968,9 @@ if(gameState==='cards'){
         card18unlock=0
       }
     
-
+      if(card18unlock>0){
+        card18button.size(150, 230)
+      }
   })
 
 
@@ -2048,73 +2152,91 @@ if(gameState==='cardsInventory'){
 if(card2stop>2){
   card2unlock=0
   card2stop=0
-  score=score-5
-  health=health-5
+
+  card2button.size(140,210)
 }
 if(card3stop>1){
   card3unlock=0
   card3stop=0
-  score=score-10
-  health=health-10
+
+  card3button.size(140,210)
 }
 if(card4stop>1){
   card4unlock=0
   card4stop=0
-  score=score-20
-  health=health-20
+  card4button.size(140,210)
 }
 if(card5stop>1){
   card5unlock=0
   card5stop=0
-  score=score-35
-  health=health-25
+  card5button.size(152,210)
 }
 if(card7stop>1){
   card7unlock=0
   card7stop=0
-  score=score-40
-  health=health-30
+  card7button.size(158,220)
+
 }
 if(card8stop>0){
   card8unlock=0
   card8stop=0
-  
+  card8button.size(152,215)
+
 }
 if(card9stop>1){
   card9unlock=0
   card9stop=0
+  card9button.size(175,220)
+
 }
 if(card10stop>1){
   card10unlock=0
   card10stop=0
+
+  card10button.size(200,280)
+
 }
 if(card11stop>1){
   card11unlock=0
   card11stop=0
+  card11button.size(190,245)
+
 }
 if(card12stop>1){
   card12unlock=0
   card12stop=0
+  card12button.size(190,245)
+
 }
 if(card13stop>0){
   card13unlock=0
   card13stop=0
+  card13button.size(210,230)
+
 }
 if(card14stop>0){
   card14unlock=0
   card14stop=0
+  card14button.size(190,245)
+
 }
 if(card15stop>0){
   card15unlock=0
   card15stop=0
+  card15button.size(190,245)
+
 }
 if(card16stop>0){
   card16unlock=0
   card16stop=0
+  card16button.size(190,245)
+
 }
 if(card18stop>0){
   card18unlock=0
   card18stop=0
+  card18button.size(180,260)
+
 }
 
     if(card2unlock>0){
@@ -2910,8 +3032,8 @@ RedThunder.y=height/2-340
 
     card17use.mousePressed(()=>{
 
-      if(score>19){
-        score=score-20
+      if(score>69){
+        score=score-70
 
         card2stop=card2stop-1
         card3stop=card3stop-1
