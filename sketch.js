@@ -41,6 +41,7 @@ var coinsclaim;
 var coinsnotlost;
 var cardset3unlocked;
 var enemyspeed;
+var chhealth;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -236,7 +237,7 @@ card16button.hide()
 
 card17button= createImg('usecard17.png')
 card17button.position(width/1.53-width/2, height/2+940)
-card17button.size(180,230)
+card17button.size(180,235)
 card17button.hide()
 
 card18button= createImg('usecard18.png')
@@ -460,6 +461,7 @@ cardset2unlocked=0
 cardset3unlocked=0
 coinsnotlost=0
 enemyspeed=0
+chhealth=0
 }
 
 function draw() {
@@ -1363,11 +1365,13 @@ enemyspeed=0
   RedThunder.x= width/.75-width/2
   RedThunder.y=height/2-340
 
-  health=100
+  chhealth=100
 
   seconds=600
 
-  
+  anotheredthunder.x= width/.8-width/2
+  anotheredthunder.y=height/2-340
+
   })
 
   if(score>9){
@@ -1394,9 +1398,8 @@ if(gameState==='skins'){
   text('Coins: '+score, width/1.6-width/2, height/2-300)
   fill('white')
   textSize(40)
-  text('Each Character will be 25 coins', width/1.3-width/2, height/2-490)
-  textSize(20)
-  text('Weekly characters!', width/1.3-width/2, height/2-450)
+  text('Each Character will be 25 coins', width/1.3-width/2, height/2-300)
+
   
   skin1.visible=false
   skin1.scale= 2
@@ -1642,13 +1645,18 @@ if(gameState==='cards'){
         card1unlock=0
       }
 
-if(card1unlock>0){
-  card1button.size(110,180)
-}
+    
 
 
    
   })
+  if(card1unlock>0){
+    fill('green')
+    textSize(13)
+    text('Unlocked', width/1.47- width/2, height/2-260)
+    
+          
+  }
 
 
 
@@ -1952,7 +1960,7 @@ if(card3unlock>0){
       }
     
       if(card17unlock>0){
-        card17button.size(150, 200)
+        card17button.size(150, 205)
       }
   })
 
@@ -1981,8 +1989,8 @@ if(card3unlock>0){
 
 
   fill('Blue')
-  textSize(20)
-  text('Coins: '+score, width/1.6-width/2, height/2-360)
+  textSize(30)
+  text('Coins: '+score, width/1.55-width/2, height/2-370)
 
 
 }
@@ -1991,8 +1999,9 @@ if(gameState==='challenge'){
   background('black')
 
   textSize(40)
-  text('Health: '+health, width/.8-width/2, height/2-280)
-  text('Time Left: '+ seconds, width/.8-width/2, height/2-230)
+  text('Health: '+chhealth, width/.82-width/2, height/2-280)
+  text('Time Left: '+ seconds, width/.82-width/2, height/2-230)
+  text('Prize: 50 Coins ', width/.83-width/2, height/2-170)
   Rightplayer.bounceOff(GetBack)
   for (var i=0; i<200; i++){
     drop[i].show()
@@ -2050,7 +2059,7 @@ anotheredthunder.velocityY=10
     if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)||Greenenemy.isTouching(skin2)){
       
       Greenenemy.destroy()
-      health=health-10
+      chhealth=chhealth-10
     }
     
       if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)||skin2.isTouching(Smallblock)){
@@ -2058,7 +2067,7 @@ anotheredthunder.velocityY=10
      
       
       Smallblock.destroy()
-      health=health-15
+      chhealth=chhealth-15
       }
     
 
@@ -2067,7 +2076,7 @@ anotheredthunder.velocityY=10
         
         redenemy.destroy()
 
-        health=health-20
+        chhealth=chhealth-20
       }
     
       if(Playerbullet.isTouching(redenemy)){
@@ -2085,29 +2094,35 @@ anotheredthunder.velocityY=10
         redenemybullet.destroy()
         redenemy.destroy()
 
-        health=health-20
+        chhealth=chhealth-20
       }
 
       if(anotheredthunder.isTouching(GetBack2)){
         anotheredthunder.visible=false
-        anotheredthunder.x= width/.75-width/2
+        anotheredthunder.x= width/.8-width/2
         anotheredthunder.y=height/2-340
-        anotheredthunder.velocityX=0
-        anotheredthunder.velocityY=0
+        //anotheredthunder.velocityX=0
+       // anotheredthunder.velocityY=0
       }
 
       if(anotheredthunder.isTouching(Rightplayer)){
-        health=health-2
+        chhealth=chhealth-2
       }
 
-      if(seconds<0&& health>0){
+    if(chhealth<0){
+gameState='home'
+card1unlock=0
+    }
+
+      if(seconds<0&& chhealth>0){
         gameState='home'
 
         score= score+50
 
         card1unlock=0
-        
-        
+        fill('green')
+        textSize(50)
+        text('WON', width/1.2-width/2, height/2-100)
 
       }
 
@@ -2119,10 +2134,7 @@ homesound.play()
 
 })
 
-if(health<0){
-  gameState='home'
-  card1unlock=0
-}
+
 
       
 
