@@ -23,15 +23,15 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
 var selectSound;
-var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop ;
+var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop, card19stop ;
 var database, coins, coinStock;
 var settings, worldstats, roadmap, volumeon, volumeoff;
 var roadmapbg;
@@ -42,6 +42,7 @@ var coinsnotlost;
 var cardset3unlocked;
 var enemyspeed;
 var chhealth;
+var code, submitButton;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -92,6 +93,13 @@ snowball[i]= new Snowball()
   }*/
 
 //homestate and its skins
+code= createInput('Type your code')
+code.position(width/1.2-width/2, height/2)
+code.hide()
+submitButton= createButton('Submit')
+submitButton.position(width/1.2-width/2, height/2+100)
+submitButton.hide()
+
 
 hometext= createSprite(width/1.05-width/2, height/2-300)
 hometext.addImage('hometext', hometextImage)
@@ -245,6 +253,11 @@ card18button.position(width/1.207-width/2, height/2+915)
 card18button.size(180,260)
 card18button.hide()
 
+card19button= createImg('usecard19.png')
+card19button.position(width/.963-width/2, height/2+915)
+card19button.size(150,240)
+card19button.hide()
+
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
@@ -329,6 +342,11 @@ card18use= createImg('usecard18.png')
 card18use.position(width/.854-width/2, height/2+620)
 card18use.size(160,220)
 card18use.hide()
+
+card19use= createImg('usecard19.png')
+card19use.position(width/1.5-width/2, height/2+920)
+card19use.size(140,230)
+card19use.hide()
 // all the stuff of settings
 settings=createImg('settings.png')
 settings.position(width/1.67-width/2, height/2-340)
@@ -439,6 +457,7 @@ card15unlock=0
 card16unlock=0
 card17unlock=0
 card18unlock=0
+card19unlock=0
 redthunderhastouched=0
 stormhastouched=0
 card2stop=0
@@ -456,6 +475,7 @@ card14stop=0
 card15stop=0
 card16stop=0
 card18stop=0
+card19stop=0
 jumpingcard=0
 cardset2unlocked=0
 cardset3unlocked=0
@@ -1189,6 +1209,7 @@ home.mousePressed(()=>{
   card16button.hide()
   card17button.hide()
   card18button.hide()
+  card19button.hide()
   skin2button.hide()
 
   arrow_get_back.x= width/.1-width/2
@@ -1213,6 +1234,8 @@ if(gameState==='home'){
   fill('green')
   textSize(30)
 
+  code.hide()
+  submitButton.hide()
   card1button.hide()
   card2button.hide()
   card3button.hide()
@@ -1231,6 +1254,8 @@ if(gameState==='home'){
   card16button.hide()
   card17button.hide()
   card18button.hide()
+  card19button.hide()
+  
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -1507,7 +1532,7 @@ if(gameState==='cards'){
   dailyCard.hide()
 
 
-
+ 
 
 
  if(score<0){
@@ -1535,13 +1560,15 @@ if(gameState==='cards'){
 
     card16button.show()
 
- 
+    
 
   }
   if(cardset3unlocked>1){
     card17button.show()
 
     card18button.show()
+
+    card19button.show()
   }
 
   if(card2stop>2){
@@ -1631,6 +1658,13 @@ if(gameState==='cards'){
     card18unlock=0
     card18stop=0
     card18button.size(180,260)
+  
+  }
+
+  if(card19stop>0){
+    card19unlock=0
+    card19stop=0
+    card19button.size(150,240)
   
   }
   
@@ -1981,6 +2015,22 @@ if(card3unlock>0){
       }
   })
 
+  card19button.mousePressed(()=>{
+    if(score>219){
+      score=score-220
+      card19unlock=1
+      coinsnotlost=19
+      selectSound.play()
+
+      }
+      if(score<219&&coinsnotlost==0){
+        card19unlock=0
+      }
+    
+      if(card19unlock>0){
+        card19button.size(120,210)
+      }
+  })
 
 
 
@@ -2250,6 +2300,12 @@ if(card18stop>0){
   card18button.size(180,260)
 
 }
+if(card19stop>0){
+  card19unlock=0
+  card19stop=0
+  card19button.size(150,240)
+
+}
 
     if(card2unlock>0){
       card2use.show()
@@ -2274,6 +2330,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
@@ -2331,6 +2388,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+15
       Rightplayer.x=width/1.5-width/2
@@ -2377,6 +2435,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+20
       health=health+15
@@ -2426,6 +2485,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -2475,6 +2535,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -2528,6 +2589,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
       score=score+50
       health=health+50
@@ -2581,6 +2643,7 @@ if(card18stop>0){
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -2634,6 +2697,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -2733,6 +2797,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -2787,6 +2852,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -2842,6 +2908,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -2896,6 +2963,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -3007,6 +3075,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
       gameState='game'
 
     
@@ -3037,6 +3106,45 @@ RedThunder.x= width/.75-width/2
 RedThunder.y=height/2-340
     })
 
+    if(card19unlock>0){
+      card19use.show()
+
+    }
+
+    card19use.mousePressed(()=>{
+      //runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      card7use.hide()
+      card8use.hide()
+      card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      card12use.hide()
+      card13use.hide()
+      card14use.hide()
+      card15use.hide()
+      card16use.hide()
+      card17use.hide()
+      card18use.hide()
+      card19use.hide()
+      gameState='multiplayer'
+
+    
+
+
+  selectSound.play()
+  card19stop=card19stop+1
+  
+
+
+  alert('To play multiplayer slide from left of your screen to the right and tap on the multiplayer bar. You will get a code after you have finished your game. It is your choice to play more or type the code in and receive the prize!Tip- Use the card(reload card unlimited use) so that you can use this card more times instead of rebuying it! ')
+
+
+    })
+
     if(card17unlock>0){
       card17use.show()
 
@@ -3062,6 +3170,7 @@ RedThunder.y=height/2-340
         card15stop=card15stop-1
         card16stop=card16stop-1
         card18stop=card18stop-1
+        card19stop=card19stop-1
       
 
         selectSound.play()
@@ -3087,6 +3196,7 @@ RedThunder.y=height/2-340
       card16use.hide()
       card17use.hide()
       card18use.hide()
+      card19use.hide()
 
       arrow_get_back.x= width/.1-width/2
       selectSound.play()
@@ -3149,6 +3259,48 @@ volumeon.hide()
     skin1sound.setVolume(0)
     selectSound.setVolume(0)
   })
+}
+
+if(gameState==="multiplayer"){
+  background('blue')
+
+
+  code.show()
+  submitButton.show()
+
+  submitButton.mousePressed(()=>{
+    codemulti= code.value()
+    if(codemulti=='jycd1'){
+      score=score+40
+      alert('You have received 40 coins')
+      gameState='home'
+    }
+
+    if(codemulti=='fydr254'){
+      score=score+80
+      alert('You have received 80 coins')
+      gameState='home' 
+    }
+
+    if(codemulti=='jdr8n4'){
+      score=score+100
+      alert('You have received 100 coins')
+      gameState='home' 
+    }
+
+    if(codemulti=='uitm2ty5'){
+      score=score+200
+      alert('You have received 200 coins')
+      gameState='home' 
+    }
+  })
+
+
+
+
+
+
+  
 }
 
 if(gameState==='roadmap'){
