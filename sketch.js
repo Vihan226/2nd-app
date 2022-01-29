@@ -16,16 +16,16 @@ var health_increaseButton;
 var drop=[];
 var snowball= [];
 var snowballattack=[];
-var home, playButton, skinChange, skin1, skin1image, skin1button, skin2button, skin2, skin2image;
+var home, playButton, skinChange, skin1, skin1image, skin1button, skin2button, skin2, skin2image, skin3, skin3image;
 var homesound, skin1sound; 
 var storm, stormImage;
 var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button,card20button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock, card20unlock;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
@@ -43,6 +43,8 @@ var cardset3unlocked;
 var enemyspeed;
 var chhealth;
 var code, submitButton;
+var datar
+var attack1, attack2, attacktext;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -68,6 +70,7 @@ homebg= loadImage('homebg.png')
 hometextImage= loadImage('title.png')
 redenemyImage= loadImage('Redenemy.png')
 skin2image= loadAnimation('skin2image.png', 'skin2part2.png' ,'skin2part3.png','skin2part4.png', 'skin2part3.png', 'skin2part2.png', 'skin2image.png' )
+skin3image= loadAnimation('skin3image.png','skin3image.png', 'skin3part2.png','skin3part2.png' ,'skin3part3.png','skin3part3.png','skin3part4.png','skin3part4.png', 'skin3part3.png', 'skin3part2.png', 'skin3image.png' )
 snowmanImage=loadImage('snowman.png')
 smbImage= loadImage('snowball.png')
 selectSound= loadSound('select.wav')
@@ -122,14 +125,19 @@ skinChange.size(150,400)
 skinChange.hide()
 
 skin1button=createImg('skin1_red.png')
-skin1button.position(width/1.4-width/2, height/2)
-skin1button.size(210,170)
+skin1button.position(width/1.3-width/2, height/2)
+skin1button.size(150,140)
 skin1button.hide()
 
 skin2button=createImg('skin2image.png')
-skin2button.position(width/1-width/2, height/2)
-skin2button.size(170,210)
+skin2button.position(width/1.07-width/2, height/2)
+skin2button.size(100,150)
 skin2button.hide()
+
+skin3button=createImg('skin3part4.png')
+skin3button.position(width/.9-width/2, height/2)
+skin3button.size(140,170)
+skin3button.hide()
 
 skin1=createSprite(width/1.5-width/2, height/2-150)
 skin1.addAnimation('redforce', skin1image)
@@ -138,6 +146,10 @@ skin1.visible=false
 skin2=createSprite(width/1.5-width/2, height/2-150)
 skin2.addAnimation('ghostimage', skin2image)
 skin2.visible=false
+
+skin3=createSprite(width/1.5-width/2, height/2-150)
+skin3.addAnimation('flameimage', skin3image)
+skin3.visible=false
 
 allow= createImg('agree.png')
 allow.position(width/1.15-width/2,height/2+150)
@@ -257,6 +269,11 @@ card19button= createImg('usecard19.png')
 card19button.position(width/.963-width/2, height/2+915)
 card19button.size(150,240)
 card19button.hide()
+
+card20button= createImg('usecard20.png')
+card20button.position(width/.824-width/2, height/2+915)
+card20button.size(150,240)
+card20button.hide()
 
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
@@ -476,12 +493,16 @@ card15stop=0
 card16stop=0
 card18stop=0
 card19stop=0
+card20unlock=0
 jumpingcard=0
 cardset2unlocked=0
 cardset3unlocked=0
 coinsnotlost=0
 enemyspeed=0
 chhealth=0
+datar=0
+attacktext=0
+
 }
 
 function draw() {
@@ -584,6 +605,24 @@ if(frameCount %150===0){
   smb.velocityX=-15
   smb.lifetime= 1000
 }
+// height/2-150
+if(frameCount %150===0){
+  attack1= createSprite(width/.75-width/2, height/2+10000, 70,15)
+  attack1.shapeColor= 'white'
+  attack1.visible=true
+
+  attack1.velocityX=-20
+  attack1.lifetime= 1000
+} 
+// height/2+200
+if(frameCount %200===0){
+  attack2= createSprite(width/.75-width/2, height/2+10000, 80,20)
+  attack2.shapeColor= 'white'
+  attack2.visible=true
+
+  attack2.velocityX=-18
+  attack2.lifetime= 1000
+} 
 
 
 allow.mousePressed(()=>{
@@ -613,6 +652,7 @@ if(gameState==="game"){
   
   runnerScore= runnerScore+1
 
+datar=datar+1
   if(enemyspeed>0){
     Greenenemy.velocityX=-15
     redenemy.velocityX=-9
@@ -621,7 +661,7 @@ if(score>24){
   firstachiev=1
 }
 
-if(redthunderhastouched>0&& RedThunder.isTouching(Rightplayer)){
+if(redthunderhastouched>0&& RedThunder.isTouching(Rightplayer)||redthunderhastouched>0&& RedThunder.isTouching(skin1)||redthunderhastouched>0&& RedThunder.isTouching(skin2)||redthunderhastouched>0&& RedThunder.isTouching(skin3)){
   RedThunder.x= width/.75-width/2
   RedThunder.y=height/2-340
 
@@ -666,19 +706,19 @@ if(Playerbullet.isTouching(Greenenemy)){
   EnemySound.play()
   kills=kills+1
 }
-if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)){
+if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)||Greenenemy.isTouching(skin2)||Greenenemy.isTouching(skin3)){
   health=health-7
   Greenenemy.destroy()
 }
 
-  if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)){
+  if(Rightplayer.isTouching(Smallblock)||skin1.isTouching(Smallblock)||skin2.isTouching(Smallblock)){
   background('red')
   // make health go down a bit
   health=health-5
   Smallblock.destroy()
   }
 
-  if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)||skin2.isTouching(coin)){
+  if(Rightplayer.isTouching(coin)||skin1.isTouching(coin)||skin2.isTouching(coin)||skin3.isTouching(coin)){
  score=score+5
   CoinSound.play()
   coin.destroy()
@@ -764,7 +804,7 @@ snowman.visible=true
 Platform.visible=true;
 smb.visible=true
 
-if(Rightplayer.isTouching(smb)){
+if(Rightplayer.isTouching(smb)||skin1.isTouching(smb)||skin2.isTouching(smb)){
   health=health-5
   smb.destroy()
 }
@@ -777,7 +817,20 @@ for (var i=0; i<200; i++){
   drop[i].show()
   drop[i].update()
 }
+
+attack1.y=height/2-150
+attack2.y=height/2+200
+if(Rightplayer.isTouching(attack1)||skin1.isTouching(attack1)||skin2.isTouching(attack1)||skin3.isTouching(attack1)){
+  health=health-10
+  attack1.destroy()
 }
+if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(attack2)||skin3.isTouching(attack2)){
+  health=health-10
+  attack2.destroy()
+}
+}
+
+
 if(runnerScore>900&& runnerScore<1200){
 background(0,0,35,25); 
 background(wintertheme)
@@ -789,7 +842,7 @@ for(var i=0; i<100; i++){
 snowman.visible=true
 smb.visible=true
 
-if(Rightplayer.isTouching(smb)){
+if(Rightplayer.isTouching(smb)||skin1.isTouching(smb)||skin2.isTouching(smb)){
   health=health-5
   smb.destroy()
 }
@@ -800,6 +853,16 @@ background('black')
 for (var i=0; i<200; i++){
   drop[i].show()
   drop[i].update()
+}
+attack1.y=height/2-150
+attack2.y=height/2+200
+if(Rightplayer.isTouching(attack1)||skin1.isTouching(attack1)||skin2.isTouching(attack1)||skin3.isTouching(attack1)){
+  health=health-10
+  attack1.destroy()
+}
+if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(attack2)||skin3.isTouching(attack2)){
+  health=health-10
+  attack2.destroy()
 }
 }
 
@@ -814,7 +877,7 @@ if(runnerScore>1600&& runnerScore<2000){
   snowman.visible=true
   smb.visible=true
 
-if(Rightplayer.isTouching(smb)){
+  if(Rightplayer.isTouching(smb)||skin1.isTouching(smb)||skin2.isTouching(smb)){
   health=health-5
   smb.destroy()
 }
@@ -827,7 +890,17 @@ smb.y= height/2+200
       drop[i].show()
       drop[i].update()
     }
-    }
+    attack1.y=height/2-150
+attack2.y=height/2+200
+if(Rightplayer.isTouching(attack1)||skin1.isTouching(attack1)||skin2.isTouching(attack1)||skin3.isTouching(attack1)){
+  health=health-10
+  attack1.destroy()
+}
+if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(attack2)||skin3.isTouching(attack2)){
+  health=health-10
+  attack2.destroy()
+}
+}
 
     if(runnerScore>2800&& runnerScore<3200){
       background(0,0,35,25); 
@@ -840,7 +913,7 @@ smb.y= height/2+200
       snowman.visible=true
       smb.visible=true
 
-if(Rightplayer.isTouching(smb)){
+      if(Rightplayer.isTouching(smb)||skin1.isTouching(smb)||skin2.isTouching(smb)){
   health=health-5
   smb.destroy()
 }
@@ -853,7 +926,53 @@ smb.y= height/2+200
           drop[i].show()
           drop[i].update()
         }
-        }
+        attack1.y=height/2-150
+attack2.y=height/2+200
+if(Rightplayer.isTouching(attack1)||skin1.isTouching(attack1)||skin2.isTouching(attack1)||skin3.isTouching(attack1)){
+  health=health-10
+  attack1.destroy()
+}
+if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(attack2)||skin3.isTouching(attack2)){
+  health=health-10
+  attack2.destroy()
+}
+}
+
+        if(runnerScore>3800&& runnerScore<4500){
+          background(0,0,35,25); 
+          background(wintertheme)
+          for(var i=0; i<100; i++){
+            snowball[i].show()
+            snowball[i].update()
+          
+          }
+          snowman.visible=true
+          smb.visible=true
+    
+          if(Rightplayer.isTouching(smb)||skin1.isTouching(smb)||skin2.isTouching(smb)){
+      health=health-5
+      smb.destroy()
+    }
+    smb.y= height/2+200
+          }
+
+          if(runnerScore>4600&& runnerScore<5400){
+            background('black')
+            for (var i=0; i<200; i++){
+              drop[i].show()
+              drop[i].update()
+            }
+            attack1.y=height/2-150
+    attack2.y=height/2+200
+    if(Rightplayer.isTouching(attack1)||skin1.isTouching(attack1)||skin2.isTouching(attack1)){
+      health=health-10
+      attack1.destroy()
+    }
+    if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(attack2)){
+      health=health-10
+      attack2.destroy()
+    }
+            }
 
 
 if(runnerScore>350&& runnerScore<357){
@@ -917,6 +1036,11 @@ if(runnerScore>3600&& runnerScore<3607){
   }
 }
 
+if(runnerScore>520&&runnerScore<560||runnerScore>1360&&runnerScore<1400||runnerScore>2160&&runnerScore<2200||runnerScore>3360&&runnerScore<3400||runnerScore>4540&&runnerScore<4600){
+  fill('white')
+  textSize(30)
+  text('Attack is about to happen!', width/1.5-width/2,height/2-230)
+}
 if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)|| storm.isTouching(skin2)){
   
   health=health-1
@@ -924,7 +1048,7 @@ if(storm.isTouching(Rightplayer)|| storm.isTouching(skin1)|| storm.isTouching(sk
 if(Greenenemy.isTouching(enemystopper)){
   Greenenemy.destroy()
 }
-if(runnerScore>2600&& runnerScore<3100){
+/*(if(runnerScore>2600&& runnerScore<3100){
 background(0,0,35,25); 
 background(wintertheme)
 for(var i=0; i<100; i++){
@@ -941,7 +1065,7 @@ for (var i=0; i<200; i++){
   drop[i].update()
 }
 }
-
+*/
 if(runnerScore>200 && runnerScore<220){
   ThunderSound.play()
   RedThunder.velocityX=-27
@@ -975,6 +1099,13 @@ if(runnerScore>1600 && runnerScore<1620){
   RedThunder.visible=true
 }
 
+if(runnerScore>2000 && runnerScore<2020){
+  ThunderSound.play()
+  RedThunder.velocityX=-27
+  RedThunder.velocityY=10
+  RedThunder.visible=true
+}
+
 
 
 if(health<0){
@@ -989,7 +1120,8 @@ Playerbullet.visible=false;
 Smallblock.visible=false
 
 skin2.visible=false
-
+skin3.visible=false
+skin1.visible=false
 score=score-30
 
 health=20
@@ -1007,6 +1139,8 @@ Playerbullet.visible=false;
 
 Smallblock.visible=false;
 skin2.visible=false
+skin3.visible=false
+skin1.visible=false
 health=20
 runnerScore=0
 storm.visible=false
@@ -1138,6 +1272,7 @@ kills=kills+1
   //skins attach to rightplayer(default player)
   skin1.y=Rightplayer.y-10
   skin2.y=Rightplayer.y-10
+  skin3.y=Rightplayer.y-10
   
   
 
@@ -1210,7 +1345,9 @@ home.mousePressed(()=>{
   card17button.hide()
   card18button.hide()
   card19button.hide()
+  card20button.hide()
   skin2button.hide()
+  skin3button.hide()
 
   arrow_get_back.x= width/.1-width/2
   storm.visible=false
@@ -1255,7 +1392,7 @@ if(gameState==='home'){
   card17button.hide()
   card18button.hide()
   card19button.hide()
-  
+  card20button.hide()
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -1316,6 +1453,8 @@ if(gameState==='home'){
 
     skin2.visible=false;
     skin2button.hide()
+    skin3button.hide()
+    skin3.visible=false;
 
     //health=100
 
@@ -1445,6 +1584,7 @@ if(gameState==='skins'){
 
     skin2.visible=false;
     skin2button.hide()
+    skin3button.hide()
 
     arrow_get_back.x= width/.1-width/2
     selectSound.play()
@@ -1470,6 +1610,7 @@ if(gameState==='skins'){
 
     skin2.visible=false
     skin2button.hide()
+    skin3button.hide()
 
  //   runnerScore=0;
  RedThunder.x= width/.75-width/2
@@ -1488,6 +1629,7 @@ if(gameState==='skins'){
     gameState='game'
     skinChange.hide()
     skin2button.hide()
+    skin3button.hide()
     cardTrades.hide()
     Rightplayer.visible=true
     skin1sound.play()
@@ -1500,6 +1642,39 @@ if(gameState==='skins'){
     score=score-25
     skin2.scale=1
     skin1.visible=false
+    skin1button.hide()
+
+
+   // runnerScore=0
+    skin1sound.play()
+    RedThunder.x= width/.75-width/2
+    RedThunder.y=height/2-340
+  }
+  })
+
+  if(card20unlock>0){
+    skin3button.show()
+  }
+
+  skin3button.mousePressed(()=>{
+  if(score>24){
+    gameState='game'
+    skinChange.hide()
+    skin2button.hide()
+    skin3button.hide()
+    cardTrades.hide()
+    Rightplayer.visible=true
+    skin1sound.play()
+    skin3.visible=true
+
+    skin3.y=Rightplayer.y-10
+   // skin2.x=Rightplayer.x
+    Rightplayer.x=width/2.4-width/2
+    Rightplayer.y=height/2
+    score=score-25
+    skin3.scale=1
+    skin1.visible=false
+    skin2.visible=false
     skin1button.hide()
 
 
@@ -1532,7 +1707,7 @@ if(gameState==='cards'){
   dailyCard.hide()
 
 
- 
+  
 
 
  if(score<0){
@@ -1569,6 +1744,7 @@ if(gameState==='cards'){
     card18button.show()
 
     card19button.show()
+    card20button.show()
   }
 
   if(card2stop>2){
@@ -1795,6 +1971,21 @@ if(card3unlock>0){
       }
   })
 
+  card20button.mousePressed(()=>{
+    if(score>204){
+      score=score-205
+      card20unlock=1
+      coinsnotlost=20
+      selectSound.play()
+      }
+      if(score<204&&coinsnotlost==0){
+        card20unlock=0
+      }
+      if(card20unlock>0){
+        card20button.size(120,210)
+      }
+  })
+
 
 
 
@@ -1987,8 +2178,8 @@ if(card3unlock>0){
       card17unlock=1
       coinsnotlost=17
       selectSound.play()
-
       }
+
       if(score<169&&coinsnotlost==0){
         card17unlock=0
       }
@@ -3152,6 +3343,7 @@ RedThunder.y=height/2-340
 
     card17use.mousePressed(()=>{
 
+    
       if(score>69){
         score=score-70
 
