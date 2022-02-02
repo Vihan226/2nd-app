@@ -45,6 +45,8 @@ var chhealth;
 var code, submitButton;
 var datar
 var attack1, attack2, attacktext;
+var startImage, showallow;
+var cardeck1Image, cardeck1;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -75,6 +77,8 @@ snowmanImage=loadImage('snowman.png')
 smbImage= loadImage('snowball.png')
 selectSound= loadSound('select.wav')
 roadmapbg= loadImage('roadmapbg.png')
+startImage= loadImage('starting.png')
+cardeck1Image=loadImage('cardeck1img.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -96,6 +100,11 @@ snowball[i]= new Snowball()
   }*/
 
 //homestate and its skins
+cardeck1=createSprite(width/1.02-width/2, height/2-15)
+cardeck1.addImage('cardbg1', cardeck1Image)
+cardeck1.scale=1.75
+cardeck1.visible=false
+
 code= createInput('Type your code')
 code.position(width/1.2-width/2, height/2)
 code.hide()
@@ -154,6 +163,7 @@ skin3.visible=false
 allow= createImg('agree.png')
 allow.position(width/1.15-width/2,height/2+150)
 allow.size(300,150)
+allow.hide()
 
 powerButton= createImg('usepower.png')
 powerButton.position(width/1.7-width/2, height/2-455)
@@ -502,18 +512,20 @@ enemyspeed=0
 chhealth=0
 datar=0
 attacktext=0
-
+showallow=0
 }
 
 function draw() {
-background('green')
-
+background(startImage)
+showallow=showallow+1
 
 
   //add styles here
 
 
 // this is question 1 from the game
+if(showallow>80){
+  background('green')
 textSize(30)
 fill("red")
 text(" Shorun",width/1.25-width/2,height/2-200)
@@ -524,7 +536,8 @@ fill("black")
 text("For policies this is an official game built by Vihan Seth", width/1.25-width/2, height/2-170)
 text("with a web viewer. This includes shooting, and it is built for 3+ ages.", width/1.25-width/2, height/2-140)
 text("Press- Agree and Continue to Play when it says Start!", width/1.25-width/2, height/2-110)
-
+allow.show()
+}
 //sprite
 
 start= start-1
@@ -1370,7 +1383,7 @@ if(gameState==='home'){
   background(homebg)
   fill('green')
   textSize(30)
-
+cardeck1.visible=false
   code.hide()
   submitButton.hide()
   card1button.hide()
@@ -1550,6 +1563,7 @@ enemyspeed=0
     settings.hide()
     selectSound.play()
     homesound.stop()
+    allow.hide()
 
   })
  
@@ -1558,13 +1572,13 @@ enemyspeed=0
 if(gameState==='skins'){
   background('green')
   fill('blue')
-  textSize(50)
+  textSize(30)
   text('Coins: '+score, width/1.6-width/2, height/2-300)
   fill('white')
-  textSize(40)
+  textSize(20)
   text('Each Character will be 25 coins', width/1.3-width/2, height/2-300)
-
-  
+allow.hide()
+cardeck1.visible=false
   skin1.visible=false
   skin1.scale= 2
   playButton.hide()
@@ -1706,6 +1720,10 @@ if(gameState==='cards'){
   card8button.show()
   dailyCard.hide()
 
+
+
+  cardeck1.visible=true
+allow.hide()
 
   
 
@@ -2238,7 +2256,7 @@ if(card3unlock>0){
 
 if(gameState==='challenge'){
   background('black')
-
+allow.hide()
   textSize(40)
   text('Health: '+chhealth, width/.82-width/2, height/2-280)
   text('Time Left: '+ seconds, width/.82-width/2, height/2-230)
@@ -2387,8 +2405,8 @@ homesound.play()
 
 if(gameState==='cardsInventory'){
   background('white')
-
-  
+allow.hide()
+cardeck1.visible=false
   fill('Blue')
   textSize(20)
   text('Coins: '+score, width/1.6-width/2, height/2-360)
@@ -3401,7 +3419,7 @@ RedThunder.y=height/2-340
 }
 if(gameState==='settings'){
   background('yellow')
-
+  cardeck1.visible=false
   roadmap.show()
   worldstats.show()
 
@@ -3410,7 +3428,7 @@ if(gameState==='settings'){
   
   homesound.stop()
 settings.hide()
-
+allow.hide()
 
 
   inventory.hide()
@@ -3456,7 +3474,8 @@ volumeon.hide()
 if(gameState==="multiplayer"){
   background('blue')
 
-
+allow.hide()
+cardeck1.visible=false
   code.show()
   submitButton.show()
 
@@ -3497,7 +3516,8 @@ if(gameState==="multiplayer"){
 
 if(gameState==='roadmap'){
   background(roadmapbg)
-
+allow.hide()
+cardeck1.visible=false
   volumeoff.hide()
   volumeon.hide()
   roadmap.hide()
