@@ -46,7 +46,7 @@ var code, submitButton;
 var datar
 var attack1, attack2, attacktext;
 var startImage, showallow;
-var cardeck1Image, cardeck1;
+var cardeck1Image, cardeck1, cardeck2Image, cardeck2;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -79,6 +79,7 @@ selectSound= loadSound('select.wav')
 roadmapbg= loadImage('roadmapbg.png')
 startImage= loadImage('starting.png')
 cardeck1Image=loadImage('cardeck1img.png')
+cardeck2Image=loadImage('cardeck2img.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -104,6 +105,11 @@ cardeck1=createSprite(width/1.02-width/2, height/2-15)
 cardeck1.addImage('cardbg1', cardeck1Image)
 cardeck1.scale=1.75
 cardeck1.visible=false
+
+cardeck2=createImg('cardeck2img.png')
+cardeck2.position(width/1.56-width/2, height/2+280)
+cardeck2.size(1300,590)
+cardeck2.hide()
 
 code= createInput('Type your code')
 code.position(width/1.2-width/2, height/2)
@@ -1384,6 +1390,8 @@ if(gameState==='home'){
   fill('green')
   textSize(30)
 cardeck1.visible=false
+cardeck2.hide()
+
   code.hide()
   submitButton.hide()
   card1button.hide()
@@ -1579,6 +1587,7 @@ if(gameState==='skins'){
   text('Each Character will be 25 coins', width/1.3-width/2, height/2-300)
 allow.hide()
 cardeck1.visible=false
+cardeck2.hide()
   skin1.visible=false
   skin1.scale= 2
   playButton.hide()
@@ -1723,6 +1732,7 @@ if(gameState==='cards'){
 
 
   cardeck1.visible=true
+  cardeck2.show()
 allow.hide()
 
   
@@ -2407,6 +2417,7 @@ if(gameState==='cardsInventory'){
   background('white')
 allow.hide()
 cardeck1.visible=false
+cardeck2.hide()
   fill('Blue')
   textSize(20)
   text('Coins: '+score, width/1.6-width/2, height/2-360)
@@ -3420,6 +3431,7 @@ RedThunder.y=height/2-340
 if(gameState==='settings'){
   background('yellow')
   cardeck1.visible=false
+  cardeck2.hide()
   roadmap.show()
   worldstats.show()
 
@@ -3476,6 +3488,7 @@ if(gameState==="multiplayer"){
 
 allow.hide()
 cardeck1.visible=false
+cardeck2.hide()
   code.show()
   submitButton.show()
 
@@ -3518,6 +3531,7 @@ if(gameState==='roadmap'){
   background(roadmapbg)
 allow.hide()
 cardeck1.visible=false
+cardeck2.hide()
   volumeoff.hide()
   volumeon.hide()
   roadmap.hide()
