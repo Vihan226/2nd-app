@@ -107,8 +107,8 @@ cardeck1.scale=1.75
 cardeck1.visible=false
 
 cardeck2=createImg('cardeck2img.png')
-cardeck2.position(width/1.56-width/2, height/2+280)
-cardeck2.size(1300,590)
+cardeck2.position(width/2-width/2, height/2+280)
+cardeck2.size(windowWidth,590)
 cardeck2.hide()
 
 code= createInput('Type your code')
