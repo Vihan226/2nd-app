@@ -101,10 +101,10 @@ snowball[i]= new Snowball()
   }*/
 
 //homestate and its skins
-cardeck1=createSprite(width/1.02-width/2, height/2-15)
-cardeck1.addImage('cardbg1', cardeck1Image)
-cardeck1.scale=1.75
-cardeck1.visible=false
+cardeck1=createImg('cardeck1img.png')
+cardeck1.position(width/2-width/2, height/2-300)
+cardeck1.size(windowWidth,590)
+cardeck1.hide()
 
 cardeck2=createImg('cardeck2img.png')
 cardeck2.position(width/2-width/2, height/2+280)
@@ -1389,7 +1389,7 @@ if(gameState==='home'){
   background(homebg)
   fill('green')
   textSize(30)
-cardeck1.visible=false
+cardeck1.hide()
 cardeck2.hide()
 
   code.hide()
@@ -1586,7 +1586,7 @@ if(gameState==='skins'){
   textSize(20)
   text('Each Character will be 25 coins', width/1.3-width/2, height/2-300)
 allow.hide()
-cardeck1.visible=false
+cardeck1.hide()
 cardeck2.hide()
   skin1.visible=false
   skin1.scale= 2
@@ -1731,7 +1731,7 @@ if(gameState==='cards'){
 
 
 
-  cardeck1.visible=true
+  cardeck1.show()
   cardeck2.show()
 allow.hide()
 
@@ -2416,7 +2416,7 @@ homesound.play()
 if(gameState==='cardsInventory'){
   background('white')
 allow.hide()
-cardeck1.visible=false
+cardeck1.hide()
 cardeck2.hide()
   fill('Blue')
   textSize(20)
@@ -3430,7 +3430,7 @@ RedThunder.y=height/2-340
 }
 if(gameState==='settings'){
   background('yellow')
-  cardeck1.visible=false
+  cardeck1.hide()
   cardeck2.hide()
   roadmap.show()
   worldstats.show()
@@ -3487,7 +3487,7 @@ if(gameState==="multiplayer"){
   background('blue')
 
 allow.hide()
-cardeck1.visible=false
+cardeck1.hide()
 cardeck2.hide()
   code.show()
   submitButton.show()
@@ -3530,7 +3530,7 @@ cardeck2.hide()
 if(gameState==='roadmap'){
   background(roadmapbg)
 allow.hide()
-cardeck1.visible=false
+cardeck1.hide()
 cardeck2.hide()
   volumeoff.hide()
   volumeon.hide()
