@@ -23,15 +23,15 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button,card20button;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button,card20button, card21button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock, card20unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock, card20unlock, card21unlock;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
 var selectSound;
-var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop, card19stop ;
+var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop, card19stop,card21stop ;
 var database, coins, coinStock;
 var settings, worldstats, roadmap, volumeon, volumeoff;
 var roadmapbg;
@@ -47,6 +47,9 @@ var datar
 var attack1, attack2, attacktext;
 var startImage, showallow;
 var cardeck1Image, cardeck1, cardeck2Image, cardeck2;
+var deck4trading;
+var slimeImage, slime, slimebounce1, slimebounce2, slimebounce3, slimesound;
+var greenenemyanimation, greenenemyanimate;
 function preload(){
 
 Background= loadImage("Background.png")
@@ -80,6 +83,9 @@ roadmapbg= loadImage('roadmapbg.png')
 startImage= loadImage('starting.png')
 cardeck1Image=loadImage('cardeck1img.png')
 cardeck2Image=loadImage('cardeck2img.png')
+slimeImage= loadImage('slime.png')
+slimesound=loadSound('slimesound.wav')
+greenenemyanimate=loadAnimation('greenenemyanimat1.png', 'greenenemyanimat2.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -186,6 +192,16 @@ inventory.position(width/1.64-width/2, height/2-455)
 inventory.size(80,80)
 inventory.hide()
 
+settings=createImg('settings.png')
+settings.position(width/1.67-width/2, height/2-340)
+settings.size(110,80)
+settings.hide()
+
+deck4trading=createImg('deck4trading.png')
+deck4trading.position(width/1.64-width/2, height/2-100)
+deck4trading.size(100,140)
+deck4trading.hide()
+
 cardTrades= createImg('usecardbutton.png')
 cardTrades.position(width/.745-width/2, height/2-50)
 cardTrades.hide()
@@ -291,6 +307,10 @@ card20button.position(width/.824-width/2, height/2+915)
 card20button.size(150,240)
 card20button.hide()
 
+card21button= createImg('usecard21.png')
+card21button.position(width/1.515-width/2, height/2+1250)
+card21button.size(160,230)
+card21button.hide()
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
@@ -380,11 +400,10 @@ card19use= createImg('usecard19.png')
 card19use.position(width/1.5-width/2, height/2+920)
 card19use.size(140,230)
 card19use.hide()
+
+
 // all the stuff of settings
-settings=createImg('settings.png')
-settings.position(width/1.67-width/2, height/2-340)
-settings.size(110,80)
-settings.hide()
+
 
 worldstats=createImg('worldstats.png')
 worldstats.position(width/1.13-width/2, height/2-170)
@@ -465,8 +484,20 @@ snowman.addImage('snowmanenemy', snowmanImage)
 snowman.scale=.4
 snowman.visible=false
 
+slimebounce1= createSprite(width/.78-width/2, height/2+350, 100,100)
+slimebounce1.visible=false
+slimebounce2=createSprite(width/.8-width/2, height/2+100, 200,10)
+slimebounce2.visible=false
+slimebounce3=createSprite(width/1-width/2, height/2, 200,10)
+slimebounce3.visible=false
+slime= createSprite(width/.5-width/2, height/2+300)
+slime.addImage('thisisslime', slimeImage)
+slime.scale=.3
 
-
+greenenemyanimation=createSprite(width/1-width/2, height/2)
+greenenemyanimation.addAnimation('aniamtionofgreenenemy', greenenemyanimate)
+greenenemyanimation.scale=4
+greenenemyanimation.visible=false
 score=5
 health=30
 start=300
@@ -491,6 +522,8 @@ card16unlock=0
 card17unlock=0
 card18unlock=0
 card19unlock=0
+card20unlock=0
+card21unlock=0
 redthunderhastouched=0
 stormhastouched=0
 card2stop=0
@@ -509,7 +542,7 @@ card15stop=0
 card16stop=0
 card18stop=0
 card19stop=0
-card20unlock=0
+card21stop=0
 jumpingcard=0
 cardset2unlocked=0
 cardset3unlocked=0
@@ -593,7 +626,7 @@ if(frameCount %100 ===0){
   coin.velocityX=-9
   coin.lifetime=900
   coin.debug=false
-  coin.y=Math.round(random(height/2+250, height/2-150))
+  coin.y=Math.round(random(height/2+250, height/2-550))
 
 }
 if(frameCount %300 ===0){
@@ -630,18 +663,23 @@ if(frameCount %150===0){
   attack1.shapeColor= 'white'
   attack1.visible=true
 
-  attack1.velocityX=-20
+  attack1.velocityX=-25
   attack1.lifetime= 1000
 } 
 // height/2+200
-if(frameCount %200===0){
+if(frameCount %220===0){
   attack2= createSprite(width/.75-width/2, height/2+10000, 80,20)
   attack2.shapeColor= 'white'
   attack2.visible=true
 
-  attack2.velocityX=-18
+  attack2.velocityX=-25
   attack2.lifetime= 1000
 } 
+
+
+
+
+  
 
 
 allow.mousePressed(()=>{
@@ -669,8 +707,46 @@ if(gameState==="game"){
   dailyCard.hide()
   redenemybullet.y= redenemy.y
   
-  runnerScore= runnerScore+1
+  slime.velocityX=-10
 
+  greenenemyanimation.x= Greenenemy.x
+  greenenemyanimation.y= Greenenemy.y
+  // slimes if statements
+
+  if(slime.isTouching(slimebounce1)){
+    slime.velocityX=-17
+    slime.velocityY=-10
+  }
+
+  if(slime.isTouching(slimebounce2)){
+    slime.bounceOff(slimebounce2)
+  }
+  if(slime.isTouching(collider)){
+    slime.bounceOff(collider)
+    slimesound.play()
+  }
+  if(slime.bounceOff(slimebounce3)){
+    slime.bounceOff(slimebounce3)
+  }
+  if(slime.isTouching(Rightplayer)){
+    health= health-3
+
+    
+    slime.x=width/.3-width/2
+    slime.y= height/2+300
+
+    slime.velocityY=0
+  }
+
+  if(slime.isTouching(enemystopper)){
+    slime.x=width/.3-width/2
+    slime.y= height/2+300
+
+    slime.velocityY=0
+  }
+
+  runnerScore= runnerScore+1
+  deck4trading.hide()
 datar=datar+1
   if(enemyspeed>0){
     Greenenemy.velocityX=-15
@@ -724,7 +800,13 @@ if(Playerbullet.isTouching(Greenenemy)){
   Greenenemy.destroy()
   EnemySound.play()
   kills=kills+1
+
+  greenenemyanimation.visible=true
 }
+else{
+  greenenemyanimation.visible=false
+}
+
 if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)||Greenenemy.isTouching(skin2)||Greenenemy.isTouching(skin3)){
   health=health-7
   Greenenemy.destroy()
@@ -754,7 +836,7 @@ if(Greenenemy.isTouching(Rightplayer)||Greenenemy.isTouching(skin1)||Greenenemy.
   }
 
   health_increaseButton.mousePressed(()=>{
-    health=health+15      
+    health=health+10    
     score=score-5
   })
 
@@ -847,6 +929,8 @@ if(Rightplayer.isTouching(attack2)||skin1.isTouching(attack2)||skin2.isTouching(
   health=health-10
   attack2.destroy()
 }
+
+//slime.y=height/2+300
 }
 
 
@@ -1365,6 +1449,7 @@ home.mousePressed(()=>{
   card18button.hide()
   card19button.hide()
   card20button.hide()
+  card21button.hide()
   skin2button.hide()
   skin3button.hide()
 
@@ -1414,6 +1499,11 @@ cardeck2.hide()
   card18button.hide()
   card19button.hide()
   card20button.hide()
+  card21button.hide()
+
+  if(card21unlock>0){
+    deck4trading.show()
+  }
 
  hometext.visible=true
   health_increaseButton.hide()
@@ -1502,8 +1592,8 @@ arrow2.velocityX=0
 arrow3.velocityX=0
 arrow4.velocityX=0
     
-
-
+slime.x=width/.5-width/2
+slime.y=height/2+300
 enemyspeed=0
 
   })
@@ -1588,6 +1678,8 @@ if(gameState==='skins'){
 allow.hide()
 cardeck1.hide()
 cardeck2.hide()
+
+deck4trading.hide()
   skin1.visible=false
   skin1.scale= 2
   playButton.hide()
@@ -1733,6 +1825,8 @@ if(gameState==='cards'){
 
   cardeck1.show()
   cardeck2.show()
+
+  deck4trading.hide()
 allow.hide()
 
   
@@ -1773,6 +1867,8 @@ allow.hide()
 
     card19button.show()
     card20button.show()
+
+    card21button.show()
   }
 
   if(card2stop>2){
@@ -1871,6 +1967,13 @@ allow.hide()
     card19button.size(150,240)
   
   }
+
+  if(card21stop>0){
+    card21unlock=0
+    card21stop=0
+    card21button.size(160,230)
+  
+  }
   
   card1button.mousePressed(()=>{
     if(score>19){
@@ -1883,7 +1986,8 @@ allow.hide()
         card1unlock=0
       }
 
-    
+
+
 
 
    
@@ -2251,6 +2355,23 @@ if(card3unlock>0){
       }
   })
 
+  card21button.mousePressed(()=>{
+    if(score>24){
+      score=score-25
+      card21unlock=1
+      coinsnotlost=21
+      selectSound.play()
+
+      }
+      if(score<24&&coinsnotlost==0){
+        card21unlock=0
+      }
+    
+      if(card21unlock>0){
+        card21button.size(130,200)
+      }
+  })
+
 
 
 
@@ -2418,6 +2539,8 @@ if(gameState==='cardsInventory'){
 allow.hide()
 cardeck1.hide()
 cardeck2.hide()
+
+deck4trading.hide()
   fill('Blue')
   textSize(20)
   text('Coins: '+score, width/1.6-width/2, height/2-360)
@@ -2524,6 +2647,13 @@ if(card19stop>0){
   card19unlock=0
   card19stop=0
   card19button.size(150,240)
+
+}
+
+if(card21stop>0){
+  card21unlock=0
+  card21stop=0
+  card21button.size(160,230)
 
 }
 
@@ -3441,7 +3571,7 @@ if(gameState==='settings'){
   homesound.stop()
 settings.hide()
 allow.hide()
-
+deck4trading.hide()
 
   inventory.hide()
   hometext.visible=false
@@ -3472,6 +3602,7 @@ volumeon.hide()
     ThunderSound.setVolume(1)
     skin1sound.setVolume(1)
     selectSound.setVolume(1)
+    slimesound.setVolume(1)
   })
   volumeoff.mousePressed(()=>{
     homesound.setVolume(0)
@@ -3480,6 +3611,7 @@ volumeon.hide()
     ThunderSound.setVolume(0)
     skin1sound.setVolume(0)
     selectSound.setVolume(0)
+    slimesound.setVolume(0)
   })
 }
 
