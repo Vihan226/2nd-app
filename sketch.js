@@ -23,15 +23,15 @@ var enemystopper;
 var homebg;
 var hometext, hometextImage;
 var redenemy, redenemyImage, redenemybullet;
-var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button,card20button, card21button;
+var cardTrades, card1button , card2button,card2use, card3button,card3use,card4button, card4use,  dailyCard, card5button, card5use, card6button, card7button, card7use, card8button, card8use, card9use, card9button, card10use, card10button,card11use, card11button, card12use, card12button, card13use, card13button, card14use, card14button, card15use, card15button, card16use, card16button, card17use, card17button, card18use, card18button,card19use, card19button,card20button, card21button,card22use, card22button;
 var runnerScore, seconds;
-var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock, card20unlock, card21unlock;
+var card1unlock, card2unlock, card3unlock, card4unlock, card5unlock, redthunderpower1open, card6unlock, card7unlockm, redthunderhastouched, card8unlock, stormhastouched, card9unlock,card10unlock,card11unlock, card12unlock, card13unlock, card14unlock, card15unlock, card16unlock, card17unlock, card18unlock, card19unlock, card20unlock, card21unlock, card22unlock;
 var inventory;
 var snowman, snowmanImage, snowmanvisible;
 var smb, smbImage;
 var anotheredthunder;
 var selectSound;
-var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop, card19stop,card21stop ;
+var card2stop,card3stop, card4stop, card5stop, card7stop,card8stop, card9stop, card10stop, card11stop, card12stop, card13stop, card14stop, card15stop, card16stop, card17stop, card18stop, card19stop,card21stop, card22stop ;
 var database, coins, coinStock;
 var settings, worldstats, roadmap, volumeon, volumeoff;
 var roadmapbg;
@@ -50,6 +50,9 @@ var cardeck1Image, cardeck1, cardeck2Image, cardeck2;
 var deck4trading;
 var slimeImage, slime, slimebounce1, slimebounce2, slimebounce3, slimesound;
 var greenenemyanimation, greenenemyanimate;
+var startcountingcard22, countingcard22, diecard22;
+var rightplayeranimation, rightplayeranimationImage;
+var playerbulletouch
 function preload(){
 
 Background= loadImage("Background.png")
@@ -86,6 +89,7 @@ cardeck2Image=loadImage('cardeck2img.png')
 slimeImage= loadImage('slime.png')
 slimesound=loadSound('slimesound.wav')
 greenenemyanimate=loadAnimation('greenenemyanimat1.png', 'greenenemyanimat2.png')
+rightplayeranimationImage=loadImage('rightplayeranimation.png')
 }
 function setup() {
 createCanvas(windowWidth, windowHeight);
@@ -311,6 +315,11 @@ card21button= createImg('usecard21.png')
 card21button.position(width/1.515-width/2, height/2+1250)
 card21button.size(160,230)
 card21button.hide()
+
+card22button= createImg('usecard22.png')
+card22button.position(width/1.195-width/2, height/2+1250)
+card22button.size(160,230)
+card22button.hide()
 // cards in the inventory
 dailyCard=createImg('weekchellange.png')
 dailyCard.position(width/.745-width/2, height/2+200)
@@ -401,6 +410,11 @@ card19use.position(width/1.5-width/2, height/2+920)
 card19use.size(140,230)
 card19use.hide()
 
+card22use= createImg('usecard22.png')
+card22use.position(width/1.195-width/2, height/2+920)
+card22use.size(150,230)
+card22use.hide()
+
 
 // all the stuff of settings
 
@@ -441,6 +455,11 @@ Rightplayer=createSprite(width/1.5-width/2, height/2+250)
 Rightplayer.addImage("rplayer", RightplayerImage)
 RightplayerImage.scale=1
 Rightplayer.visible=false
+
+rightplayeranimation=createSprite(width/1.515-width/2, height/2+250)
+rightplayeranimation.addImage("rplayergunanimation", rightplayeranimationImage)
+rightplayeranimation.scale=.9
+rightplayeranimation.visible=false
 
 collider=createSprite(width/1.15-width/2, height/2+327, 10000,10)
 collider.visible=false
@@ -498,6 +517,13 @@ greenenemyanimation=createSprite(width/1-width/2, height/2)
 greenenemyanimation.addAnimation('aniamtionofgreenenemy', greenenemyanimate)
 greenenemyanimation.scale=4
 greenenemyanimation.visible=false
+
+diecard22=createSprite(width/2.5-width/2, height/2, 10,30000)
+diecard22.visible=false
+
+
+playerbulletouch=createSprite(width/1.3-width/2, height/2, 20,30000)
+playerbulletouch.visible=false
 score=5
 health=30
 start=300
@@ -524,6 +550,7 @@ card18unlock=0
 card19unlock=0
 card20unlock=0
 card21unlock=0
+card22unlock=0
 redthunderhastouched=0
 stormhastouched=0
 card2stop=0
@@ -543,6 +570,7 @@ card16stop=0
 card18stop=0
 card19stop=0
 card21stop=0
+card22stop=0
 jumpingcard=0
 cardset2unlocked=0
 cardset3unlocked=0
@@ -552,6 +580,8 @@ chhealth=0
 datar=0
 attacktext=0
 showallow=0
+startcountingcard22=0
+countingcard22=0
 }
 
 function draw() {
@@ -706,7 +736,61 @@ if(gameState==="game"){
   redenemybullet.visible=true
   dailyCard.hide()
   redenemybullet.y= redenemy.y
+  rightplayeranimation.y= Rightplayer.y
+ 
+  rightplayeranimation.visible=false
+  // card22 poison codes
+  if(Playerbullet.isTouching(playerbulletouch)){
+    rightplayeranimation.visible=true
+    Rightplayer.x=width/2.5-width/2
+  }
+  else{
+    Rightplayer.x= width/1.5-width/2
+  }
+
+  if(startcountingcard22>0){
+    countingcard22=countingcard22+1
+  }
+  if(countingcard22>1&&countingcard22<501){
+    diecard22.x= width/1-width/2
+  }
+  if(Greenenemy.isTouching(diecard22)&&startcountingcard22>0){
+    Greenenemy.destroy()
+    score=score+5
+  }
+  if(redenemy.isTouching(diecard22)&&startcountingcard22>0){
+    redenemy.destroy()
+    score=score+10
+  }
   
+  if(attack1.isTouching(diecard22)&&startcountingcard22>0){
+    attack1.destroy()
+    score=score+10
+  }
+  if(attack2.isTouching(diecard22)&&startcountingcard22>0){
+    attack2.destroy()
+    score=score+10
+  }
+  if(smb.isTouching(diecard22)&&startcountingcard22>0){
+    smb.destroy()
+    score=score+10
+  }
+  if(slime.isTouching(diecard22)&&startcountingcard22>0){
+   score=score+5
+
+    
+    slime.x=width/.3-width/2
+    slime.y= height/2+300
+
+    slime.velocityY=0
+  }
+
+
+  if(countingcard22>502){
+    startcountingcard22=0
+    diecard22.x=width/2.5-width/2
+    countingcard22=0
+  }
   slime.velocityX=-10
 
   greenenemyanimation.x= Greenenemy.x
@@ -1450,6 +1534,7 @@ home.mousePressed(()=>{
   card19button.hide()
   card20button.hide()
   card21button.hide()
+  card22button.hide()
   skin2button.hide()
   skin3button.hide()
 
@@ -1497,6 +1582,7 @@ cardeck2.hide()
   card16button.hide()
   card17button.hide()
   card18button.hide()
+  card22button.hide()
   card19button.hide()
   card20button.hide()
   card21button.hide()
@@ -1594,7 +1680,11 @@ arrow4.velocityX=0
     
 slime.x=width/.5-width/2
 slime.y=height/2+300
+
+slime.velocityY=0
 enemyspeed=0
+
+diecard22.x= width/2.5-width/2
 
   })
 
@@ -1869,6 +1959,7 @@ allow.hide()
     card20button.show()
 
     card21button.show()
+    card22button.show()
   }
 
   if(card2stop>2){
@@ -1972,6 +2063,12 @@ allow.hide()
     card21unlock=0
     card21stop=0
     card21button.size(160,230)
+  
+  }
+  if(card22stop>0){
+    card22unlock=0
+    card22stop=0
+    card22button.size(160,230)
   
   }
   
@@ -2372,6 +2469,23 @@ if(card3unlock>0){
       }
   })
 
+  card22button.mousePressed(()=>{
+    if(score>229){
+      score=score-230
+      card22unlock=1
+      coinsnotlost=22
+      selectSound.play()
+
+      }
+      if(score<230&&coinsnotlost==0){
+        card22unlock=0
+      }
+    
+      if(card22unlock>0){
+        card22button.size(130,200)
+      }
+  })
+
 
 
 
@@ -2657,6 +2771,13 @@ if(card21stop>0){
 
 }
 
+if(card22stop>0){
+  card22unlock=0
+  card22stop=0
+  card22button.size(160,230)
+
+}
+
     if(card2unlock>0){
       card2use.show()
     
@@ -2681,6 +2802,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+10
       Rightplayer.x=width/1.5-width/2
@@ -2739,6 +2861,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+15
       Rightplayer.x=width/1.5-width/2
@@ -2786,6 +2909,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+20
       health=health+15
@@ -2836,6 +2960,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -2886,6 +3011,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+30
       health=health+30
@@ -2940,6 +3066,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
       score=score+50
       health=health+50
@@ -2994,6 +3121,7 @@ if(card21stop>0){
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3048,6 +3176,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3148,6 +3277,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3203,6 +3333,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3259,6 +3390,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3314,6 +3446,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3426,6 +3559,7 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='game'
 
     
@@ -3480,19 +3614,77 @@ RedThunder.y=height/2-340
       card17use.hide()
       card18use.hide()
       card19use.hide()
+      card22use.hide()
       gameState='multiplayer'
 
     
 
 
   selectSound.play()
-  card19stop=card19stop+1
+
   
 
 
   alert('To play multiplayer slide from left of your screen to the right and tap on the multiplayer bar. You will get a code after you have finished your game. It is your choice to play more or type the code in and receive the prize!Tip- Use the card(reload card unlimited use) so that you can use this card more times instead of rebuying it! ')
 
 
+    })
+
+    if(card22unlock>0){
+      card22use.show()
+
+    }
+
+    card22use.mousePressed(()=>{
+      //runnerScore=0
+      card2use.hide()
+      card3use.hide()
+      card4use.hide()
+      card5use.hide()
+      card7use.hide()
+      card8use.hide()
+      card9use.hide()
+      card10use.hide()
+      card11use.hide()
+      card12use.hide()
+      card13use.hide()
+      card14use.hide()
+      card15use.hide()
+      card16use.hide()
+      card17use.hide()
+      card18use.hide()
+      card19use.hide()
+      card22use.hide()
+      gameState='game'
+
+    
+      Rightplayer.x=width/1.5-width/2
+      Rightplayer.y=height/2
+
+  selectSound.play()
+  card22stop=card22stop+1
+  
+
+
+  arrow1.x= width/2.2-width/2
+  arrow2.x= width/2.2-width/2
+  arrow3.x=width/2.2-width/2
+  arrow4.x= width/2.2-width/2
+  arrow1.y=height/2
+  arrow2.y= height/2-120
+  arrow3.y= height/2-240
+  arrow4.y = height/2+200
+arrow1.velocityX=0
+arrow2.velocityX=0
+arrow3.velocityX=0
+arrow4.velocityX=0
+
+// coding for the poison affect for 300 seconds
+
+startcountingcard22=1
+
+RedThunder.x= width/.75-width/2
+RedThunder.y=height/2-340
     })
 
     if(card17unlock>0){
@@ -3522,6 +3714,7 @@ RedThunder.y=height/2-340
         card16stop=card16stop-1
         card18stop=card18stop-1
         card19stop=card19stop-1
+        
       
 
         selectSound.play()
@@ -3630,24 +3823,28 @@ cardeck2.hide()
       score=score+40
       alert('You have received 40 coins')
       gameState='home'
+      card19stop=card19stop+1
     }
 
     if(codemulti=='fydr254'){
       score=score+80
       alert('You have received 80 coins')
       gameState='home' 
+      card19stop=card19stop+1
     }
 
     if(codemulti=='jdr8n4'){
       score=score+100
       alert('You have received 100 coins')
       gameState='home' 
+      card19stop=card19stop+1
     }
 
     if(codemulti=='uitm2ty5'){
       score=score+200
       alert('You have received 200 coins')
       gameState='home' 
+      card19stop=card19stop+1
     }
   })
 
